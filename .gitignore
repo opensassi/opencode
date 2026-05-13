@@ -39,6 +39,9 @@ test/data/
 # CTest temporary files
 Testing/
 
+# FlameGraph (cloned by init skill at v1.0)
+scripts/FlameGraph/
+
 # External project clones
 /external/
 

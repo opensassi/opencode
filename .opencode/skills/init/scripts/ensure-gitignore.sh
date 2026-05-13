@@ -27,6 +27,9 @@ PATTERNS=(
     ".artifacts/"
     "src/**/.artifacts/"
 
+    "# FlameGraph (cloned by init skill at v1.0)"
+    "scripts/FlameGraph/"
+
     "# Browser automation"
     ".playwright-mcp/"
 
