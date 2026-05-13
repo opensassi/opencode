@@ -54,23 +54,13 @@ npm run check-artifacts  # Staleness check
 
 ## 6. Environment & Setup
 
-- Install script: `bash scripts/install.sh` (Linux/macOS) or PowerShell for WSL2
-- `npm install` installs `playwright` and `sharp` devDependencies
-- `.opencode/package.json` depends on `@opencode-ai/plugin`
-- `env-check.sh` (in opensassi skill) outputs structured JSON for agent consumption
-- FlameGraph cloned by `init flamegraph` at pinned tag `v1.0` to `scripts/FlameGraph/`
+- Run `skill opensassi init` to bootstrap the development environment
 
 ## 7. Watcher & Gitignore
 
 Root `opencode.json` ignores `sessions/**`, `node_modules/**`, `thirdparty/**`, `test/data/**`. The gitignore lives at `.gitignore` (project-wide) plus `.opencode/.gitignore` (opencode-internal). Key patterns: `/.artifacts/`, `.playwright-mcp/`, `.profiler/`, `sessions/` (except `.gitkeep` and `export-session.sh`), `scripts/FlameGraph/`.
 
-## 8. Installing GitHub CLI (for `issue` skill)
-
-```bash
-sudo apt install gh && gh auth login
-```
-
-## 9. Design Constraints
+## 8. Design Constraints
 
 - **No commits during development** — all changes staged at `finish session` time
 - **Single atomic commit per session** — use `git commit --amend --no-edit` for test-fix loops

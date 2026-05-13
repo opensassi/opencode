@@ -14,10 +14,6 @@ Senior DevOps engineer specializing in cross-platform development environment pr
 1. Run `init check` to report current environment status (OS, Node.js, git, FlameGraph, npm deps)
 2. Show available commands
 
-## Constraint: Script-Only Execution
-
-The AI agent NEVER creates or modifies files directly. All writes are performed by the companion scripts in `.opencode/skills/opensassi/scripts/`. If a script needs to exist but doesn't, report the gap — do not write it.
-
 ## Dependencies
 
 - `bash` or `powershell` (for bootstrap scripts — zero other deps)
@@ -28,7 +24,7 @@ The AI agent NEVER creates or modifies files directly. All writes are performed 
 
 ### `init`
 
-Run the full initialization pipeline by executing companion scripts. The AI agent never creates or modifies files — all writes are handled by the scripts themselves. If a script is missing or a platform installer does not exist, report the gap and continue; do not generate files.
+Execute companion scripts. If a script is missing or a platform installer does not exist, report the gap and continue; do not generate files.
 
 1. `env-check.sh` (or `env-check.ps1` on Windows) — bootstrap git + Node.js LTS (creates `.nvmrc` if missing)
 2. `init install` — run existing platform installer, or report if none found
@@ -66,7 +62,6 @@ Run `env-check.sh` (or `env-check.ps1`) and verify:
 
 ## Design Principles
 
-- **Script-only execution** — AI agent runs scripts, never writes files directly.
 - **No circular dependencies on Node.js** — Bootstrap scripts use only bash or PowerShell. Node.js is installed BY the bootstrap.
 - **nvm is additive, not destructive** — `nvm install --lts` installs alongside existing Node versions. `nvm use --lts` scopes to the current shell only. System default node is never touched.
 - **`.nvmrc` for the project** — Written with `--lts` so `nvm use` auto-selects when entering the project directory.
