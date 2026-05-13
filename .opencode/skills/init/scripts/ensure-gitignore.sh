@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || cd "$(dirname "$0")/../../.." && pwd)"
+PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || (cd "$(dirname "$0")/../../.." && pwd))"
 GITIGNORE="$PROJECT_ROOT/.gitignore"
 
 PATTERNS=(
@@ -66,8 +66,10 @@ ensure_pattern() {
     if [[ "$pattern" == \#* ]]; then
         return 0
     fi
-    # Escape special chars for grep -F
-    if grep -qxF "$pattern" "$GITIGNORE" 2>/dev/null; then
+    # Check for existing pattern with optional leading /
+    local alt="${pattern#!}"
+    [[ "$pattern" == \!* ]] && alt="!/${alt#/}" || alt="/${alt#/}"
+    if grep -qxF "$pattern" "$GITIGNORE" 2>/dev/null || grep -qxF "$alt" "$GITIGNORE" 2>/dev/null; then
         return 0
     fi
     echo "$pattern" >> "$GITIGNORE"

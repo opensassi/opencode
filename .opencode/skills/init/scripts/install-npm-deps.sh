@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || cd "$(dirname "$0")/../../.." && pwd)"
+PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || (cd "$(dirname "$0")/../../.." && pwd))"
 
 if ! command -v node &>/dev/null; then
     echo "[ERROR] Node.js not found. Run env-check.sh first."
