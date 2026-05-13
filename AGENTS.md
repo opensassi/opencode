@@ -1,68 +1,81 @@
 # opencode Agent Instructions
 
-## Overview
+This is the **opencode project template** — a meta-repository (agent harness), not an application codebase. Skills in `.opencode/skills/<name>/SKILL.md` give the agent domain-specific expertise on demand via `skill <name>`.
 
-This project uses opencode for AI-assisted software development. The agent harness is organized around **skills** — modular prompt packs in `.opencode/skills/<name>/SKILL.md` that give the AI agent domain-specific expertise on demand.
+## 1. Mandatory: Load System Design
 
-## How to Use Skills
+At the start of every session, load `skill system-design`. This agent drives the entire workflow — it reads `technical-specification.md`, iterates on design through clarifying questions, and generates class specifications, architecture/sequence diagrams, D3 animations, and testing plans via the propose-revise-generate loop. All other skills (git, session-evaluation, profiler, etc.) serve this primary workflow.
 
-Skills are loaded in-context via the `skill` tool. For example:
-- `skill git` loads the git workflow skill
-- `skill system-design` loads the system design skill
-- `skill profiler` loads the profiling skill
+## 2. Skill System
 
-Each skill defines its own available commands. After loading a skill, the agent will display them.
+All skills are registered with `"allow"` in `.opencode/opencode.json`. Load on demand:
 
-## Available Skills
-
-| Skill | Description |
-|-------|-------------|
-| `skill-manager` | Create, revise, and maintain skills interactively |
-| `system-design` | Interactive system design agent — class specifications, diagrams, testing plans |
-| `system-design-review` | Seven-expert panel audit of technical specifications |
-| `session-evaluation` | Generate structured session evaluation reports |
-| `git` | Rebase-based git workflow — single atomic commits on main |
-| `profiler` | Linux perf profiling, flamegraph generation, benchmarking |
-| `issue` | GitHub issue management (create, list, show, close) |
-| `todo` | Create linked issues and debugging skills from session context |
+| `skill` | Use case |
+|---------|----------|
 | `asm-optimizer` | SIMD/assembly optimization framework |
-| `daily-evaluation` | Aggregate session evaluations into daily dashboards |
+| `daily-evaluation` | Aggregate session evaluations into dashboards |
+| `git` | Rebase-based single-commit-per-session workflow |
+| `init` | Bootstrap a new project environment |
+| `issue` | GitHub issue management (requires `gh` CLI) |
+| `profiler` | Linux perf profiling + flamegraphs |
+| `session-evaluation` | Generate structured session reports |
+| `skill-manager` | Create/revise skills interactively |
+| `system-design` | Interactive C++ spec authoring with diagrams |
+| `system-design-review` | Seven-expert panel audit of technical specs |
+| `todo` | Create issues + debugging skills from session context |
 
-## Artifact Pipeline
+## 3. Git & Session Workflow
 
-Mermaid diagrams and D3 animations embedded in spec files can be extracted and validated:
+**Always load `skill git` before finishing a session.** The workflow is:
+
+1. **`start session`** — checkout main, pull --rebase, verify clean tree
+2. **Develop** (no commits during development — `git add -A` only at finish time)
+3. **`finish session`** — orchestrates: `git add -A` → generate eval title slug + session ID → commit with message `<title-slug>-<session-id-noprefix>` → rebase onto `origin/main` → run tests → if fail: fix + amend + re-rebase → write evaluation sidecar → export session archive → amend artifacts → push
+4. Commit message format: `<title-slug>-<session-id-noprefix>` (single line, no body)
+5. Rebasing only — never merge. Conflicts: resolve → `git add` → `git rebase --continue`
+6. Session archives go to `sessions/` as `.md` + `.json.bz2` + `.sha256`
+
+## 4. MCP Tools
+
+Configured in `.opencode/opencode.json`:
+
+- **Playwright** (`npx @playwright/mcp@latest --headless`) — browser automation
+- **GDB Debugger** (`gdb-mcp-server`) — C/C++ headless debugging via GDB/MI
+
+## 5. npm Scripts (Artifact Pipeline)
 
 ```
-npm run extract                    # extract artifacts from technical-specification.md
-npm run test-artifacts             # validate all extracted artifacts
-npm run validate-all               # extract + validate in one step
+npm run extract          # Extract diagrams from technical-specification.md
+npm run test-artifacts   # Validate artifacts (SVG, PNG, D3 keyframes)
+npm run validate-all     # extract --all + test-artifacts
+npm run verify-animation -- --file <path>   # D3 keyframe verification
+npm run check-artifacts  # Staleness check
 ```
 
-## GDB Debugger MCP
+## 6. Environment & Setup
 
-A GDB debugger MCP server is configured in `.opencode/opencode.json`. It provides headless debugging for C/C++ programs via the GDB/MI protocol.
+- Install script: `bash scripts/install.sh` (Linux/macOS) or PowerShell for WSL2
+- `npm install` installs `playwright` and `sharp` devDependencies
+- `.opencode/package.json` depends on `@opencode-ai/plugin`
+- `env-check.sh` (in init skill) outputs structured JSON for agent consumption
+- FlameGraph cloned by `init flamegraph` at pinned tag `v1.0` to `scripts/FlameGraph/`
 
-## Git & Session Workflow
+## 7. Watcher & Gitignore
 
-CRITICAL: Before any development work, load the `git` skill and follow its commands. Develop directly against `main` with a rebase workflow. At the end of every session, run `finish session` which orchestrates commit → rebase → tests → evaluation → push.
+Root `opencode.json` ignores `sessions/**`, `node_modules/**`, `thirdparty/**`, `test/data/**`. The gitignore lives at `.gitignore` (project-wide) plus `.opencode/.gitignore` (opencode-internal). Key patterns: `/.artifacts/`, `.playwright-mcp/`, `.profiler/`, `sessions/` (except `.gitkeep` and `export-session.sh`), `scripts/FlameGraph/`.
 
-## Dev Environment Setup
-
-### GitHub CLI (for the `issue` skill)
+## 8. Installing GitHub CLI (for `issue` skill)
 
 ```bash
-sudo apt install gh
-gh auth login
+sudo apt install gh && gh auth login
 ```
 
-Follow the browser-based OAuth flow or paste a personal access token.
+## 9. Design Constraints
 
-## Customization
-
-To adapt this template to a specific project:
-
-1. **Replace placeholder paths** in skill SKILL.md files with your project's paths
-2. **Install dependencies** via `scripts/install.sh`
-3. **Update the test command** in the `git` skill to match your test runner
-4. **Create a technical-specification.md** using the `system-design` skill
-5. **Add project-specific skills** via the `skill-manager` skill
+- **No commits during development** — all changes staged at `finish session` time
+- **Single atomic commit per session** — use `git commit --amend --no-edit` for test-fix loops
+- **Full test suite after every rebase** — if tests fail, fix → amend → re-rebase
+- **Session evaluation is read-only** — `generate` does not write files; `export` writes to `sessions/`
+- **`skill-manager` reads skills with `read` tool** — never uses `skill` to load other skills
+- **Title slugs are lower-dash-case** (e.g. `2026-05-11-my-project-setup`)
+- **`ses_` prefix stripped** from session IDs for filenames

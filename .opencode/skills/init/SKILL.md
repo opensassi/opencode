@@ -14,6 +14,18 @@ Senior DevOps engineer specializing in cross-platform development environment pr
 1. Run `init check` to report current environment status (OS, Node.js, git, FlameGraph, npm deps)
 2. Show available commands
 
+## Critical: Never Overwrite Existing Files
+
+The init skill must NEVER modify, overwrite, or regenerate any existing project file. This includes AGENTS.md, README.md, SKILL.md files, source code, config files, or any other file that already exists on disk. The only permitted writes are:
+
+- **`scripts/FlameGraph/`** — clone or update (git-controlled, pinned to v1.0)
+- **`.gitignore`** — may append missing patterns via `ensure-gitignore.sh` (idempotent, no-op if present)
+- **`scripts/install/<os>/<distro>-<version>/install.sh`** — only when the file does not yet exist AND user has confirmed
+- **`scripts/install.sh`** — only to append a new case entry (insert before `esac`) for a newly generated installer
+- **`node_modules/`** — managed by npm, never committed
+
+If a file exists, skip it. If unsure whether something should be written, abort and tell the user.
+
 ## Dependencies
 
 - `bash` or `powershell` (for bootstrap scripts — zero other deps)
@@ -24,7 +36,7 @@ Senior DevOps engineer specializing in cross-platform development environment pr
 
 ### `init`
 
-Run the full initialization pipeline:
+Run the full initialization pipeline. **Never modifies existing project files** (AGENTS.md, README.md, source code, configs). Only creates new files or appends to `.gitignore`.
 
 1. `env-check.sh` (or `env-check.ps1` on Windows) — bootstrap git + Node.js LTS via nvm
 2. `init install` — find/generate and run the platform installer
@@ -66,6 +78,8 @@ Run `env-check.sh` (or `env-check.ps1`) and verify:
 - `.gitignore` has common patterns
 
 ## Design Principles
+
+- **Never overwrite existing files** — AGENTS.md, README.md, source code, SKILL.md files, configs, and any other pre-existing file must never be modified. The only writes permitted are: creating new files (platform installers), appending to `.gitignore`, and managing `scripts/FlameGraph/` (git clone/checkout).
 
 - **No circular dependencies on Node.js** — Bootstrap scripts use only bash or PowerShell. Node.js is installed BY the bootstrap.
 - **nvm is additive, not destructive** — `nvm install --lts` installs alongside existing Node versions. `nvm use --lts` scopes to the current shell only. System default node is never touched.
