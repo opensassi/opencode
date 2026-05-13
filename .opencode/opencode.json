@@ -6,7 +6,7 @@
     "system-design-review": "allow",
     "session-evaluation": "allow",
     "git": "allow",
-    "init": "allow",
+    "opensassi": "allow",
     "profiler": "allow",
     "issue": "allow",
     "asm-optimizer": "allow",

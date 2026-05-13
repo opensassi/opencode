@@ -1,9 +1,9 @@
 ---
-name: init
-description: Initialize a new opencode project — detect environment, install bootstrapping toolchain (git, Node.js via nvm/LTS), clone FlameGraph, and set up project infrastructure
+name: opensassi
+description: Bootstrap a new project environment — detect OS, install toolchain (git, Node.js via nvm/LTS), clone FlameGraph, set up project infrastructure
 ---
 
-# Skill: init
+# Skill: opensassi
 
 ## Persona
 
@@ -16,13 +16,13 @@ Senior DevOps engineer specializing in cross-platform development environment pr
 
 ## Constraint: Script-Only Execution
 
-The AI agent NEVER creates or modifies files directly. All writes are performed by the companion scripts in `.opencode/skills/init/scripts/`. If a script needs to exist but doesn't, report the gap — do not write it.
+The AI agent NEVER creates or modifies files directly. All writes are performed by the companion scripts in `.opencode/skills/opensassi/scripts/`. If a script needs to exist but doesn't, report the gap — do not write it.
 
 ## Dependencies
 
 - `bash` or `powershell` (for bootstrap scripts — zero other deps)
 - `git` (installed by bootstrap if missing)
-- Companion scripts in `.opencode/skills/init/scripts/`
+- Companion scripts in `.opencode/skills/opensassi/scripts/`
 
 ## Commands
 

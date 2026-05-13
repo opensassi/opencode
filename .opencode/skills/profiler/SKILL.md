@@ -33,7 +33,7 @@ Verify the profiling toolchain. Runs the following checks and reports pass/fail:
 - `perf` is installed and accessible
 - Encoder Release binary exists (check `bin/release-static/` or build tree)
 - `test/data/` contains benchmark input data
-- `scripts/FlameGraph/stackcollapse-perf.pl` and `flamegraph.pl` exist (clone via init skill if missing)
+- `scripts/FlameGraph/stackcollapse-perf.pl` and `flamegraph.pl` exist (clone via opensassi skill if missing)
 - `ffmpeg` available (needed for `--vmaf`)
 - `vmaf` tool available (needed for `--vmaf`)
 - `.profiler/` output directory exists
@@ -56,7 +56,7 @@ What it does:
  3. If `--resize` given, runs `ffmpeg` to produce resized variants
  4. Creates `.profiler/` directory structure: `flamegraphs/`, `benchmarks/`, `perf_archives/`, `reports/`
  5. Creates `.gitignore` entries for test data and `.profiler/` if not present
- 6. Checks that `scripts/FlameGraph/` exists; if not, runs the init skill to clone it
+  6. Checks that `scripts/FlameGraph/` exists; if not, runs the opensassi skill to clone it
 
 Example output files (video encoder project):
 ```
@@ -192,7 +192,7 @@ Produces:
 - **Resized input variants** via `setup --resize WxH` for fast iteration
 - **Release build only** (ensure `-fno-omit-frame-pointer` is enabled for meaningful flamegraphs)
 - **5 iterations minimum** for benchmark; raw `perf.data` retained for LLM analysis
-- **FlameGraph scripts** at `scripts/FlameGraph/` (cloned by init skill from Brendan Gregg's repo)
+- **FlameGraph scripts** at `scripts/FlameGraph/` (cloned by opensassi skill from Brendan Gregg's repo)
 - **Input data**: `test/data/` (gitignored, downloaded by setup)
 - **Output artifacts**: `.profiler/` (hidden dir, gitignored)
 - **Read-only on source code** — never modifies source or build files

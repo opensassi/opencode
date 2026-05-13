@@ -15,7 +15,7 @@ All skills are registered with `"allow"` in `.opencode/opencode.json`. Load on d
 | `asm-optimizer` | SIMD/assembly optimization framework |
 | `daily-evaluation` | Aggregate session evaluations into dashboards |
 | `git` | Rebase-based single-commit-per-session workflow |
-| `init` | Bootstrap a new project environment |
+| `opensassi` | Bootstrap a new project environment |
 | `issue` | GitHub issue management (requires `gh` CLI) |
 | `profiler` | Linux perf profiling + flamegraphs |
 | `session-evaluation` | Generate structured session reports |
@@ -57,7 +57,7 @@ npm run check-artifacts  # Staleness check
 - Install script: `bash scripts/install.sh` (Linux/macOS) or PowerShell for WSL2
 - `npm install` installs `playwright` and `sharp` devDependencies
 - `.opencode/package.json` depends on `@opencode-ai/plugin`
-- `env-check.sh` (in init skill) outputs structured JSON for agent consumption
+- `env-check.sh` (in opensassi skill) outputs structured JSON for agent consumption
 - FlameGraph cloned by `init flamegraph` at pinned tag `v1.0` to `scripts/FlameGraph/`
 
 ## 7. Watcher & Gitignore

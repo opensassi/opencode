@@ -1,4 +1,4 @@
-# env-check.ps1 — Bootstrap environment detection for opencode init skill (Windows native).
+# env-check.ps1 — Bootstrap environment detection for opencode opensassi skill (Windows native).
 # Detects OS, ensures git, installs Node.js LTS via nvm-windows if needed.
 # Outputs JSON to stdout: {os, distro, version, codename, pkg_manager, shell,
 #                          is_wsl, arch, node_version, nvm_version, git_version}
