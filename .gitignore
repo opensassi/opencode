@@ -1,0 +1,50 @@
+# Build directories
+/build*/
+/bin/
+/lib/
+/install/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependencies
+node_modules/
+
+# Generated artifacts
+.artifacts/
+src/**/.artifacts/
+
+# Browser automation logs
+.playwright-mcp/
+
+# Profiling and performance data
+.profiler/
+
+# Sessions (generated session exports)
+sessions/
+!/sessions/.gitkeep
+!/sessions/daily/.gitkeep
+!/sessions/export-session.sh
+
+# Performance experiment data
+perf/experiments/
+perf/baseline/
+
+# Test data (downloaded on demand)
+test/data/
+
+# CTest temporary files
+Testing/
+
+# External project clones
+/external/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Core dumps
+core

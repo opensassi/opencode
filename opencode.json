@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "watcher": {
+    "ignore": [
+      "sessions/**",
+      "node_modules/**",
+      "thirdparty/**",
+      "test/data/**"
+    ]
+  }
+}

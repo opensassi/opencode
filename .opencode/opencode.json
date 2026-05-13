@@ -1,0 +1,28 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "skills": {
+    "skill-manager": "allow",
+    "system-design": "allow",
+    "system-design-review": "allow",
+    "session-evaluation": "allow",
+    "git": "allow",
+    "init": "allow",
+    "profiler": "allow",
+    "issue": "allow",
+    "asm-optimizer": "allow",
+    "todo": "allow",
+    "daily-evaluation": "allow"
+  },
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "@playwright/mcp@latest", "--headless"],
+      "enabled": true
+    },
+    "debugger": {
+      "type": "local",
+      "command": ["gdb-mcp-server"],
+      "enabled": true
+    }
+  }
+}

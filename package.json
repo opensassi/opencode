@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "description": "A forked opencode agent harness for AI-assisted software development",
+  "scripts": {
+    "extract": "node scripts/extract-artifacts.js",
+    "extract:file": "node scripts/extract-artifacts.js --file",
+    "test-artifacts": "node scripts/test-artifacts.js",
+    "test-artifact": "node scripts/test-artifacts.js --file",
+    "validate-all": "node scripts/extract-artifacts.js --all && node scripts/test-artifacts.js",
+    "verify-animation": "node scripts/verify-artifact.js",
+    "check-artifacts": "node scripts/check-artifacts.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.60.0",
+    "sharp": "^0.34.5"
+  }
+}
