@@ -11,7 +11,8 @@
     "issue": "allow",
     "asm-optimizer": "allow",
     "todo": "allow",
-    "daily-evaluation": "allow"
+    "daily-evaluation": "allow",
+    "npm-optimizer": "allow"
   },
   "mcp": {
     "playwright": {
