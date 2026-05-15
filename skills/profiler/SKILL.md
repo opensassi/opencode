@@ -202,7 +202,7 @@ Produces:
 
 ## Support Scripts
 
-Support scripts live in `.opencode/skills/profiler/scripts/` and handle the actual execution:
+Support scripts live in the `@opensassi/opencode` package. Run them via `npx @opensassi/opencode run --skill profiler <name>`:
 
 | Script | Purpose |
 |---|---|

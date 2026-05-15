@@ -1,10 +1,12 @@
 #!/usr/bin/env node
-const { chromium } = require('playwright');
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-const sharp = require('sharp');
+import { fileURLToPath } from 'url';
+import { chromium } from 'playwright';
+import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import sharp from 'sharp';
 
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
 function findArtifactDirs(specPath) {

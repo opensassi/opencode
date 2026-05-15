@@ -1,9 +1,11 @@
 #!/usr/bin/env node
-const path = require('path');
-const fs = require('fs');
-const http = require('http');
-const { chromium } = require('playwright');
+import { fileURLToPath } from 'url';
+import path from 'path';
+import fs from 'fs';
+import http from 'http';
+import { chromium } from 'playwright';
 
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
 function serveStatic(dir) {

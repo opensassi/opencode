@@ -20,6 +20,7 @@ When activated:
 
 1. **Read spec file** — Read `technical-specification.md` from the project root. Output a high‑level summary (purpose, components, data flow), then wait for user prompts. Do not initiate a new design analysis.
    - **If the file does not exist**: Proceed to step 2.
+   - **Scope note**: This skill operates on the **project root's** `technical-specification.md` (which describes the skill system, artifact pipeline, and project tooling). The `external/opencode/` directory contains a separate spec tree for the opencode runtime product; do not confuse the two. All `load spec` and `generate from source` commands operate on the project root tree unless explicitly directed otherwise.
 
 2. **Load C++ conventions** — When `technical-specification.md` exists, read the `## C++ Coding Conventions` section (typically near the end of the file). This section documents the project's C++14 idioms, naming conventions (`m_` prefix, `x` prefix for private helpers, PascalCase), class patterns (no inheritance, virtual destructors, in-class init, forward declarations), error signaling via `int` returns, and test conventions. All generated class declarations and specifications must follow these conventions exactly.
 
@@ -37,25 +38,25 @@ When activated:
 
    **Fast per-file validation (recommended for single spec files):**
    ```
-   node scripts/extract-artifacts.js --file <path>
-   node scripts/test-artifacts.js --file <path>
+   npx @opensassi/opencode run extract-artifacts.js --file <path>
+   npx @opensassi/opencode run test-artifacts.js --file <path>
    ```
    The `--file` flag processes only that spec's mermaid + D3 artifacts in ~10-30s.
 
    **Full validation (slow — 5-9 min when many D3 animations exist):**
    ```
-   npm run validate-all
+   npx @opensassi/opencode run validate-all.js
    ```
    Avoid full validation inside sub-agents; use it only interactively or as a final check at module boundaries.
 
    **Sub-module validation** (requires Module Reference table in root spec):
    ```
-   npm run extract -- --sub-module <name> && npm run test-artifacts
+   npx @opensassi/opencode run extract-artifacts.js --sub-module <name> && npx @opensassi/opencode run test-artifacts.js
    ```
 
    When a D3 animation is present, additionally run:
    ```
-   npm run verify-animation -- --file <extracted-html-path>
+   npx @opensassi/opencode run verify-artifact.js --file <extracted-html-path>
    ```
 
    If any step fails, investigate and fix the issue before declaring the command complete.
@@ -66,11 +67,11 @@ When activated:
 
 ### `generate sequence diagram`
 
-Generate a Mermaid `sequenceDiagram` depicting the full data or processing flow using the exact component names from the class specification. Embed the diagram in the `## 4. Detailed Data Flow` section of `technical-specification.md`, replacing any existing content in that section. Use `sequenceDiagram` for temporal flows. After embedding, run `npm run validate-all` to confirm the diagram compiles and renders to PNG without errors.
+Generate a Mermaid `sequenceDiagram` depicting the full data or processing flow using the exact component names from the class specification. Embed the diagram in the `## 4. Detailed Data Flow` section of `technical-specification.md`, replacing any existing content in that section. Use `sequenceDiagram` for temporal flows. After embedding, run `npx @opensassi/opencode run validate-all.js` to confirm the diagram compiles and renders to PNG without errors.
 
 ### `generate architecture diagram`
 
-Generate a Mermaid `graph TB` C4 container (or component) diagram showing the system's building‑blocks and their static relationships. Include external actors, the main container, and internal components with directed edges indicating usage, delegation, and data flow. Label each node with its component name (and optionally its type). The diagram must reference only the class names, properties, and relationships defined in the class specification to guarantee consistency. Embed the diagram in the `## 3. System Architecture` section of `technical-specification.md`, replacing any existing content. After embedding, run `npm run validate-all` to confirm the diagram compiles and renders to PNG without errors.
+Generate a Mermaid `graph TB` C4 container (or component) diagram showing the system's building‑blocks and their static relationships. Include external actors, the main container, and internal components with directed edges indicating usage, delegation, and data flow. Label each node with its component name (and optionally its type). The diagram must reference only the class names, properties, and relationships defined in the class specification to guarantee consistency. Embed the diagram in the `## 3. System Architecture` section of `technical-specification.md`, replacing any existing content. After embedding, run `npx @opensassi/opencode run validate-all.js` to confirm the diagram compiles and renders to PNG without errors.
 
 When the design includes a user‑facing visualisation, embed a **Visualization sub‑module** as a nested container within the main system container.  
 The internal components must mirror the system's data‑processing stages: each visual element should correspond to a **specific validated data structure** or **processing step** (e.g., a bar for bounded estimates, a marker for raw events, a stacked layer for a cumulative quantity). Name the components according to their role in the consistency checks (e.g., `EngagementBar`, `SMEStackedBar`, `MessageMarkers` → but the generic instruction is: "name them after the metric or check they represent").  
@@ -152,12 +153,12 @@ When the system's logical rules are correctly implemented, the animation will pl
     - Be embedded as a ` ```html ` fenced code block in `technical-specification.md` (in §5 Visualization, under an "Animation Source" subsection), alongside the description of the animation phases and controls.
 5. **Validation** – After embedding in the spec file, run:
    ```
-   node scripts/extract-artifacts.js
-   node scripts/test-artifacts.js --file technical-specification.md
+   npx @opensassi/opencode run extract-artifacts.js
+   npx @opensassi/opencode run test-artifacts.js --file technical-specification.md
    ```
    to confirm the HTML is extracted to `.artifacts/` and the filmstrip test captures one frame per keyframe successfully with no errors. (Use `--file` to avoid the full-suite timeout; only one D3 animation lives in the root spec.)
    If the test reports `ANIMATION_KEYFRAMES not set` or fails to find `[data-testid="play-pause"]`, fix the HTML and re-run.
-6. **Verification** – Run `npm run verify-animation -- --file .artifacts/.../d3-animation.html` to assert that every keyframe's DOM state matches the expected values in `ANIMATION_VERIFICATION`. All keyframes must pass. If any assertion fails, debug the D3 state transitions and re-run from step 4.
+6. **Verification** – Run `npx @opensassi/opencode run verify-artifact.js --file .artifacts/.../d3-animation.html` to assert that every keyframe's DOM state matches the expected values in `ANIMATION_VERIFICATION`. All keyframes must pass. If any assertion fails, debug the D3 state transitions and re-run from step 4.
 
 **Validation (self‑test)**  
 After generation, mentally inject a single inconsistency (e.g., a human engagement estimate that exceeds the attention window by a factor of ten). The author must confirm that the animation would visibly break for that input – otherwise the command is not satisfied and the design must be reworked.
@@ -228,7 +229,7 @@ Save file-level specs as `source/<path-relative>/<FileName>.spec.md` (e.g., `sou
 
 **Validation**: After phases 1, 1.5, 2, and 3, run per-file validation:
 ```
-node scripts/extract-artifacts.js --file <path> && node scripts/test-artifacts.js --file <path>
+npx @opensassi/opencode run extract-artifacts.js --file <path> && npx @opensassi/opencode run test-artifacts.js --file <path>
 ```
 All diagrams must render and all D3 animations must pass filmstrip + verification. Do not proceed to the next phase until the current phase passes validation.
 
@@ -247,10 +248,43 @@ Load the complete specification tree into the agent's working context — every 
    - Do not skip, truncate, or summarize any section
    - Do not defer diagram or animation content
 
+2.5 **Load external integration specs** — After loading the local spec tree, scan the
+    `external/` directory for two-file integration pairs.
+
+    For every entry where both `external/<name>.md` and `external/<name>/` directory
+    exist (e.g., `external/opencode.md` + `external/opencode/`):
+
+    a. **Read integration spec** — Read `external/<name>.md` in full. This document
+       (formatted like a `technical-specification.md`) describes the inter-linkages
+       between the current project and the external project.
+
+    b. **Check for external spec tree**: Detect whether `external/<name>/` contains
+       its own specification tree by checking for:
+       - `external/<name>/technical-specification.md` (top-level spec)
+       - `external/<name>/source/` and `external/<name>/src/` directories containing
+         `.spec.md` files
+
+    c. **Load external spec tree** — If `external/<name>/technical-specification.md`
+       exists, recursively apply steps 1-2 of this command:
+       - Read the external top-level spec
+       - Parse its Module Reference table and Free-Standing Components table
+       - Load every `.spec.md` file referenced in those tables in full
+
+    d. **Record integration edges** — In the spec tree index, record every
+       cross-reference from the integration spec (`external/<name>.md` §5
+       Cross-Reference Table) that connects a project-root file to an
+       external consumer or spec. These edges are validated in step 4.
+
+    e. **Mark as externally-linked** — Flag the spec tree index as having
+       external linkages. This affects the output summary format (step 6)
+       and staleness scope (step 5).
+
 3. **Build spec tree index** — From the loaded content, construct a structured navigable index in working memory:
    - Sub-module count, names, and facade roles
    - Internal component count and roles per sub-module
    - Free-standing component count and roles
+   - External project count and linkage count
+   - Integration edges (project file → external consumer pairs)
    - Cross-reference connectivity graph (which specs reference which)
 
 4. **Cross-reference validation** — Verify across all loaded specs:
@@ -262,7 +296,7 @@ Load the complete specification tree into the agent's working context — every 
    - All sequence diagram participant names correspond to actual components or subsystems
    - Report unresolved references and orphaned specs as warnings
 
-5. **Staleness check** — Run `node scripts/check-artifacts.js --errors` and report any specs with missing reviews (MISSING) or out-of-date reviews (STALE).
+5. **Staleness check** — Run `npx @opensassi/opencode run check-artifacts.js --errors` from the project root and report any specs with missing reviews (MISSING) or out-of-date reviews (STALE). If external spec trees were loaded in step 2.5, also run the staleness check inside each `external/<name>/` directory (if `scripts/check-artifacts.js` exists there) and report those results as a separate "External" section in the output.
 
 6. **Output summary** — Print a structured tree summary:
    ```
@@ -270,6 +304,8 @@ Load the complete specification tree into the agent's working context — every 
      Top-level: technical-specification.md
      Sub-modules: N facade specs → M internal components
      Free-standing: P component specs
+     External: R linked projects (see external/<name>.md for integration edges)
+     Integration edges: S cross-references verified
      Total: Q spec files loaded in full
      Languages: Shell, JavaScript, PowerShell, Markdown
      Cross-references: all resolved (or: N unresolved warnings)
@@ -343,8 +379,8 @@ The generated file must follow this 7‑section structure:
 
 After writing the spec file, run:
 ```
-node scripts/extract-artifacts.js --file source/Lib/<Module>/<SubModuleName>.spec.md
-node scripts/test-artifacts.js --file source/Lib/<Module>/<SubModuleName>.spec.md
+npx @opensassi/opencode run extract-artifacts.js --file source/Lib/<Module>/<SubModuleName>.spec.md
+npx @opensassi/opencode run test-artifacts.js --file source/Lib/<Module>/<SubModuleName>.spec.md
 ```
 to validate the generated mermaid diagrams render correctly. Prefer `--file` over `npm run test-artifacts` to avoid the full-suite timeout.
 
@@ -516,7 +552,7 @@ For the D3 animation, embed the full HTML as a ` ```html ` fenced code block in 
 For sub‑module specs, save to `src/<module>/<Name>.spec.md` (e.g., `src/storage/RedisEntityRepository.spec.md`).
 
 After saving any artifact that modifies `technical-specification.md` or any `.spec.md` file, run:
-- For individual spec files: `node scripts/extract-artifacts.js --file <path> && node scripts/test-artifacts.js --file <path>` (~10-30s)
-- For a sub-module: `npm run extract -- --sub-module <name> && node scripts/test-artifacts.js --file src/<Module>/<Name>.spec.md`
-- For full validation (slow): `npm run validate-all`
+- For individual spec files: `npx @opensassi/opencode run extract-artifacts.js --file <path> && npx @opensassi/opencode run test-artifacts.js --file <path>` (~10-30s)
+- For a sub-module: `npx @opensassi/opencode run extract-artifacts.js --sub-module <name> && npx @opensassi/opencode run test-artifacts.js --file src/<Module>/<Name>.spec.md`
+- For full validation (slow): `npx @opensassi/opencode run validate-all.js`
 Do not consider the command complete until validation passes.

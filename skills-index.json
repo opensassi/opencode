@@ -1,0 +1,137 @@
+{
+  "skills": [
+    {
+      "name": "system-design",
+      "description": "Interactive C++ spec authoring with diagrams and D3 animations",
+      "commands": [
+        "generate sequence diagram",
+        "generate architecture diagram",
+        "generate class specification",
+        "generate manim animation",
+        "generate d3 animation",
+        "generate testing plan",
+        "generate from source",
+        "load spec",
+        "generate technical specification",
+        "revise technical specification",
+        "split sub-modules",
+        "combine sub-modules",
+        "list sub-modules",
+        "load sub-module spec",
+        "generate sub-module spec"
+      ]
+    },
+    {
+      "name": "git",
+      "description": "Rebase-based single-commit-per-session workflow",
+      "commands": [
+        "start session",
+        "finish session",
+        "sync"
+      ]
+    },
+    {
+      "name": "profiler",
+      "description": "Linux perf profiling + flamegraphs",
+      "commands": [
+        "check",
+        "setup",
+        "profile",
+        "benchmark",
+        "compare",
+        "report"
+      ]
+    },
+    {
+      "name": "asm-optimizer",
+      "description": "SIMD/assembly optimization framework",
+      "commands": [
+        "setup-baseline",
+        "profile",
+        "assess",
+        "assess all",
+        "setup-microbench",
+        "spec",
+        "analyze-gap",
+        "bench",
+        "implement",
+        "iterative-optimize",
+        "archive-experiment",
+        "report"
+      ]
+    },
+    {
+      "name": "opensassi",
+      "description": "Bootstrap a new project environment",
+      "commands": [
+        "init",
+        "init install",
+        "init flamegraph",
+        "init check"
+      ]
+    },
+    {
+      "name": "session-evaluation",
+      "description": "Generate structured session reports",
+      "commands": [
+        "generate",
+        "export"
+      ]
+    },
+    {
+      "name": "skill-manager",
+      "description": "Create/revise skills interactively",
+      "commands": [
+        "show skills",
+        "create skill",
+        "revise skill",
+        "save skill",
+        "delete skill",
+        "commit",
+        "audit skills"
+      ]
+    },
+    {
+      "name": "issue",
+      "description": "GitHub issue management",
+      "commands": [
+        "create issue",
+        "list issues",
+        "show issue",
+        "close issue"
+      ]
+    },
+    {
+      "name": "system-design-review",
+      "description": "Seven-expert panel audit of technical specs",
+      "commands": [
+        "review all",
+        "review sub-module",
+        "review file-path",
+        "review stale"
+      ]
+    },
+    {
+      "name": "daily-evaluation",
+      "description": "Aggregate session evaluations into dashboards",
+      "commands": [
+        "create",
+        "list"
+      ]
+    },
+    {
+      "name": "todo",
+      "description": "Create issues + debugging skills from session context",
+      "commands": [
+        "extract",
+        "propose-skill",
+        "save-skill"
+      ]
+    },
+    {
+      "name": "npm-optimizer",
+      "description": "Port an npm package to a C++ native addon",
+      "commands": []
+    }
+  ]
+}

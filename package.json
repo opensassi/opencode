@@ -1,6 +1,25 @@
 {
-  "private": true,
-  "description": "A forked opencode agent harness for AI-assisted software development",
+  "name": "@opensassi/opencode",
+  "version": "0.1.0",
+  "description": "Agent skill harness for opencode — bootstrap, system-design, git workflow, profiling, and more",
+  "type": "module",
+  "bin": {
+    "opencode": "bin/opencode.js"
+  },
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "skills/",
+    "scripts/",
+    "AGENTS.md",
+    "skills-index.json",
+    "!scripts/FlameGraph/",
+    "!**/*.spec.md"
+  ],
   "scripts": {
     "extract": "node scripts/extract-artifacts.js",
     "extract:file": "node scripts/extract-artifacts.js --file",
@@ -8,7 +27,11 @@
     "test-artifact": "node scripts/test-artifacts.js --file",
     "validate-all": "node scripts/extract-artifacts.js --all && node scripts/test-artifacts.js",
     "verify-animation": "node scripts/verify-artifact.js",
-    "check-artifacts": "node scripts/check-artifacts.js"
+    "check-artifacts": "node scripts/check-artifacts.js",
+    "start": "bin/opencode.js"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "devDependencies": {
     "playwright": "^1.60.0",

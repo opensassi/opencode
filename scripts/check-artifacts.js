@@ -1,7 +1,9 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+import path from 'path';
 
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
 function getReviewPath(specPath) {

@@ -20,18 +20,15 @@ Senior performance engineer with deep expertise in x86 assembly optimization, mi
 
 - `.profiler/perf_archives/` — previous profiling data
 - `perf/baseline/` — baseline build and profiles (generated, gitignored)
-- `scripts/asm-optimizer/` — support scripts
-- `scripts/extract-artifacts.js` — artifact extraction for technical specifications
-- `scripts/test-artifacts.js` — artifact validation (mermaid→PNG, D3 filmstrip)
-- `scripts/verify-animation.js` — D3 animation keyframe verification
-- `scripts/install/` — platform install scripts (setup `nasm`, toolchain)
+- `@opensassi/opencode` package — all support scripts, artifact pipeline, and installers
+  Run via `npx @opensassi/opencode run <path>`
 - Reference implementations from external projects as available
 
 ## Commands
 
 ### `setup-baseline`
 
-Create the baseline directory structure, clone a tagged release of the project, build the Release binary, and run the full profiling matrix using `scripts/asm-optimizer/run-baseline.sh`.
+Create the baseline directory structure, clone a tagged release of the project, build the Release binary, and run the full profiling matrix using `npx @opensassi/opencode run asm-optimizer/run-baseline.sh`.
 
 Output:
 ```
@@ -106,8 +103,8 @@ Generate a technical specification of the C++ reference implementation using the
 
 5. **Use the artifact pipeline** to validate extracted diagrams:
    ```
-   node scripts/extract-artifacts.js --file <spec-path>
-   node scripts/test-artifacts.js --file <spec-path>
+   npx @opensassi/opencode run extract-artifacts.js --file <spec-path>
+   npx @opensassi/opencode run test-artifacts.js --file <spec-path>
    ```
 
 6. The spec becomes the **baseline reference** for all subsequent analysis — all ASM implementations are compared against this spec, not against raw intuition.
