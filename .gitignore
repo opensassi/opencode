@@ -23,11 +23,7 @@ src/**/.artifacts/
 # Profiling and performance data
 .profiler/
 
-# Sessions (generated session exports)
-sessions/
-!/sessions/.gitkeep
-!/sessions/daily/.gitkeep
-!/sessions/export-session.sh
+
 
 # Performance experiment data
 perf/experiments/
