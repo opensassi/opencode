@@ -70,12 +70,9 @@
     },
     {
       "name": "opensassi",
-      "description": "Bootstrap a new project environment",
+      "description": "Root skill ecosystem — loads system-design + spec tree, routes sub-skill composition, bootstraps environments",
       "commands": [
-        "init",
-        "init install",
-        "init flamegraph",
-        "init check"
+        "init"
       ]
     },
     {
@@ -139,8 +136,14 @@
     },
     {
       "name": "todo",
-      "description": "Create issues + debugging skills from session context",
-      "commands": []
+      "description": "Extract unfinished work from session context, create GitHub issues, and save structured todo entries to todos/ for future agents",
+      "commands": [
+        "extract",
+        "propose-todo",
+        "save-todo",
+        "load-todo",
+        "list-todos"
+      ]
     }
   ]
 }
