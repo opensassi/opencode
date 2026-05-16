@@ -40,11 +40,29 @@ Complete the current session: create a single atomic commit, rebase onto latest 
 > **Ordering constraint**: Commit must be created *before* rebase so that rebase moves the single commit to the tip of main. The commit message must be obtained *before* the commit because it requires data from `generate` and `opencode session list`. The evaluation `.md` sidecar is written from the `generate` output (step 10) *after* the commit, so it reflects the final session state including any test-fix loops.
 
 **Process:**
+
+0. **Preflight session check**: Run `opencode session list`. Save the most recent session's full ID (with `ses_` prefix). Then check `ls -1 sessions/*.md 2>/dev/null` to list existing sidecar filenames.
+   - If the most recent session's noprefix ID already appears in an existing sidecar filename → the current session is NOT persisted yet. **ABORT** with: "Current session ID not found in session list. Session may not be persisted. Run `opencode` to enter the session first, or provide a session ID manually."
+   - Do not fabricate or improvise a session ID. Using a fake ID breaks traceability between commit messages, sidecar files, and session archives.
+
 1. **Stage all changes**: `git add -A`
 2. **Get evaluation title slug**: Load the `session-evaluation` skill via the `skill` tool, then instruct it to run `generate`. Extract the slug from the Session ID field of its output (e.g., `2026-05-11-testing-plan-revision`).
-3. **Get session ID**: Run `opencode session list` and identify the most recent session. Strip the `ses_` prefix to get the noprefix ID (e.g., `1e793e9b0ffeLqAjZOHtI8vy8v`).
+3. **Get session ID**: Run `opencode session list` and identify the most recent session whose noprefix ID has NOT been used in an existing sidecar filename. Strip the `ses_` prefix to get the noprefix ID (e.g., `1e793e9b0ffeLqAjZOHtI8vy8v`).
+
+3.5. **Validate session ID**:
+   a. Does the session ID start with `ses_` before stripping? If not → **ABORT**: "Session ID does not match expected `ses_` format."
+   b. Has this noprefix ID been used in an existing sidecar filename? Check `ls sessions/*-<noprefix>.md`. If it exists → **ABORT**: "Session ID has already been used in a previous archive."
+   c. Does `opencode export <session-id>` return valid JSON (non-zero bytes)? If not → **ABORT**: "Session ID is not exportable. The session may not be persisted."
+   d. If any check fails, do NOT proceed. Report the failure and stop.
 4. **Construct commit message**: `<title-slug>-<session-id-noprefix>` — this is identical to the session evaluation sidecar filename (e.g., `2026-05-11-testing-plan-revision-1e793e9b0ffeLqAjZOHtI8vy8v`).
 5. **Create commit**: `git commit -m "<commit-message>"`
+
+5.5. **Validate commit message**: Before proceeding to rebase, verify:
+   - `git log --oneline -1` shows the message as `<slug>-<noprefix>`
+   - The `<noprefix>` portion matches the session ID from step 3 (without `ses_`)
+   - A file `sessions/<message>.md` will be written in step 10 — confirm the path would be unique (not overwriting an existing file)
+   If any check fails → **ABORT** and report which constraint was violated. Do not proceed until the commit message is corrected.
+
 6. **Rebase onto main**: `git fetch origin && git rebase origin/main`
 7. **Handle conflicts**: If conflicts occur:
    - For each conflicted file, resolve manually (edit to correct state)
