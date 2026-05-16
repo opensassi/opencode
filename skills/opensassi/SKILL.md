@@ -15,11 +15,15 @@ Senior DevOps engineer specializing in cross-platform development environment pr
 2. Run `init check` to report current environment status (OS, Node.js, git, FlameGraph, npm deps)
 3. Show available commands
 
-To load a sub-skill (e.g., system-design, git, profiler), the agent should run:
+Available sub-skills: asm-optimizer, daily-evaluation, git, issue, npx, npm-optimizer, profiler, session-evaluation, skill-manager, system-design, system-design-review, todo
+
+To load a sub-skill, run:
 ```
 npx @opensassi/opencode <skill-name>
 ```
 and read the output as the skill's full instructions.
+
+The `npx` sub-skill provides cross-project dispatch — it runs `@opensassi/opencode` commands in a different target directory (handy for operating on `external/` projects from the root).
 
 ## Dependencies
 

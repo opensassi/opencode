@@ -102,30 +102,12 @@
       ]
     },
     {
-      "name": "system-design-review",
-      "description": "Seven-expert panel audit of technical specs",
+      "name": "npx",
+      "description": "Run npx commands in a target directory with automatic directory resolution",
       "commands": [
-        "review all",
-        "review sub-module",
-        "review file-path",
-        "review stale"
-      ]
-    },
-    {
-      "name": "daily-evaluation",
-      "description": "Aggregate session evaluations into dashboards",
-      "commands": [
-        "create",
-        "list"
-      ]
-    },
-    {
-      "name": "todo",
-      "description": "Create issues + debugging skills from session context",
-      "commands": [
-        "extract",
-        "propose-skill",
-        "save-skill"
+        "npx <target> <npx-command>",
+        "npx . <npx-command>",
+        "npx list"
       ]
     },
     {
