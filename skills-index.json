@@ -1,48 +1,6 @@
 {
   "skills": [
     {
-      "name": "system-design",
-      "description": "Interactive C++ spec authoring with diagrams and D3 animations",
-      "commands": [
-        "generate sequence diagram",
-        "generate architecture diagram",
-        "generate class specification",
-        "generate manim animation",
-        "generate d3 animation",
-        "generate testing plan",
-        "generate from source",
-        "load spec",
-        "generate technical specification",
-        "revise technical specification",
-        "split sub-modules",
-        "combine sub-modules",
-        "list sub-modules",
-        "load sub-module spec",
-        "generate sub-module spec"
-      ]
-    },
-    {
-      "name": "git",
-      "description": "Rebase-based single-commit-per-session workflow",
-      "commands": [
-        "start session",
-        "finish session",
-        "sync"
-      ]
-    },
-    {
-      "name": "profiler",
-      "description": "Linux perf profiling + flamegraphs",
-      "commands": [
-        "check",
-        "setup",
-        "profile",
-        "benchmark",
-        "compare",
-        "report"
-      ]
-    },
-    {
       "name": "asm-optimizer",
       "description": "SIMD/assembly optimization framework",
       "commands": [
@@ -61,6 +19,56 @@
       ]
     },
     {
+      "name": "daily-evaluation",
+      "description": "Aggregate session evaluations into dashboards",
+      "commands": []
+    },
+    {
+      "name": "git",
+      "description": "Rebase-based single-commit-per-session workflow",
+      "commands": [
+        "start session",
+        "finish session",
+        "sync"
+      ]
+    },
+    {
+      "name": "issue",
+      "description": "GitHub issue management",
+      "commands": [
+        "create issue",
+        "list issues",
+        "show issue",
+        "close issue"
+      ]
+    },
+    {
+      "name": "npx",
+      "description": "Run npx commands in a target directory with automatic directory resolution",
+      "commands": [
+        "npx <target> <npx-command>",
+        "npx . <npx-command>",
+        "npx list"
+      ]
+    },
+    {
+      "name": "npm-optimizer",
+      "description": "Port an npm package to a C++ native addon — preserve 100% test compatibility while significantly improving performance through profiling-driven architectural iteration",
+      "commands": [
+        "execute",
+        "assess-ceiling",
+        "implement-naive",
+        "classify",
+        "pivot",
+        "micro-optimize",
+        "shim",
+        "bench",
+        "assess-handoff",
+        "report",
+        "show-state"
+      ]
+    },
+    {
       "name": "opensassi",
       "description": "Bootstrap a new project environment",
       "commands": [
@@ -68,6 +76,18 @@
         "init install",
         "init flamegraph",
         "init check"
+      ]
+    },
+    {
+      "name": "profiler",
+      "description": "Linux perf profiling + flamegraphs",
+      "commands": [
+        "check",
+        "setup",
+        "profile",
+        "benchmark",
+        "compare",
+        "report"
       ]
     },
     {
@@ -92,27 +112,34 @@
       ]
     },
     {
-      "name": "issue",
-      "description": "GitHub issue management",
+      "name": "system-design",
+      "description": "Interactive C++ spec authoring with diagrams and D3 animations",
       "commands": [
-        "create issue",
-        "list issues",
-        "show issue",
-        "close issue"
+        "generate sequence diagram",
+        "generate architecture diagram",
+        "generate class specification",
+        "generate manim animation",
+        "generate d3 animation",
+        "generate testing plan",
+        "generate from source",
+        "load spec",
+        "generate technical specification",
+        "revise technical specification",
+        "split sub-modules",
+        "combine sub-modules",
+        "list sub-modules",
+        "load sub-module spec",
+        "generate sub-module spec"
       ]
     },
     {
-      "name": "npx",
-      "description": "Run npx commands in a target directory with automatic directory resolution",
-      "commands": [
-        "npx <target> <npx-command>",
-        "npx . <npx-command>",
-        "npx list"
-      ]
+      "name": "system-design-review",
+      "description": "Seven-expert panel audit of technical specs",
+      "commands": []
     },
     {
-      "name": "npm-optimizer",
-      "description": "Port an npm package to a C++ native addon",
+      "name": "todo",
+      "description": "Create issues + debugging skills from session context",
       "commands": []
     }
   ]

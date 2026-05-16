@@ -1,6 +1,6 @@
 # @opensassi/opencode
 
-Agent skill harness for AI-assisted software development. Delivers 12 domain-specific skills (system-design, git workflow, profiling, etc.) and supporting scripts as a standalone npm CLI package.
+Agent skill harness for AI-assisted software development. Delivers 13 domain-specific skills (system-design, git workflow, profiling, etc.) and supporting scripts as a standalone npm CLI package.
 
 ```
 npx @opensassi/opencode init
@@ -43,13 +43,14 @@ npx @opensassi/opencode help                     # Show help
 | `daily-evaluation` | Aggregate session evaluations into dashboards |
 | `git` | Rebase-based single-commit-per-session workflow |
 | `issue` | GitHub issue management |
-| `npm-optimizer` | Port an npm package to a C++ native addon |
+| `npm-optimizer` | Port an npm package to a C++ native addon — 100% test compatibility through profiling-driven iteration |
 | `opensassi` | Bootstrap a new project environment |
 | `profiler` | Linux perf profiling + flamegraphs |
 | `session-evaluation` | Generate structured session reports |
 | `skill-manager` | Create/revise skills interactively |
 | `system-design` | Interactive C++ spec authoring with diagrams |
 | `system-design-review` | Seven-expert panel audit of technical specs |
+| `npx` | Run npx commands in a target directory with automatic directory resolution |
 | `todo` | Create issues + debugging skills from session context |
 
 ## Package Contents
@@ -58,7 +59,7 @@ npx @opensassi/opencode help                     # Show help
 |-----------|----------|
 | `bin/` | CLI entry point (`opencode` binary) |
 | `lib/` | Programmatic API + command implementations |
-| `skills/` | 12 skill definitions (SKILL.md) + skill scripts |
+| `skills/` | 13 skill definitions (SKILL.md) + skill scripts |
 | `scripts/` | Artifact pipeline (extract, test, verify, check) + installers |
 | `AGENTS.md` | Agent harness instructions (appended by init) |
 | `skills-index.json` | Pre-built static skill/command index |

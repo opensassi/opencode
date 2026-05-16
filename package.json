@@ -1,6 +1,6 @@
 {
   "name": "@opensassi/opencode",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Agent skill harness for opencode — bootstrap, system-design, git workflow, profiling, and more",
   "type": "module",
   "bin": {
