@@ -1,56 +1,81 @@
-# Opencode Project Template
+# @opensassi/opencode
 
-A forkable project skeleton for AI-assisted software development using [opencode](https://opencode.ai) with an integrated skill system.
+Agent skill harness for AI-assisted software development. Delivers 12 domain-specific skills (system-design, git workflow, profiling, etc.) and supporting scripts as a standalone npm CLI package.
 
-## What This Is
+```
+npx @opensassi/opencode init
+```
 
-This repository provides the agent harness infrastructure — a self-contained set of skills, scripts, and agent instructions that enable AI development agents to work on your project with domain-specific expertise. When you fork this repo, you get:
-
-- **Skills** — Modular capability packs (system design, profiling, code review, issue management, session tracking)
-- **Session Management** — Archive and evaluate AI-assisted development sessions
-- **Install Scripts** — Cross-platform (Linux, macOS, WSL2) toolchain setup
-- **Git Workflow** — Rebase-based single-commit-per-session development loop
-
-## Getting Started
-
-### 1. Fork This Repository
+## Installation
 
 ```bash
-git clone <your-fork-url>
+npm install --dev @opensassi/opencode
 ```
 
-### 2. Install opencode and Initialize
+Then bootstrap a project to make its skills available to opencode:
 
-Install [opencode](https://opencode.ai), then run `/opensassi init` in the project root to bootstrap toolchains and install dependencies.
-
-## Working with Skills
-
-Skills are loaded on demand via slash commands in the opencode CLI:
-
-```
-/skills               # Show available skills
-/[skill-name]         # Load and run a skill (e.g., /git, /system-design)
+```bash
+npx opencode init
 ```
 
-After loading a skill, use `/[skill-name] show commands` to see available commands.
+This writes three files to your project:
+- **`AGENTS.md`** — appends full opensassi agent instructions
+- **`.opencode/skills/opensassi/SKILL.md`** — bootstrap skill (the only skill on disk)
+- **`.opencode/opencode.json`** — permission rules + MCP server config
 
-### Creating New Skills
+All other skills (system-design, git, profiler, etc.) are loaded at runtime via the CLI.
 
-Use `/skill-manager` to create new skills interactively:
+## CLI Commands
 
 ```
-/skill-manager
-create skill  # Describe your skill in natural language
+npx @opensassi/opencode init                    # Bootstrap project
+npx @opensassi/opencode <skill-name>             # Print skill instructions to stdout
+npx @opensassi/opencode run <path> [args...]     # Run a script from the package
+npx @opensassi/opencode run --skill <n> <path>   # Run a skill-specific script
+npx @opensassi/opencode help                     # Show help
 ```
 
-Skills are saved to `.opencode/skills/<name>/SKILL.md` and registered in `.opencode/opencode.json`.
+## Skills
 
-## Session Workflow
+| Skill | Purpose |
+|-------|---------|
+| `asm-optimizer` | SIMD/assembly optimization framework |
+| `daily-evaluation` | Aggregate session evaluations into dashboards |
+| `git` | Rebase-based single-commit-per-session workflow |
+| `issue` | GitHub issue management |
+| `npm-optimizer` | Port an npm package to a C++ native addon |
+| `opensassi` | Bootstrap a new project environment |
+| `profiler` | Linux perf profiling + flamegraphs |
+| `session-evaluation` | Generate structured session reports |
+| `skill-manager` | Create/revise skills interactively |
+| `system-design` | Interactive C++ spec authoring with diagrams |
+| `system-design-review` | Seven-expert panel audit of technical specs |
+| `todo` | Create issues + debugging skills from session context |
 
-Development follows a single-commit-per-session rebase workflow:
+## Package Contents
 
-1. `/git` → `start session` — checkout main, pull latest
-2. Make changes
-3. `finish session` — stage, commit, rebase, test, evaluate, push
+| Directory | Contents |
+|-----------|----------|
+| `bin/` | CLI entry point (`opencode` binary) |
+| `lib/` | Programmatic API + command implementations |
+| `skills/` | 12 skill definitions (SKILL.md) + skill scripts |
+| `scripts/` | Artifact pipeline (extract, test, verify, check) + installers |
+| `AGENTS.md` | Agent harness instructions (appended by init) |
+| `skills-index.json` | Pre-built static skill/command index |
 
-Session evaluations are saved to `sessions/` as compressed JSON archives with markdown sidecars and integrity hashes.
+## Development
+
+```bash
+git clone git@github.com:opensassi/opencode.git
+cd opencode
+node bin/opencode.js help
+npm pack --dry-run     # Review package contents
+npm run validate-all   # Full artifact pipeline test
+```
+
+## Design
+
+- **Minimal filesystem footprint** — `init` writes only 3 files. All sub-skills load from the npm package at runtime.
+- **opencode-agnostic** — The CLI works stand-alone. Skills are consumed by opencode but the package doesn't depend on it.
+- **Runtime skill loading** — Sub-skills are never on disk; the agent loads them by running `npx @opensassi/opencode <name>`.
+- **Programmatic API** — `import { init, run, printSkill } from '@opensassi/opencode'`
