@@ -23,8 +23,9 @@ All skills, scripts, and tooling are delivered via the npm package.
 ## Workflow
 
 1. `skill opensassi` — Load the bootstrap skill. It exposes the full skills-index as a reference table.
-2. Run `npx @opensassi/opencode <skill-name>` to load any sub-skill. The agent reads the output as the skill's full instructions.
-3. Use the skill's commands. Scripts are run via `npx @opensassi/opencode run <path>` or `npx @opensassi/opencode run --skill <name> <path>`.
+2. Run `npm run opencode -- <skill-name>` to load any sub-skill. The agent reads the output as the skill's full instructions.
+3. Use the skill's commands. Scripts are run via `npm run opencode -- run <path>` or `npm run opencode -- run --skill <name> <path>`.
+   - *Consumers of the published package use `npx @opensassi/opencode` instead of `npm run opencode --`.*
 
 ## Design Constraints
 

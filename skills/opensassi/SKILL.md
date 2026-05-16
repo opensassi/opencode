@@ -5,13 +5,16 @@ description: Root skill ecosystem — loads system-design + spec tree, routes su
 
 # Skill: opensassi — Root Skill Ecosystem
 
+> **Invocation note:** Within this project, use `npm run opencode -- <cmd>`.
+> Consumers of the published `@opensassi/opencode` package use `npx @opensassi/opencode <cmd>` instead.
+
 ## Entry Point
 
 | Input | Action |
 |-------|--------|
 | `/opensassi` | Load `skill system-design`, read `technical-specification.md` + spec tree depth 2 (root + facade specs). Report ready. |
 | `/opensassi init` | Run `env-check.sh`. Parse JSON result: if node+git+FlameGraph+deps all present → "Already bootstrapped". Otherwise run full bootstrap sequence (env-check → install → flamegraph → npm-deps → gitignore). |
-| `/opensassi <skill> <command> [args]` | Load `<skill>` from npm via `npx @opensassi/opencode <skill>`, then run `<command>` with `[args]`. Return result. |
+| `/opensassi <skill> <command> [args]` | Load `<skill>` from npm via `npm run opencode -- <skill>`, then run `<command>` with `[args]`. Return result. |
 
 ### Spec tree depth
 
@@ -23,7 +26,7 @@ Depth is controlled by `--depth` flag on `load spec`:
 
 ## Init
 
-Single shell command: `npx @opensassi/opencode run --skill opensassi env-check.sh`
+Single shell command: `npm run opencode -- run --skill opensassi env-check.sh`
 
 Returns JSON: `{"os": ..., "distro": ..., "node_version": ..., "git_version": ..., ...}`
 
@@ -37,11 +40,11 @@ bootstrapped = (node_version != "" && git_version != ""
 If bootstrapped → report "Environment ready." + show node/git versions.  
 If not → run full bootstrap:
 
-1. `npx @opensassi/opencode run --skill opensassi env-check.sh` — install git + Node.js LTS if missing, write `.nvmrc`
+1. `npm run opencode -- run --skill opensassi env-check.sh` — install git + Node.js LTS if missing, write `.nvmrc`
 2. `init install` — run platform-specific installer (cmake, nasm, gdb, ripgrep, perf, htop, etc.) or report none found
 3. `init flamegraph` — clone FlameGraph v1.0 to `scripts/FlameGraph/`
-4. `npx @opensassi/opencode run --skill opensassi install-npm-deps.sh` — `npm install`
-5. `npx @opensassi/opencode run --skill opensassi ensure-gitignore.sh` — append common patterns
+4. `npm run opencode -- run --skill opensassi install-npm-deps.sh` — `npm install`
+5. `npm run opencode -- run --skill opensassi ensure-gitignore.sh` — append common patterns
 
 ## Lexicon
 

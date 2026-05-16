@@ -1,6 +1,6 @@
 {
   "name": "@opensassi/opencode",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Agent skill harness for opencode — bootstrap, system-design, git workflow, profiling, and more",
   "type": "module",
   "bin": {
@@ -22,6 +22,7 @@
     "!**/*.spec.md"
   ],
   "scripts": {
+    "opencode": "node bin/opencode.js",
     "extract": "node scripts/extract-artifacts.js",
     "extract:file": "node scripts/extract-artifacts.js --file",
     "test-artifacts": "node scripts/test-artifacts.js",
