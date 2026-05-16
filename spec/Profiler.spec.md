@@ -61,11 +61,11 @@ private:
 
 | Class | Path | Access |
 |-------|------|--------|
-| `CommonConfig` | `.opencode/skills/profiler/scripts/common.spec.md` | profiler.config |
-| `ProfileRunner` | `.opencode/skills/profiler/scripts/profile.spec.md` | profiler.runner |
-| `SetupEnv` | `.opencode/skills/profiler/scripts/setup.spec.md` | profiler.setup |
-| `BenchmarkRunner` | `.opencode/skills/profiler/scripts/benchmark.spec.md` | profiler.benchmark |
-| `ResultsComparer` | `.opencode/skills/profiler/scripts/compare.spec.md` | profiler.compare |
+| `CommonConfig` | `skills/profiler/scripts/common.spec.md` | profiler.config |
+| `ProfileRunner` | `skills/profiler/scripts/profile.spec.md` | profiler.runner |
+| `SetupEnv` | `skills/profiler/scripts/setup.spec.md` | profiler.setup |
+| `BenchmarkRunner` | `skills/profiler/scripts/benchmark.spec.md` | profiler.benchmark |
+| `ResultsComparer` | `skills/profiler/scripts/compare.spec.md` | profiler.compare |
 
 ## 3. System Architecture
 

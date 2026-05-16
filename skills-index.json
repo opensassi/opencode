@@ -24,6 +24,11 @@
       "commands": []
     },
     {
+      "name": "demo-video",
+      "description": "Produce narrated demo videos with multi-language subtitles — captures terminal TUI and browser, assembles via ffmpeg",
+      "commands": ["plan", "record", "produce"]
+    },
+    {
       "name": "git",
       "description": "Rebase-based single-commit-per-session workflow",
       "commands": [

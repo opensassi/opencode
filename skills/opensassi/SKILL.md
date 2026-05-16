@@ -115,6 +115,9 @@ If not → run full bootstrap:
 | | `commit` | — | Stage + commit all skill changes |
 | | `audit skills` | — | Validate all skill files for consistency |
 | **system-design-review** | *(no commands defined)* | — | Seven-expert panel audit of technical specs |
+| **demo-video** | `plan` | — | Generate scene file from project outline |
+| | `record` | — | Capture terminal + browser scenes as video clips |
+| | `produce` | — | TTS audio, subtitles, ffmpeg assembly → final MP4 |
 | **daily-evaluation** | *(no commands defined)* | — | Aggregate session evaluations into dashboards |
 | **npx** | `npx <target> <cmd>` | `<target> <cmd>` | Run npx command in target directory |
 | | `npx . <cmd>` | `<cmd>` | Run npx command in current directory |
@@ -138,6 +141,7 @@ Common requests map to skill compositions. Load order: permanent base (tail) at 
 | "optimize a hot function" | asm-optimizer → system-design+spec | `assess <entry>` → `iterative-optimize <entry>` |
 | "create a debugging todo" | todo → asm-optimizer → system-design+spec | `extract` → `propose-todo` → `save-todo` |
 | "save a note" | todo → system-design+spec | (treat free text as note → `extract` → `propose-todo` → `save-todo`) |
+| "create a demo video" | demo-video → system-design+spec | `plan` → `record` → `produce` |
 
 ## Interpretation
 
@@ -154,7 +158,8 @@ Parse user text into skill compositions:
    - "todo", "note", "deferred", "remaining" → `todo` skill
    - "spec", "diagram", "design" → `system-design` skill
    - "session eval", "report card" → `session-evaluation` skill
-   - "skill", "manage skills" → `skill-manager` skill
+    - "skill", "manage skills" → `skill-manager` skill
+    - "demo", "video", "record", "narration" → `demo-video` skill
 
 3. **Pattern matching** — Match multi-keyword phrases against Composition Patterns. If no direct match, compose by chaining relevant skills.
 

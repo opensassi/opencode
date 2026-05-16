@@ -8,7 +8,10 @@
     "grep": "allow",
     "bash": "ask",
     "task": "allow",
-    "webfetch": "allow"
+    "webfetch": "allow",
+    "skills": {
+      "demo-video": "allow"
+    }
   },
   "instructions": ["AGENTS.md"],
   "mcp": {

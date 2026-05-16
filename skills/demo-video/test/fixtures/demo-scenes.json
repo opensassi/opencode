@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "title": "Test Demo",
+    "output_file": "test-demo.mp4",
+    "resolution": "1920x1080",
+    "frame_rate": 30
+  },
+  "languages": {
+    "en": { "voice": "en-US-AriaNeural" },
+    "zh": { "voice": "zh-CN-XiaoxiaoNeural" }
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "type": "terminal_command",
+      "command": "echo 'hello demo'",
+      "cwd": "/tmp",
+      "speed": 3,
+      "narration": {
+        "en": "Running the first command.",
+        "zh": "运行第一个命令。"
+      }
+    },
+    {
+      "id": 2,
+      "type": "narration_only",
+      "bullets": ["Feature one", "Feature two"],
+      "duration": 5,
+      "transition": "fade",
+      "narration": {
+        "en": "Key features include.",
+        "zh": "主要功能包括。"
+      }
+    }
+  ]
+}
