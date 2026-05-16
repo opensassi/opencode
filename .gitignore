@@ -32,6 +32,9 @@ perf/baseline/
 # Test data (downloaded on demand)
 test/data/
 
+# Playwright test results
+/test-results/
+
 # CTest temporary files
 Testing/
 

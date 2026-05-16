@@ -1,0 +1,340 @@
+{
+  "dashboard": {
+    "metadata": {
+      "generated_at": "2026-05-16T16:29:23.692Z",
+      "audited": false,
+      "audit_note": "Auto-generated from session evaluation files"
+    },
+    "daily_summary": {
+      "date": "2026-05-13",
+      "total_prompter_time_hours": 2.1,
+      "total_sme_time_hours": 12,
+      "ai_multiplier": 5.7,
+      "total_sessions": 9,
+      "top_subject_areas": [
+        {
+          "name": "AGENTS.md",
+          "prompter_time_hours": 0.25,
+          "sme_time_hours": 1.23,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "documentation",
+          "prompter_time_hours": 0.18,
+          "sme_time_hours": 0.9,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "opensassi",
+          "prompter_time_hours": 0.11,
+          "sme_time_hours": 0.77,
+          "ai_multiplier": 6.9
+        },
+        {
+          "name": "skill-system",
+          "prompter_time_hours": 0.13,
+          "sme_time_hours": 0.65,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "init",
+          "prompter_time_hours": 0.09,
+          "sme_time_hours": 0.65,
+          "ai_multiplier": 6.9
+        },
+        {
+          "name": "npm-optimizer",
+          "prompter_time_hours": 0.1,
+          "sme_time_hours": 0.5,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "skill-creation",
+          "prompter_time_hours": 0.1,
+          "sme_time_hours": 0.5,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "clone",
+          "prompter_time_hours": 0.1,
+          "sme_time_hours": 0.5,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "pipeline-design",
+          "prompter_time_hours": 0.1,
+          "sme_time_hours": 0.5,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "cpp-addon",
+          "prompter_time_hours": 0.1,
+          "sme_time_hours": 0.5,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "benchmark",
+          "prompter_time_hours": 0.1,
+          "sme_time_hours": 0.5,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "configuration",
+          "prompter_time_hours": 0.09,
+          "sme_time_hours": 0.45,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "skill-rename",
+          "prompter_time_hours": 0.07,
+          "sme_time_hours": 0.33,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "cross-file-refactoring",
+          "prompter_time_hours": 0.07,
+          "sme_time_hours": 0.33,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "naming-conflict",
+          "prompter_time_hours": 0.07,
+          "sme_time_hours": 0.33,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "environment-setup",
+          "prompter_time_hours": 0.02,
+          "sme_time_hours": 0.31,
+          "ai_multiplier": 15
+        },
+        {
+          "name": "flamegraph",
+          "prompter_time_hours": 0.02,
+          "sme_time_hours": 0.31,
+          "ai_multiplier": 15
+        },
+        {
+          "name": "npm-install",
+          "prompter_time_hours": 0.02,
+          "sme_time_hours": 0.31,
+          "ai_multiplier": 15
+        },
+        {
+          "name": "gitignore",
+          "prompter_time_hours": 0.02,
+          "sme_time_hours": 0.31,
+          "ai_multiplier": 15
+        },
+        {
+          "name": "ubuntu",
+          "prompter_time_hours": 0.02,
+          "sme_time_hours": 0.31,
+          "ai_multiplier": 15
+        },
+        {
+          "name": "reorganization",
+          "prompter_time_hours": 0.05,
+          "sme_time_hours": 0.25,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "compaction",
+          "prompter_time_hours": 0.05,
+          "sme_time_hours": 0.25,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "agent-instructions",
+          "prompter_time_hours": 0.04,
+          "sme_time_hours": 0.2,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "repository-analysis",
+          "prompter_time_hours": 0.04,
+          "sme_time_hours": 0.2,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "compacting",
+          "prompter_time_hours": 0.04,
+          "sme_time_hours": 0.2,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "sudo",
+          "prompter_time_hours": 0,
+          "sme_time_hours": 0.19,
+          "ai_multiplier": 90
+        },
+        {
+          "name": "bootstrap",
+          "prompter_time_hours": 0.02,
+          "sme_time_hours": 0.13,
+          "ai_multiplier": 6.7
+        },
+        {
+          "name": "toolchain",
+          "prompter_time_hours": 0.02,
+          "sme_time_hours": 0.13,
+          "ai_multiplier": 6.7
+        },
+        {
+          "name": "idempotent",
+          "prompter_time_hours": 0.03,
+          "sme_time_hours": 0.13,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "verification",
+          "prompter_time_hours": 0.03,
+          "sme_time_hours": 0.13,
+          "ai_multiplier": 5
+        }
+      ]
+    },
+    "session_breakdown": [
+      {
+        "session_id": "2026-05-13-agents-md-creation",
+        "duration_minutes": 12,
+        "prompter_time_minutes": 12,
+        "sme_time_minutes": 60,
+        "top_component_summary": "AGENTS.md — agent instruction file for opencode sessions",
+        "tags": [
+          "AGENTS.md",
+          "agent-instructions",
+          "skill-system",
+          "repository-analysis",
+          "documentation"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-13-agents-md-creation-guide",
+        "duration_minutes": 24,
+        "prompter_time_minutes": 24,
+        "sme_time_minutes": 120,
+        "top_component_summary": "AGENTS.md creation and init→opensassi skill rename",
+        "tags": [
+          "AGENTS.md",
+          "skill-rename",
+          "init",
+          "opensassi",
+          "cross-file-refactoring",
+          "naming-conflict"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-13-clone-fastest-stable-stringify-into-exte",
+        "duration_minutes": 36,
+        "prompter_time_minutes": 36,
+        "sme_time_minutes": 180,
+        "top_component_summary": "Cloned repo, npm-optimizer skill (218 lines) with execute/show-state commands, 6 pipeline phases",
+        "tags": [
+          "npm-optimizer",
+          "skill-creation",
+          "clone",
+          "pipeline-design",
+          "cpp-addon",
+          "benchmark"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-13-create-or-update-agents-md",
+        "duration_minutes": 12,
+        "prompter_time_minutes": 12,
+        "sme_time_minutes": 60,
+        "top_component_summary": "Reorganized AGENTS.md (81 → 79 lines, 9 sections → 6)",
+        "tags": [
+          "AGENTS.md",
+          "documentation",
+          "reorganization",
+          "configuration"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-13-creating-or-updating-agents-md",
+        "duration_minutes": 12,
+        "prompter_time_minutes": 12,
+        "sme_time_minutes": 60,
+        "top_component_summary": "Condensed AGENTS.md (81 → 56 lines)",
+        "tags": [
+          "AGENTS.md",
+          "documentation",
+          "compacting",
+          "configuration",
+          "skill-system"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-13-creating-updating-agents-md",
+        "duration_minutes": 12,
+        "prompter_time_minutes": 12,
+        "sme_time_minutes": 60,
+        "top_component_summary": "Compacted AGENTS.md (81 → 75 lines)",
+        "tags": [
+          "AGENTS.md",
+          "documentation",
+          "compaction",
+          "skill-system"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-13-init-command-for-opensassi",
+        "duration_minutes": 1,
+        "prompter_time_minutes": 1,
+        "sme_time_minutes": 90,
+        "top_component_summary": "`init` pipeline execution (partial — sudo step deferred)",
+        "tags": [
+          "opensassi",
+          "init",
+          "environment-setup",
+          "sudo",
+          "flamegraph",
+          "npm-install",
+          "gitignore",
+          "ubuntu"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-13-initializing-environment-via-opensassi",
+        "duration_minutes": 3321,
+        "prompter_time_minutes": 9,
+        "sme_time_minutes": 60,
+        "top_component_summary": "Full `init` pipeline execution via opensassi skill",
+        "tags": [
+          "opensassi",
+          "environment-setup",
+          "bootstrap",
+          "flamegraph",
+          "npm-install",
+          "gitignore",
+          "ubuntu",
+          "toolchain"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-13-opensassi-init",
+        "duration_minutes": 6,
+        "prompter_time_minutes": 6,
+        "sme_time_minutes": 30,
+        "top_component_summary": "opensassi init re-run, idempotent verification",
+        "tags": [
+          "opensassi",
+          "init",
+          "idempotent",
+          "verification"
+        ],
+        "human_confidence": "medium"
+      }
+    ]
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "dashboard": {
+    "metadata": {
+      "generated_at": "2026-05-16T16:29:23.694Z",
+      "audited": false,
+      "audit_note": "Auto-generated from session evaluation files"
+    },
+    "daily_summary": {
+      "date": "2026-05-14",
+      "total_prompter_time_hours": 1.1,
+      "total_sme_time_hours": 5.5,
+      "ai_multiplier": 5,
+      "total_sessions": 2,
+      "top_subject_areas": [
+        {
+          "name": "npm-optimizer",
+          "prompter_time_hours": 0.13,
+          "sme_time_hours": 0.67,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "cpp-addon",
+          "prompter_time_hours": 0.13,
+          "sme_time_hours": 0.67,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "n-api",
+          "prompter_time_hours": 0.13,
+          "sme_time_hours": 0.67,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "profiling",
+          "prompter_time_hours": 0.13,
+          "sme_time_hours": 0.67,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "benchmark",
+          "prompter_time_hours": 0.13,
+          "sme_time_hours": 0.67,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "pipeline",
+          "prompter_time_hours": 0.13,
+          "sme_time_hours": 0.67,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "AGENTS.md",
+          "prompter_time_hours": 0.06,
+          "sme_time_hours": 0.3,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "opensassi-package",
+          "prompter_time_hours": 0.06,
+          "sme_time_hours": 0.3,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "npx",
+          "prompter_time_hours": 0.06,
+          "sme_time_hours": 0.3,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "skill-reference",
+          "prompter_time_hours": 0.06,
+          "sme_time_hours": 0.3,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "documentation",
+          "prompter_time_hours": 0.06,
+          "sme_time_hours": 0.3,
+          "ai_multiplier": 5
+        }
+      ]
+    },
+    "session_breakdown": [
+      {
+        "session_id": "2026-05-14-create-or-update-agents.md",
+        "duration_minutes": 18,
+        "prompter_time_minutes": 18,
+        "sme_time_minutes": 90,
+        "top_component_summary": "AGENTS.md update with @opensassi/opencode references",
+        "tags": [
+          "AGENTS.md",
+          "opensassi-package",
+          "npx",
+          "skill-reference",
+          "documentation"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-14-npm-optimizer-skill-definition",
+        "duration_minutes": 48,
+        "prompter_time_minutes": 48,
+        "sme_time_minutes": 240,
+        "top_component_summary": "npm-optimizer skill implementation and refinement",
+        "tags": [
+          "npm-optimizer",
+          "cpp-addon",
+          "n-api",
+          "profiling",
+          "benchmark",
+          "pipeline"
+        ],
+        "human_confidence": "medium"
+      }
+    ]
+  }
+}

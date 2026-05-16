@@ -1,0 +1,248 @@
+{
+  "dashboard": {
+    "metadata": {
+      "generated_at": "2026-05-16T16:29:23.694Z",
+      "audited": false,
+      "audit_note": "Auto-generated from session evaluation files"
+    },
+    "daily_summary": {
+      "date": "2026-05-15",
+      "total_prompter_time_hours": 2.2,
+      "total_sme_time_hours": 10.5,
+      "ai_multiplier": 4.8,
+      "total_sessions": 5,
+      "top_subject_areas": [
+        {
+          "name": "load-spec",
+          "prompter_time_hours": 0.18,
+          "sme_time_hours": 1,
+          "ai_multiplier": 5.6
+        },
+        {
+          "name": "spec-tree",
+          "prompter_time_hours": 0.18,
+          "sme_time_hours": 1,
+          "ai_multiplier": 5.6
+        },
+        {
+          "name": "architecture",
+          "prompter_time_hours": 0.21,
+          "sme_time_hours": 0.9,
+          "ai_multiplier": 4.4
+        },
+        {
+          "name": "integration",
+          "prompter_time_hours": 0.1,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 6
+        },
+        {
+          "name": "external-opencode",
+          "prompter_time_hours": 0.1,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 6
+        },
+        {
+          "name": "cross-project",
+          "prompter_time_hours": 0.1,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 6
+        },
+        {
+          "name": "system-design",
+          "prompter_time_hours": 0.13,
+          "sme_time_hours": 0.5,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "cpp-spec",
+          "prompter_time_hours": 0.13,
+          "sme_time_hours": 0.5,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "technical-specification",
+          "prompter_time_hours": 0.13,
+          "sme_time_hours": 0.5,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "cross-reference",
+          "prompter_time_hours": 0.08,
+          "sme_time_hours": 0.4,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "validation",
+          "prompter_time_hours": 0.08,
+          "sme_time_hours": 0.4,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "readme",
+          "prompter_time_hours": 0.07,
+          "sme_time_hours": 0.29,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "documentation",
+          "prompter_time_hours": 0.07,
+          "sme_time_hours": 0.29,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "restructuring",
+          "prompter_time_hours": 0.07,
+          "sme_time_hours": 0.29,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "getting-started",
+          "prompter_time_hours": 0.07,
+          "sme_time_hours": 0.29,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "skills",
+          "prompter_time_hours": 0.07,
+          "sme_time_hours": 0.29,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "slash-commands",
+          "prompter_time_hours": 0.07,
+          "sme_time_hours": 0.29,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "opensassi",
+          "prompter_time_hours": 0.07,
+          "sme_time_hours": 0.29,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "session-evaluation",
+          "prompter_time_hours": 0.04,
+          "sme_time_hours": 0.21,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "generate",
+          "prompter_time_hours": 0.04,
+          "sme_time_hours": 0.21,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "export",
+          "prompter_time_hours": 0.04,
+          "sme_time_hours": 0.21,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "session-archive",
+          "prompter_time_hours": 0.04,
+          "sme_time_hours": 0.21,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "sidecar",
+          "prompter_time_hours": 0.04,
+          "sme_time_hours": 0.21,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "bzip2",
+          "prompter_time_hours": 0.04,
+          "sme_time_hours": 0.21,
+          "ai_multiplier": 5
+        },
+        {
+          "name": "integrity-verification",
+          "prompter_time_hours": 0.04,
+          "sme_time_hours": 0.21,
+          "ai_multiplier": 5
+        }
+      ]
+    },
+    "session_breakdown": [
+      {
+        "session_id": "2026-05-15-load-specification-tree-+-analysis",
+        "duration_minutes": 30,
+        "prompter_time_minutes": 30,
+        "sme_time_minutes": 180,
+        "top_component_summary": "Spec tree analysis and integration evaluation",
+        "tags": [
+          "load-spec",
+          "spec-tree",
+          "integration",
+          "external-opencode",
+          "cross-project"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-15-load-specification-tree",
+        "duration_minutes": 24,
+        "prompter_time_minutes": 24,
+        "sme_time_minutes": 120,
+        "top_component_summary": "Spec tree loading",
+        "tags": [
+          "load-spec",
+          "spec-tree",
+          "architecture",
+          "cross-reference",
+          "validation"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-15-readme-update-opencode-template",
+        "duration_minutes": 3311,
+        "prompter_time_minutes": 30,
+        "sme_time_minutes": 120,
+        "top_component_summary": "README.md restructuring — removed Directory Structure, Artifact Pipeline, Available npm Scripts, and Customization sections. Simplified Getting Started to fork + /opensassi init. Updated Working with Skills to use opencode slash commands (/skills, /[skill-name]). Title-cased \"Opencode\".",
+        "tags": [
+          "readme",
+          "documentation",
+          "restructuring",
+          "getting-started",
+          "skills",
+          "slash-commands",
+          "opensassi"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-15-session-eval-export",
+        "duration_minutes": 281,
+        "prompter_time_minutes": 18,
+        "sme_time_minutes": 90,
+        "top_component_summary": "Session evaluation generation and export — ran `generate` and `export` from the session-evaluation skill on the current session.",
+        "tags": [
+          "session-evaluation",
+          "generate",
+          "export",
+          "session-archive",
+          "sidecar",
+          "bzip2",
+          "integrity-verification"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-15-system-design-agent-prompt",
+        "duration_minutes": 30,
+        "prompter_time_minutes": 30,
+        "sme_time_minutes": 120,
+        "top_component_summary": "System design skill interaction",
+        "tags": [
+          "system-design",
+          "cpp-spec",
+          "technical-specification",
+          "architecture"
+        ],
+        "human_confidence": "medium"
+      }
+    ]
+  }
+}

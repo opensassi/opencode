@@ -1,6 +1,6 @@
 {
   "name": "@opensassi/opencode",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Agent skill harness for opencode — bootstrap, system-design, git workflow, profiling, and more",
   "type": "module",
   "bin": {
@@ -15,6 +15,7 @@
     "lib/",
     "skills/",
     "scripts/",
+    "dashboard/",
     "AGENTS.md",
     "skills-index.json",
     "!scripts/FlameGraph/",
@@ -28,12 +29,19 @@
     "validate-all": "node scripts/extract-artifacts.js --all && node scripts/test-artifacts.js",
     "verify-animation": "node scripts/verify-artifact.js",
     "check-artifacts": "node scripts/check-artifacts.js",
+    "build:dashboard": "tsc -p dashboard/tsconfig.json",
+    "test:dashboard": "npx playwright test --config dashboard/playwright.config.ts",
     "start": "bin/opencode.js"
   },
   "engines": {
     "node": ">=22"
   },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
   "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/express": "^5.0.0",
     "playwright": "^1.60.0",
     "sharp": "^0.34.5"
   }

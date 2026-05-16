@@ -1,0 +1,173 @@
+{
+  "dashboard": {
+    "metadata": {
+      "generated_at": "2026-05-16T16:29:23.694Z",
+      "audited": false,
+      "audit_note": "Auto-generated from session evaluation files"
+    },
+    "daily_summary": {
+      "date": "2026-05-16",
+      "total_prompter_time_hours": 1.5,
+      "total_sme_time_hours": 14,
+      "ai_multiplier": 9.3,
+      "total_sessions": 2,
+      "top_subject_areas": [
+        {
+          "name": "session-evaluation",
+          "prompter_time_hours": 0,
+          "sme_time_hours": 0.89,
+          "ai_multiplier": 480
+        },
+        {
+          "name": "export",
+          "prompter_time_hours": 0,
+          "sme_time_hours": 0.89,
+          "ai_multiplier": 480
+        },
+        {
+          "name": "config-fix",
+          "prompter_time_hours": 0,
+          "sme_time_hours": 0.89,
+          "ai_multiplier": 480
+        },
+        {
+          "name": "skill-revision",
+          "prompter_time_hours": 0,
+          "sme_time_hours": 0.89,
+          "ai_multiplier": 480
+        },
+        {
+          "name": "integration",
+          "prompter_time_hours": 0,
+          "sme_time_hours": 0.89,
+          "ai_multiplier": 480
+        },
+        {
+          "name": "external-opencode",
+          "prompter_time_hours": 0,
+          "sme_time_hours": 0.89,
+          "ai_multiplier": 480
+        },
+        {
+          "name": "load-spec",
+          "prompter_time_hours": 0,
+          "sme_time_hours": 0.89,
+          "ai_multiplier": 480
+        },
+        {
+          "name": "git-finish-session",
+          "prompter_time_hours": 0,
+          "sme_time_hours": 0.89,
+          "ai_multiplier": 480
+        },
+        {
+          "name": "permission-config",
+          "prompter_time_hours": 0,
+          "sme_time_hours": 0.89,
+          "ai_multiplier": 480
+        },
+        {
+          "name": "skill-design",
+          "prompter_time_hours": 0.15,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "npm-optimizer",
+          "prompter_time_hours": 0.15,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "asm-optimizer",
+          "prompter_time_hours": 0.15,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "system-design",
+          "prompter_time_hours": 0.15,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "context-architecture",
+          "prompter_time_hours": 0.15,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "kv-cache",
+          "prompter_time_hours": 0.15,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "loading-contracts",
+          "prompter_time_hours": 0.15,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "opensassi",
+          "prompter_time_hours": 0.15,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "skill-index",
+          "prompter_time_hours": 0.15,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 4
+        },
+        {
+          "name": "agent-workflow",
+          "prompter_time_hours": 0.15,
+          "sme_time_hours": 0.6,
+          "ai_multiplier": 4
+        }
+      ]
+    },
+    "session_breakdown": [
+      {
+        "session_id": "2026-05-16-npm-optimizer-skill-revision",
+        "duration_minutes": 135,
+        "prompter_time_minutes": 90,
+        "sme_time_minutes": 360,
+        "top_component_summary": "Revised `skills/npm-optimizer/SKILL.md` with context-aware loading contracts, removed `spec` and `profile` commands (delegated to permanent base and JIT-loaded skills), added `assess-handoff` gate, and extracted 11 standalone commands from the former monolithic `execute`.",
+        "tags": [
+          "skill-design",
+          "npm-optimizer",
+          "asm-optimizer",
+          "system-design",
+          "context-architecture",
+          "kv-cache",
+          "loading-contracts",
+          "opensassi",
+          "skill-index",
+          "agent-workflow"
+        ],
+        "human_confidence": "medium"
+      },
+      {
+        "session_id": "2026-05-16-session-eval-generation-and-config-fixes",
+        "duration_minutes": 1,
+        "prompter_time_minutes": 1,
+        "sme_time_minutes": 480,
+        "top_component_summary": "Session evaluation generation + project config/skill integration fixes",
+        "tags": [
+          "session-evaluation",
+          "export",
+          "config-fix",
+          "skill-revision",
+          "integration",
+          "external-opencode",
+          "load-spec",
+          "git-finish-session",
+          "permission-config"
+        ],
+        "human_confidence": "medium"
+      }
+    ]
+  }
+}
