@@ -120,23 +120,23 @@ sequenceDiagram
     participant SE as session-evaluation skill
     participant AP as ArtifactPipeline
 
-    User->>Harness: start session
+    User->>Harness: start-session
     Harness->>SD: load system-design skill
     SD->>Harness: read technical-specification.md
     Harness->>User: show available skills
 
     User->>Harness: skill git
     Harness->>Git: load git skill
-    Git->>Harness: show start session command
+    Git->>Harness: show start-session command
 
     alt development
-        User->>Git: start session
+        User->>Git: start-session
         Git->>Git: checkout main, pull --rebase
         Git->>Harness: clean tree ready
         User->>Harness: develop no commits
     end
 
-    User->>Git: finish session
+    User->>Git: finish-session
     Git->>SE: load session-evaluation generate
     SE->>Git: title slug + session ID
     Git->>Git: git add -A && git commit

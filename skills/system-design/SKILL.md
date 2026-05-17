@@ -20,7 +20,7 @@ When activated:
 
 1. **Read spec file** — Read `technical-specification.md` from the project root. Output a high‑level summary (purpose, components, data flow), then wait for user prompts. Do not initiate a new design analysis.
    - **If the file does not exist**: Proceed to step 2.
-   - **Scope note**: This skill operates on the **project root's** `technical-specification.md` (which describes the skill system, artifact pipeline, and project tooling). The `external/opencode/` directory contains a separate spec tree for the opencode runtime product; do not confuse the two. All `load spec` and `generate from source` commands operate on the project root tree unless explicitly directed otherwise.
+   - **Scope note**: This skill operates on the **project root's** `technical-specification.md` (which describes the skill system, artifact pipeline, and project tooling). The `external/opencode/` directory contains a separate spec tree for the opencode runtime product; do not confuse the two. All `load-spec` and `generate-from-source` commands operate on the project root tree unless explicitly directed otherwise.
 
 2. **Load C++ conventions** — When `technical-specification.md` exists, read the `## C++ Coding Conventions` section (typically near the end of the file). This section documents the project's C++14 idioms, naming conventions (`m_` prefix, `x` prefix for private helpers, PascalCase), class patterns (no inheritance, virtual destructors, in-class init, forward declarations), error signaling via `int` returns, and test conventions. All generated class declarations and specifications must follow these conventions exactly.
 
@@ -28,11 +28,11 @@ When activated:
 
 4. **Surface available commands** — After completing the summary (step 1) or the analysis (step 3), conclude by listing every command from the `## Available Commands` section with its single-line description. This orients the user on what they can request next (diagrams, class specs, animations, testing plans, sub-module operations, etc.).
 
-5. **Free‑form revision requests** — If the user issues a free‑form revision request (e.g., "change X to Y", "update section Z", "add a new module", "rename all instances of…"), **do not** produce the full revised specification. Instead, treat the request as an implicit `revise technical specification` command:
+5. **Free‑form revision requests** — If the user issues a free‑form revision request (e.g., "change X to Y", "update section Z", "add a new module", "rename all instances of…"), **do not** produce the full revised specification. Instead, treat the request as an implicit `revise-technical-specification` command:
    - Analyse the current specification (or original system description, whichever is the active reference).
-   - Output a structured list of revisions in the format defined under the `revise technical specification` command.
-   - End the response by asking whether to apply the revisions with `generate technical specification` or whether the user has additional changes.
-   - Only produce the full revised document when the user explicitly invokes `generate technical specification` (or gives a clear equivalent confirmation such as "apply these" or "yes, generate it").
+   - Output a structured list of revisions in the format defined under the `revise-technical-specification` command.
+   - End the response by asking whether to apply the revisions with `generate-technical-specification` or whether the user has additional changes.
+   - Only produce the full revised document when the user explicitly invokes `generate-technical-specification` (or gives a clear equivalent confirmation such as "apply these" or "yes, generate it").
 
 6. **Validation loop** — After generating or saving any artifact (diagram, animation, spec file), run the artifact validation pipeline to confirm all extracted artifacts pass.
 
@@ -65,11 +65,11 @@ When activated:
 
 ## Available Commands
 
-### `generate sequence diagram`
+### `generate-sequence-diagram`
 
 Generate a Mermaid `sequenceDiagram` depicting the full data or processing flow using the exact component names from the class specification. Embed the diagram in the `## 4. Detailed Data Flow` section of `technical-specification.md`, replacing any existing content in that section. Use `sequenceDiagram` for temporal flows. After embedding, run `npx @opensassi/opencode run validate-all.js` to confirm the diagram compiles and renders to PNG without errors.
 
-### `generate architecture diagram`
+### `generate-architecture-diagram`
 
 Generate a Mermaid `graph TB` C4 container (or component) diagram showing the system's building‑blocks and their static relationships. Include external actors, the main container, and internal components with directed edges indicating usage, delegation, and data flow. Label each node with its component name (and optionally its type). The diagram must reference only the class names, properties, and relationships defined in the class specification to guarantee consistency. Embed the diagram in the `## 3. System Architecture` section of `technical-specification.md`, replacing any existing content. After embedding, run `npx @opensassi/opencode run validate-all.js` to confirm the diagram compiles and renders to PNG without errors.
 
@@ -77,7 +77,7 @@ When the design includes a user‑facing visualisation, embed a **Visualization 
 The internal components must mirror the system's data‑processing stages: each visual element should correspond to a **specific validated data structure** or **processing step** (e.g., a bar for bounded estimates, a marker for raw events, a stacked layer for a cumulative quantity). Name the components according to their role in the consistency checks (e.g., `EngagementBar`, `SMEStackedBar`, `MessageMarkers` → but the generic instruction is: "name them after the metric or check they represent").  
 The goal is that any **missing or mis‑connected component** in the architecture will be immediately visible as a gap or error when the sub‑module sequence diagram and the D3 animation are built from it.
 
-### `generate class specification`
+### `generate-class-specification`
 
 Produce a **complete C++ class declaration** for every class in the system, following the project conventions documented in `technical-specification.md § C++ Coding Conventions`. Output the classes into the `## 2. Component Specifications` section of `technical-specification.md`.
 
@@ -99,9 +99,9 @@ Each class declaration must include:
 
 Include data structure definitions (structs, enums, typedefs) using the project's conventions: plain enums inside class scope for C++, `typedef enum` for the C API layer. All declarations must be suitable for direct translation to C and Rust.
 
-This command MUST be generated before `generate architecture diagram` or `generate technical specification` when those artifacts are also requested. The architecture diagram must reference only the class names, properties, and relationships defined in the class specification to guarantee consistency. If a user requests both, always produce the class specification first, then derive the diagrams from it.
+This command MUST be generated before `generate-architecture-diagram` or `generate-technical-specification` when those artifacts are also requested. The architecture diagram must reference only the class names, properties, and relationships defined in the class specification to guarantee consistency. If a user requests both, always produce the class specification first, then derive the diagrams from it.
 
-### `generate manim animation`
+### `generate-manim-animation`
 
 Generate a self‑contained Python script for Manim that visualizes the complete state machine. Save it as `animation.py` in the project root.  
 Follow this structure:
@@ -114,7 +114,7 @@ Follow this structure:
 Use colored rectangles, arrows, text labels, and simple grid representations where helpful.  
 The script must be immediately runnable with `manim -pql`.
 
-### `generate d3 animation`
+### `generate-d3-animation`
 
 Generate a self‑contained HTML file that uses **D3.js** (CDN) to create a browser‑native animated visualisation. The animation is not merely a presentation aid – it is an **executable consistency check** for the system architecture.
 
@@ -123,7 +123,7 @@ When the system's logical rules are correctly implemented, the animation will pl
 
 **Prerequisites**
 
-- A `generate architecture diagram` that includes a **Visualization sub‑module** whose internal components correspond to the system's data‑processing stages.
+- A `generate-architecture-diagram` that includes a **Visualization sub‑module** whose internal components correspond to the system's data‑processing stages.
 - A **sub‑module sequence diagram** (produced previously or as part of this command) that lists every step of visual update and is consistent with the overall system's data flow.
 
 **Process**
@@ -171,7 +171,7 @@ Additionally, confirm that the following requirements are met by the automated t
 - A `[data-testid="play-pause"]` element exists and toggles playback.
 - The keyframe counter in the UI uses 0-based indexing with a dynamic total (`<span id="kf-total">`).
 
-### `generate testing plan`
+### `generate-testing-plan`
 
 Produce a structured testing plan covering the following. Write it into the `## 6. Testing Requirements` section of `technical-specification.md` (renumbering sections as needed), replacing any existing content:
 
@@ -184,7 +184,7 @@ Produce a structured testing plan covering the following. Write it into the `## 
   The plan should be self‑contained and refer to the agreed technical specification.
 
 
-### `generate from source`
+### `generate-from-source`
 
 Generate a complete project-wide specification tree by scanning the current directory's source and test files. This is a multi-phase command that builds `.spec.md` files bottom-up: individual source files first, then sub-modules, then the top-level `technical-specification.md`.
 
@@ -210,7 +210,7 @@ Save file-level specs as `source/<path-relative>/<FileName>.spec.md` (e.g., `sou
 
 **Phase 2 — Sub-module organization**: After all file-level specs exist, analyze dependency relationships:
 1. Group related source file specs into sub-modules based on dependency analysis (include dependencies, forward declarations, and usage patterns).
-2. For each sub-module, create a facade class and generate a sub-module `.spec.md` under `src/<module>/<FacadeName>.spec.md` following the 7-section structure defined in `generate sub-module spec`.
+2. For each sub-module, create a facade class and generate a sub-module `.spec.md` under `src/<module>/<FacadeName>.spec.md` following the 7-section structure defined in `generate-sub-module-spec`.
 3. **Not all files must be assigned to a sub-module.** Cross-cutting concerns (utility classes, global constants, shared type definitions, platform abstraction layers) remain outside any sub-module. These are documented as "free-standing components" in the top-level spec.
 4. Update each assigned file's spec to note its sub-module membership. Update free-standing file specs to note their top-level status.
 
@@ -234,9 +234,9 @@ npx @opensassi/opencode run extract-artifacts.js --file <path> && npx @opensassi
 All diagrams must render and all D3 animations must pass filmstrip + verification. Do not proceed to the next phase until the current phase passes validation.
 
 
-### `load spec`
+### `load-spec`
 
-Load the complete specification tree into the agent's working context — every `.spec.md` file at every level, in full, including diagrams and D3 animations. This is the strict inverse of `generate from source` (which builds the tree bottom-up) and acts as the identity function for the spec tree (reading back exactly what was generated).
+Load the complete specification tree into the agent's working context — every `.spec.md` file at every level, in full, including diagrams and D3 animations. This is the strict inverse of `generate-from-source` (which builds the tree bottom-up) and acts as the identity function for the spec tree (reading back exactly what was generated).
 
 **Process**:
 
@@ -314,7 +314,7 @@ Load the complete specification tree into the agent's working context — every 
 
 **Context assumptions**: This command assumes a model with 1M+ token context and 250K+ token budget for the spec tree. The full tree is approximately 84K-96K tokens across ~36 spec files. Loading all files in full is intentional — the dense, internally-consistent cross-reference structure across all layers enables optimal sparse attention retrieval across the entire specification.
 
-**Relationship to `generate from source`**: `load spec` is the read-only inverse of `generate from source`. It does not create, modify, or validate artifacts (beyond the staleness check). Use it to reify the full specification tree into the agent's context for review, analysis, or revision.
+**Relationship to `generate-from-source`**: `load-spec` is the read-only inverse of `generate-from-source`. It does not create, modify, or validate artifacts (beyond the staleness check). Use it to reify the full specification tree into the agent's context for review, analysis, or revision.
 
 ---
 
@@ -322,19 +322,19 @@ Load the complete specification tree into the agent's working context — every 
 
 These commands are available when the active specification uses sub‑modules.
 
-### `split sub-modules`
+### `split-sub-modules`
 
 Break the current monolithic specification into a set of sub‑modules. Only available when the specification does NOT already use sub‑modules.
 
 1. Propose a directory layout: each sub‑module gets a directory under `src/` and exports a single facade class. Internal implementation files sit alongside the facade.
 2. Define each facade class interface (public methods, properties) and list the internal components it composes.
 3. Map the monolithic spec's classes to sub‑module internal files.
-4. Output a structured plan (in `revise technical specification` format) covering:
+4. Output a structured plan (in `revise-technical-specification` format) covering:
    - New directories to create (`src/storage/`, `src/shard/`, etc.)
    - New `.spec.md` files to write for each sub‑module
    - Content to extract from `technical-specification.md` into each `.spec.md`
    - The revised `technical-specification.md` structure (becoming a sub‑module-aware top‑level document)
-5. End by asking whether to apply the revisions with `generate technical specification` or iterate. After applying, run `npm run validate-all` to confirm all sub-module artifacts pass validation.
+5. End by asking whether to apply the revisions with `generate-technical-specification` or iterate. After applying, run `npm run validate-all` to confirm all sub-module artifacts pass validation.
 
 **Conventions** (drawn from real usage):
 - Each sub‑module directory is lowercase plural: `src/storage/`, `src/shard/`, `src/computation/`, `src/core/`, `src/cli/`.
@@ -342,20 +342,20 @@ Break the current monolithic specification into a set of sub‑modules. Only ava
 - Internal component spec files are `src/<module>/<ClassName>.spec.md` using CamelCase matching the class name.
 - Only the facade file may export from a sub‑module. Internal files are marked with the comment `// NOT exported directly from the module. Accessed via <facade>.<property>.`
 
-### `combine sub-modules`
+### `combine-sub-modules`
 
 Flatten a sub‑module specification back into a single monolithic document. Only available when the specification uses sub‑modules.
 
 1. Collect all sub‑module facade specs and internal class specs.
 2. Produce a draft monolithic document with all classes under `§2 Component Specifications`.
-3. Present as a set of additions/deletions in `revise technical specification` format.
+3. Present as a set of additions/deletions in `revise-technical-specification` format.
 4. Ask for confirmation before applying.
 
-### `list sub-modules`
+### `list-sub-modules`
 
 When a sub‑module-aware specification is active, output a simple list of all sub‑module names, their facade classes, and their spec file paths. No additional commentary.
 
-### `load sub-module spec <path>`
+### `load-sub-module-spec <path>`
 
 Accept a sub‑module specification file content (provided inline by the user or read from disk) and integrate it into the active specification's knowledge.
 
@@ -363,7 +363,7 @@ Accept a sub‑module specification file content (provided inline by the user or
 2. If the sub‑module is already known, update its internal representation. If new, register it.
 3. Confirm the sub‑module name and facade class.
 
-### `generate sub-module spec <SubModuleName>`
+### `generate-sub-module-spec <SubModuleName>`
 
 Generate a complete `.spec.md` file for the named sub‑module, scoped to that single module. Available only when a sub‑module-aware top‑level specification is active and the named sub‑module exists.
 
@@ -386,10 +386,10 @@ to validate the generated mermaid diagrams render correctly. Prefer `--file` ove
 
 ---
 
-### `generate technical specification`
+### `generate-technical-specification`
 
 Produce a **complete C++ class specification** (following the conventions in `technical-specification.md § C++ Coding Conventions`) that matches the agreed design, **including a comprehensive testing plan**. The output format depends on whether the specification uses sub‑modules.
-When `generate from source` has been run, `generate technical specification` operates on the existing file-level and sub-module `.spec.md` tree, regenerating only the top-level `technical-specification.md` from the cross-reference data. Individual file specs and sub-module specs are not modified — only the top-level aggregation document is updated.
+When `generate-from-source` has been run, `generate-technical-specification` operates on the existing file-level and sub-module `.spec.md` tree, regenerating only the top-level `technical-specification.md` from the cross-reference data. Individual file specs and sub-module specs are not modified — only the top-level aggregation document is updated.
 
 **When the active specification does NOT use sub‑modules (monolithic):**
 Follows the original behavior — a single self‑contained document with all classes, diagrams, and testing plan under these section ordering rules:
@@ -424,7 +424,7 @@ The document must contain a **Module Reference** table in §1 listing every sub�
 - Each class exposes public methods only; private properties are documented but implementation details are up to the translator.
 - Design the code so it can be trivially ported to C (opaque struct pointer, functions taking that pointer) and Rust (`struct` with `pub` methods).
 - Include full method signatures, Doxygen `\param`/`\retval` comments, and explicit processing order in the main encrypt/decrypt methods (or primary handler methods).
-- The technical specification must contain the complete C++ class declarations (as defined in `generate class specification`) for every component, integrated into the document alongside any diagrams and testing plan.
+- The technical specification must contain the complete C++ class declarations (as defined in `generate-class-specification`) for every component, integrated into the document alongside any diagrams and testing plan.
 
 **Testing plan requirements (both modes):**
 - **Regression baseline** — The test files listed in `technical-specification.md § C++ Coding Conventions > Regression Test Baseline` are frozen and must never be modified. All new tests must be added to new files.
@@ -436,11 +436,11 @@ The document must contain a **Module Reference** table in §1 listing every sub�
 
 **Diagrams** must use the exact class and method names defined in §2. The d3 animation section must contain the complete self‑contained HTML file as an appendix or inline embed, with a caption that references the sub‑module sequence diagram and the architecture diagram.
 
-**Revision application**: This command also applies accepted revisions to the existing specification. When invoked after `revise technical specification`, it applies only the specific, minimal changes listed in the accepted revisions — writing the result back to `technical-specification.md` without modifying any other content. If no revisions were accepted, it reports that no changes were needed. After writing, run `npm run validate-all` to confirm all diagrams and animations in the updated specification pass validation.
+**Revision application**: This command also applies accepted revisions to the existing specification. When invoked after `revise-technical-specification`, it applies only the specific, minimal changes listed in the accepted revisions — writing the result back to `technical-specification.md` without modifying any other content. If no revisions were accepted, it reports that no changes were needed. After writing, run `npm run validate-all` to confirm all diagrams and animations in the updated specification pass validation.
 
-**This command must only be executed when explicitly requested by the user.** Free‑form revision requests must be processed through `revise technical specification` first, and the full document must not be emitted until the user confirms by typing `generate technical specification` or an equivalent explicit instruction.
+**This command must only be executed when explicitly requested by the user.** Free‑form revision requests must be processed through `revise-technical-specification` first, and the full document must not be emitted until the user confirms by typing `generate-technical-specification` or an equivalent explicit instruction.
 
-### `revise technical specification`
+### `revise-technical-specification`
 
 Review the **file‑based technical specification** (`technical-specification.md`) against all subsequent design decisions, corrections, and feedback.  
 If `technical-specification.md` does not exist, use the original user message as the reference.  
@@ -474,15 +474,15 @@ During your analysis, you should gently steer the user toward designs that:
 - Structure the processing so that the complete session must be reconstructed for seed verification (all‑or‑nothing property).
 - Remain easily portable to C, C++, and Rust with simple, flat state objects.
 - When producing a technical specification, always include a testing plan (unit tests and end‑to‑end strategy) as an integral section.
-- When visualizations are requested, offer both a sequence diagram (`generate sequence diagram`) and a C4 architecture diagram (`generate architecture diagram`) if the design involves multiple components.
+- When visualizations are requested, offer both a sequence diagram (`generate-sequence-diagram`) and a C4 architecture diagram (`generate-architecture-diagram`) if the design involves multiple components.
 - When producing a technical specification that includes both component interfaces and diagrams, always place the Component Specifications section before the Architecture and Data Flow sections. Generate the class specification first, then produce the diagrams using only the class names, method signatures, and relationships already defined.
 - **Sub‑module independence**: When sub‑modules are in use, ensure every sub‑module is independently testable and inter‑module dependencies are explicit via facade imports. Prefer a flat peer hierarchy — no circular dependencies between sub‑modules.
 - **Single‑export boundary**: Only the facade class file (e.g., `Storage.h`) may export symbols from a sub‑module directory. Internal implementation files (e.g., `RedisEntityRepository.h`) are not directly importable by other modules — they are accessed through the facade's public properties. Spec files and implementation files use CamelCase matching the class name.
 - **Project naming conventions**: Member variables use `m_` prefix (`m_p` for pointers, `m_b` for bools, `m_e` for enums, `m_c` for strings); private helper methods use `x` prefix; all classes use PascalCase; constants use `static constexpr`.
 - **Config format**: Use `config.json` (JSON) rather than YAML for the bootstrap configuration. The `Cli` module parses JSON via `JSON.parse` + `readFileSync`.
 - **Mermaid node label safety** — Avoid `<>`, `()`, and `&lt;&gt;` in Mermaid node labels. These are parsed as HTML/markup and cause silent render failures in the `mmdc` pipeline. Use plain text descriptions instead (e.g., `PelBuf` not `AreaBuf<Pel>`, `current state pairs` not `(type, value) pairs`).
-- **Bottom-up spec generation** — When `generate from source` is used, the process is strictly ordered: file-level specs → source-test cross-references → sub-module specs → top-level spec. Never skip a phase. Never skip diagrams or animations in any file-level spec, regardless of file complexity.
-- **Top-down spec loading** — `load spec` is the strict inverse of `generate from source`. It always proceeds top-down: top-level → sub-module facades → file-level specs. Every spec file is loaded in full, including all diagrams and animations. The dense, internally-consistent cross-reference structure across all spec layers is essential — it enables optimal sparse attention retrieval across the specification when loaded into a 1M+ token context window.
+- **Bottom-up spec generation** — When `generate-from-source` is used, the process is strictly ordered: file-level specs → source-test cross-references → sub-module specs → top-level spec. Never skip a phase. Never skip diagrams or animations in any file-level spec, regardless of file complexity.
+- **Top-down spec loading** — `load-spec` is the strict inverse of `generate-from-source`. It always proceeds top-down: top-level → sub-module facades → file-level specs. Every spec file is loaded in full, including all diagrams and animations. The dense, internally-consistent cross-reference structure across all spec layers is essential — it enables optimal sparse attention retrieval across the specification when loaded into a 1M+ token context window.
 - **Mandatory animations** — Every `.spec.md` file at every level (file, sub-module, top-level) must include all three artifacts: a Mermaid architecture diagram, a Mermaid sequence diagram, and a D3 self-contained HTML animation. No exceptions. An animation is not optional polish — it is an executable consistency check for the component.
 - **Source-test symmetry** — Source file specs and test file specs are peers. Test specs are not second-class; they get the same diagrams, animations, and validation as source specs. Cross-references between them form a bi-directional traceability matrix.
 
@@ -495,7 +495,7 @@ If the architecture diagram contains a nested sub‑module, a separate `sequence
 - Every incoming data event or time step.
 - Exactly how each visual component is updated (add, remove, transition) in strict order.
 - Any conditional branches that represent validation checks (e.g., "if bound applied, flash red").
-  The sequence diagram is not just documentation – it is the **blueprint for the d3 animation**. Any inconsistency between the sequence diagram and the overall system's data flow will result in an animation that fails to display correctly. The `generate d3 animation` command will refuse to proceed until this diagram is accepted.
+  The sequence diagram is not just documentation – it is the **blueprint for the d3 animation**. Any inconsistency between the sequence diagram and the overall system's data flow will result in an animation that fails to display correctly. The `generate-d3-animation` command will refuse to proceed until this diagram is accepted.
 
 ---
 
@@ -525,7 +525,7 @@ Read `technical-specification.md`, output a high-level summary, then:
 **Proposed change**: → `function buildAuthMiddleware(providers: AuthProvider[]): Middleware {`
 **Reason**: Aligns with project naming conventions.
 
-Would you like me to apply these revisions with `generate technical specification`?"
+Would you like me to apply these revisions with `generate-technical-specification`?"
 
 **User**: "yes, apply them"
 
@@ -535,11 +535,11 @@ Would you like me to apply these revisions with `generate technical specificatio
 
 ## Final Note
 
-When instructed via an explicit command (`generate from source`, `load spec`, `generate sequence diagram`, `generate architecture diagram`, `generate class specification`, `generate manim animation`, `generate testing plan`, `generate technical specification`, `split sub-modules`, `combine sub-modules`, `list sub-modules`, `load sub-module spec`, `generate sub-module spec`), save the requested artifact to its designated file. Do not output the full artifact inline — output a confirmation message instead (e.g., "Saved architecture diagram to ## 3. System Architecture in technical-specification.md").
+When instructed via an explicit command (`generate-from-source`, `load-spec`, `generate-sequence-diagram`, `generate-architecture-diagram`, `generate-class-specification`, `generate-manim-animation`, `generate-testing-plan`, `generate-technical-specification`, `split-sub-modules`, `combine-sub-modules`, `list-sub-modules`, `load-sub-module-spec`, `generate-sub-module-spec`), save the requested artifact to its designated file. Do not output the full artifact inline — output a confirmation message instead (e.g., "Saved architecture diagram to ## 3. System Architecture in technical-specification.md").
 
-When responding to a free‑form revision request (e.g., "change X to Y"), output **only** the structured list of revisions in the `revise technical specification` format, followed by a prompt asking whether to apply them. Do not apply any changes until `generate technical specification` or an explicit confirmation is received.
+When responding to a free‑form revision request (e.g., "change X to Y"), output **only** the structured list of revisions in the `revise-technical-specification` format, followed by a prompt asking whether to apply them. Do not apply any changes until `generate-technical-specification` or an explicit confirmation is received.
 
-For `generate from source`, save file-level specs to `source/<relative-path>/<FileName>.spec.md`, sub-module specs to `src/<module>/<FacadeName>.spec.md`, and free-standing component specs to `source/<relative-path>/<FileName>.spec.md` with a `Free-standing` marker. The top-level `technical-specification.md` goes to the project root as usual. Run per-file validation (extract + test-artifacts) after each phase.
+For `generate-from-source`, save file-level specs to `source/<relative-path>/<FileName>.spec.md`, sub-module specs to `src/<module>/<FacadeName>.spec.md`, and free-standing component specs to `source/<relative-path>/<FileName>.spec.md` with a `Free-standing` marker. The top-level `technical-specification.md` goes to the project root as usual. Run per-file validation (extract + test-artifacts) after each phase.
 
 For the Manim animation, save as `animation.py` and include a brief comment at the top explaining how to run it.
 For the D3 animation, embed the full HTML as a ` ```html ` fenced code block in `technical-specification.md` (in §5 under an "Animation Source" subsection). Include a brief comment at the top of the HTML referencing the sub‑module sequence diagram and architecture diagram. The `npm run extract` step will place it in `.artifacts/technical-specification.md/d3-animation.html`. The generated HTML must:

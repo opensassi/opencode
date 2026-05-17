@@ -121,7 +121,7 @@ Apply the following template exactly when generating an evaluation:
 ## Design Principles
 
 - **`generate` is read-only** — It produces the evaluation summary inline but does not write any files, run any external commands, or modify the filesystem.
-- **`export` is the write command** — It creates files in `sessions/` and runs the export script. Git operations (commit, push) are handled by the `git` skill's `finish session` command.
+- **`export` is the write command** — It creates files in `sessions/` and runs the export script. Git operations (commit, push) are handled by the `git` skill's `finish-session` command.
 - **`export` must be idempotent** — If the `.json.bz2` already exists, it should overwrite it (the `-f` flag in bzip2 handles this).
 - **Title slugs must be lower-dash-case** — e.g., `2026-05-11-my-project-setup`.
 - **Session ID prefix** — The `ses_` prefix on opencode session IDs is stripped for filenames to keep them clean.

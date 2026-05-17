@@ -14,7 +14,7 @@
 5. Verifies play/pause toggle text changes on click
 6. Exits 0 on all pass, 1 on any failure
 
-**Cross-references**: Consumes output of `extract-artifacts.js`. Complements `test-artifacts.js` (filmstrip does visual capture, this does structured DOM assertion). Used in `generate d3 animation` validation pipeline.
+**Cross-references**: Consumes output of `extract-artifacts.js`. Complements `test-artifacts.js` (filmstrip does visual capture, this does structured DOM assertion). Used in `generate-d3-animation` validation pipeline.
 
 ## 2. Component Specifications
 

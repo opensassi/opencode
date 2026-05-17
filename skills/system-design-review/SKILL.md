@@ -14,9 +14,9 @@ All experts translate their domain‑specific concerns into a **unified computat
 
 When activated:
 
-1. **Check for stale reviews** — Run `node scripts/check-artifacts.js --errors` and inspect the output. If any entries are returned, report them to the user as a notice: a list of spec files whose reviews are missing or out of date. Recommend running `review stale` to regenerate them.
+1. **Check for stale reviews** — Run `node scripts/check-artifacts.js --errors` and inspect the output. If any entries are returned, report them to the user as a notice: a list of spec files whose reviews are missing or out of date. Recommend running `review-stale` to regenerate them.
 2. **Show available commands** — Immediately output the list of available commands from the `## Available Commands` section. Do not read any spec files, do not start any review, and do not invoke any panel experts.
-3. **Wait for command** — Do not proceed with any review until the user issues an explicit command (`review all`, `review <name>`, `review <path>`, `review stale`). Free-form text about the specification should be acknowledged but not acted upon unless a command keyword is present.
+3. **Wait for command** — Do not proceed with any review until the user issues an explicit command (`review-all`, `review <name>`, `review <path>`, `review-stale`). Free-form text about the specification should be acknowledged but not acted upon unless a command keyword is present.
 
 ## Panel Composition
 
@@ -342,7 +342,7 @@ If the target `.artifacts/` subdirectory does not exist, create it before writin
 
 ## Available Commands
 
-### `review all`
+### `review-all`
 
 Run a full panel review on the root `technical-specification.md` AND all sub-module `.spec.md` files discovered via the Module Reference table.
 
@@ -370,7 +370,7 @@ Run a full panel review on a single spec file (e.g., `review src/core/Core.spec.
 - Save the review to `<file-path's-artifacts-dir>/review.md`, where the artifacts directory is derived by replacing the spec file's directory with `<dir>/.artifacts/<SpecFile>.spec.md/`.
 - Error if the file does not exist or is not a `.spec.md` file.
 
-### `review stale`
+### `review-stale`
 
 Regenerate only those reviews whose source spec file has changed since the last review.
 
@@ -378,8 +378,8 @@ Regenerate only those reviews whose source spec file has changed since the last 
 - For each stale spec file: run the full seven-expert panel; save the review to the appropriate `.artifacts/` directory.
 - Report a summary (regenerated vs. skipped).
 
-**Sub-module scope**: `review stale --sub-module <name>` — only check/review that module's spec files.
-**Single file scope**: `review stale --file <path>` — check/review that one file.
+**Sub-module scope**: `review-stale --sub-module <name>` — only check/review that module's spec files.
+**Single file scope**: `review-stale --file <path>` — check/review that one file.
 
 ---
 
@@ -393,4 +393,4 @@ Regenerate only those reviews whose source spec file has changed since the last 
 - **Sub-module resolution**: Uses the Module Reference table from `technical-specification.md`. Check `HAS_SUB_MODULES` definition at the top of the root spec.
 - **Independent audit**: This skill is a standalone auditor. Do NOT invoke the `system-design` skill — this skill critiques, not designs.
 - **Output validation**: Before writing `review.md`, the agent MUST verify the output against the canonical template: Part 1 uses `### Revision N` with bold fields (not tables), Part 2 uses numbered lists per expert (not tables or prose), and the summary table is present.
-- **Staleness-aware reviews**: Use `node scripts/check-artifacts.js` as a pre-filter when running `review stale`. Only generate reviews for spec files whose review is missing or out of date.
+- **Staleness-aware reviews**: Use `node scripts/check-artifacts.js` as a pre-filter when running `review-stale`. Only generate reviews for spec files whose review is missing or out of date.

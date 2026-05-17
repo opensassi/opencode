@@ -52,7 +52,7 @@ Goal: Understand the original package and validate that a C++ native addon is vi
      establish a passing baseline. These tests must never be modified.
 
 1.3. The spec tree is generated using **system-design** (permanent base context):
-     - Run `generate from source` to produce the full spec tree of the original package.
+     - Run `generate-from-source` to produce the full spec tree of the original package.
      - Extract from the spec tree: full API surface, edge cases, data flow.
      - Design the C++ addon architecture: which functions go native vs stay in JS,
        N-API boundary strategy, build pipeline.
@@ -227,7 +227,7 @@ and has reached diminishing returns. If so, spawn a sub-agent with
 - Ceiling headroom still exists (pass-through is significantly faster)
 
 **Process**:
-1. Run `assess all` from asm-optimizer on the C++ addon's hot functions.
+1. Run `assess-all` from asm-optimizer on the C++ addon's hot functions.
 2. If asm-optimizer reports **Medium** or higher potential on any function:
    - Run `iterative-optimize <entry>` from asm-optimizer.
    - Re-benchmark after each successful optimization.

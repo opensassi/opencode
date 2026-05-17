@@ -12,7 +12,7 @@ Senior DevOps engineer specializing in cross-platform development environment pr
 ## On Activation
 
 1. Show the skills-index (from `skills-index.json` or by running `npm run opencode -- opensassi --print-index`)
-2. Run `init check` to report current environment status (OS, Node.js, git, FlameGraph, npm deps)
+2. Run `init-check` to report current environment status (OS, Node.js, git, FlameGraph, npm deps)
 3. Show available commands
 
 To load a sub-skill (e.g., system-design, git, profiler), the agent should run:
@@ -35,12 +35,12 @@ and read the output as the skill's full instructions.
 Execute companion scripts from the `@opensassi/opencode` package. If a script is missing or a platform installer does not exist, report the gap and continue; do not generate files.
 
 1. `npm run opencode -- run --skill opensassi env-check.sh` (or `env-check.ps1` on Windows) — bootstrap git + Node.js LTS (creates `.nvmrc` if missing)
-2. `init install` — run existing platform installer, or report if none found
-3. `init flamegraph` — clone FlameGraph v1.0
+2. `init-install` — run existing platform installer, or report if none found
+3. `init-flamegraph` — clone FlameGraph v1.0
 4. `npm run opencode -- run --skill opensassi install-npm-deps.sh` — `npm install`
 5. `npm run opencode -- run --skill opensassi ensure-gitignore.sh` — append common patterns
 
-### `init install`
+### `init-install`
 
 Install the development environment toolchain.
 
@@ -53,13 +53,13 @@ Install the development environment toolchain.
    a. Report: "No installer found for this platform"
    b. Continue — env-check already installed git + Node.js, which is sufficient for the project to function
 
-### `init flamegraph`
+### `init-flamegraph`
 
 Clone Brendan Gregg's FlameGraph at pinned tag `v1.0` to `scripts/FlameGraph/`:
 - If `scripts/FlameGraph/` does not exist: `git clone --depth=1 --branch v1.0`
 - If it exists: `git fetch --tags --depth=1 && git checkout v1.0`
 
-### `init check`
+### `init-check`
 
 Run `npm run opencode -- run --skill opensassi env-check.sh` (or `env-check.ps1`) and verify:
 - Node.js version (LTS or later)

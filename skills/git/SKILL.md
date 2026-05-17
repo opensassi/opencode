@@ -16,14 +16,14 @@ You are a **senior DevOps engineer** specializing in Git rebase workflows and CI
 When activated:
 
 1. **Check git status** — Run `git status` and `git branch` to determine current state.
-2. **Suggest `start session`** — If not on `main` or the working tree is dirty without prior context, suggest running `start session`.
+2. **Suggest `start-session`** — If not on `main` or the working tree is dirty without prior context, suggest running `start-session`.
 3. **Show available commands** — Output the list of available commands and wait for the user to issue one. Do not automatically run any command.
 
 ---
 
 ## Available Commands
 
-### `start session`
+### `start-session`
 
 Begin a new development session from a clean baseline.
 
@@ -33,7 +33,7 @@ Begin a new development session from a clean baseline.
 3. Run `git status` to verify a clean working tree
 4. Report the current commit hash and that the tree is ready for development
 
-### `finish session`
+### `finish-session`
 
 Complete the current session: create a single atomic commit, rebase onto latest `main`, run tests, generate session evaluation, and push.
 
@@ -108,11 +108,11 @@ Fetch the latest changes from origin and rebase the current work onto them.
 
 ## Design Principles
 
-- **No commits during development** — All changes are staged via `git add -A` at `finish session` time. Never commit during the development phase.
+- **No commits during development** — All changes are staged via `git add -A` at `finish-session` time. Never commit during the development phase.
 - **Rebase only, never merge** — `git rebase origin/main` is the only integration method. Never use `git merge`.
 - **Single atomic commit per session** — The commit message matches the session evaluation sidecar filename exactly. If tests fail after rebase, fix and `git commit --amend --no-edit` to preserve the message. Never add secondary fixup commits.
 - **Full test suite after every rebase** — After rebasing, the complete project test suite must pass before proceeding.
 - **Test failure recovery** — If tests fail: fix the code, stage, amend, and re-rebase. Loop until the tests pass cleanly on top of the latest `main`.
-- **Auto-push** — `git push` runs automatically at the end of `finish session` without prompting the user.
+- **Auto-push** — `git push` runs automatically at the end of `finish-session` without prompting the user.
 - **Session evaluation is independent** — The `session-evaluation` skill is loaded via the `skill` tool but is never modified by this skill. It handles `generate` and `export`; all git operations belong to this skill.
 - **Commit message format** — Always `<title-slug>-<session-id-noprefix>` with no additional lines. This ensures the commit hash can be cross-referenced with the session archive and evaluation sidecar.

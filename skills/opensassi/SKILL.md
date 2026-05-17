@@ -18,7 +18,7 @@ description: Root skill ecosystem — loads system-design + spec tree, routes su
 
 ### Spec tree depth
 
-Depth is controlled by `--depth` flag on `load spec`:
+Depth is controlled by `--depth` flag on `load-spec`:
 - Depth 1: `technical-specification.md` only
 - Depth 2 (default): + sub-module facade `.spec.md` files
 - Depth 3: + internal component `.spec.md` files
@@ -41,8 +41,8 @@ If bootstrapped → report "Environment ready." + show node/git versions.
 If not → run full bootstrap:
 
 1. `npm run opencode -- run --skill opensassi env-check.sh` — install git + Node.js LTS if missing, write `.nvmrc`
-2. `init install` — run platform-specific installer (cmake, nasm, gdb, ripgrep, perf, htop, etc.) or report none found
-3. `init flamegraph` — clone FlameGraph v1.0 to `scripts/FlameGraph/`
+2. `init-install` — run platform-specific installer (cmake, nasm, gdb, ripgrep, perf, htop, etc.) or report none found
+3. `init-flamegraph` — clone FlameGraph v1.0 to `scripts/FlameGraph/`
 4. `npm run opencode -- run --skill opensassi install-npm-deps.sh` — `npm install`
 5. `npm run opencode -- run --skill opensassi ensure-gitignore.sh` — append common patterns
 
@@ -50,27 +50,27 @@ If not → run full bootstrap:
 
 | Skill | Command | Arguments | Description |
 |-------|---------|-----------|-------------|
-| **system-design** | `load spec` | `[--depth 1-4]` | Load spec tree into context (tail — permanent base) |
-| | `generate from source` | — | Build spec tree from source files |
-| | `generate technical specification` | — | Produce complete class spec + diagrams + test plan |
-| | `revise technical specification` | — | Propose structured revisions list |
-| | `generate sequence diagram` | — | Mermaid sequence diagram for data flow |
-| | `generate architecture diagram` | — | Mermaid C4 container/component diagram |
-| | `generate class specification` | — | Complete C++ class declarations |
-| | `generate d3 animation` | — | Self-contained HTML D3.js animation |
-| | `generate testing plan` | — | Structured unit/integration/regression tests |
-| | `split sub-modules` | — | Break monolithic spec into sub-module directory |
-| | `combine sub-modules` | — | Flatten sub-module spec back to monolithic |
-| | `list sub-modules` | — | List all sub-modules with facade classes |
-| | `load sub-module spec` | `<path>` | Load one sub-module `.spec.md` |
-| | `generate sub-module spec` | `<name>` | Generate `.spec.md` for a named sub-module |
-| **git** | `start session` | — | `git checkout main` → `git pull --rebase`, verify clean tree |
-| | `finish session` | — | add → commit → rebase → test → eval → push (single atomic commit) |
+| **system-design** | `load-spec` | `[--depth 1-4]` | Load spec tree into context (tail — permanent base) |
+| | `generate-from-source` | — | Build spec tree from source files |
+| | `generate-technical-specification` | — | Produce complete class spec + diagrams + test plan |
+| | `revise-technical-specification` | — | Propose structured revisions list |
+| | `generate-sequence-diagram` | — | Mermaid sequence diagram for data flow |
+| | `generate-architecture-diagram` | — | Mermaid C4 container/component diagram |
+| | `generate-class-specification` | — | Complete C++ class declarations |
+| | `generate-d3-animation` | — | Self-contained HTML D3.js animation |
+| | `generate-testing-plan` | — | Structured unit/integration/regression tests |
+| | `split-sub-modules` | — | Break monolithic spec into sub-module directory |
+| | `combine-sub-modules` | — | Flatten sub-module spec back to monolithic |
+| | `list-sub-modules` | — | List all sub-modules with facade classes |
+| | `load-sub-module-spec` | `<path>` | Load one sub-module `.spec.md` |
+| | `generate-sub-module-spec` | `<name>` | Generate `.spec.md` for a named sub-module |
+| **git** | `start-session` | — | `git checkout main` → `git pull --rebase`, verify clean tree |
+| | `finish-session` | — | add → commit → rebase → test → eval → push (single atomic commit) |
 | | `sync` | — | `git fetch origin` → `git rebase origin/main` → test |
-| **issue** | `create issue` | `<body>` | Create GitHub issue from structured body |
-| | `list issues` | `[--limit N]` | List recent GitHub issues |
-| | `show issue` | `<number>` | Show issue details and status |
-| | `close issue` | `<number>` | Close issue with comment |
+| **issue** | `create-issue` | `<body>` | Create GitHub issue from structured body |
+| | `list-issues` | `[--limit N]` | List recent GitHub issues |
+| | `show-issue` | `<number>` | Show issue details and status |
+| | `close-issue` | `<number>` | Close issue with comment |
 | **npm-optimizer** | `execute` | — | Full port pipeline: discover → ceiling → naive → profile → classify → pivot/micro → shim → report |
 | | `assess-ceiling` | — | Build N-API pass-through, measure upper bound |
 | | `implement-naive` | — | Scaffold simplest C++ addon passing 100% tests |
@@ -91,7 +91,7 @@ If not → run full bootstrap:
 | **asm-optimizer** | `setup-baseline` | — | Create baseline dirs, clone release, build, run profiling matrix |
 | | `profile` | `<name>` | Maximal perf counter dump against baseline |
 | | `assess` | `<entry>` | Evaluate one function's ASM optimization potential |
-| | `assess all` | — | Rank all candidate functions by potential |
+| | `assess-all` | — | Rank all candidate functions by potential |
 | | `setup-microbench` | `<entry>` | Create isolated microbenchmark harness |
 | | `spec` | `<entry>` | Generate technical spec of C++ implementation |
 | | `analyze-gap` | `<entry>` | Compare ASM implementation against C++ spec |
@@ -107,21 +107,18 @@ If not → run full bootstrap:
 | | `list-todos` | — | List all saved todo entries |
 | **session-evaluation** | `generate` | — | Analyze conversation, produce structured session evaluation |
 | | `export` | — | Save evaluation + compressed session archive to `sessions/` |
-| **skill-manager** | `show skills` | — | List all registered skills |
-| | `create skill` | — | Interactive skill creation flow |
-| | `revise skill` | `<name>` | Interactive skill revision |
-| | `save skill` | — | Write skill to disk + register |
-| | `delete skill` | `<name>` | Remove skill from disk |
+| **skill-manager** | `show-skills` | — | List all registered skills |
+| | `create-skill` | — | Interactive skill creation flow |
+| | `revise-skill` | `<name>` | Interactive skill revision |
+| | `save-skill` | — | Write skill to disk + register |
+| | `delete-skill` | `<name>` | Remove skill from disk |
 | | `commit` | — | Stage + commit all skill changes |
-| | `audit skills` | — | Validate all skill files for consistency |
+| | `audit-skills` | — | Validate all skill files for consistency |
 | **system-design-review** | *(no commands defined)* | — | Seven-expert panel audit of technical specs |
 | **demo-video** | `plan` | — | Generate scene file from project outline |
 | | `record` | — | Capture terminal + browser scenes as video clips |
 | | `produce` | — | TTS audio, subtitles, ffmpeg assembly → final MP4 |
 | **daily-evaluation** | *(no commands defined)* | — | Aggregate session evaluations into dashboards |
-| **npx** | `npx <target> <cmd>` | `<target> <cmd>` | Run npx command in target directory |
-| | `npx . <cmd>` | `<cmd>` | Run npx command in current directory |
-| | `npx list` | — | List available target directories |
 
 ## Composition Patterns
 
@@ -129,10 +126,10 @@ Common requests map to skill compositions. Load order: permanent base (tail) at 
 
 | User says | Skill stack (head ← tail) | Commands |
 |-----------|---------------------------|----------|
-| "start a session" | git → system-design+spec | `start session` |
-| "finish the session" | session-evaluation → git → system-design+spec | `generate` → `finish session` → `export` |
-| "load the last issue" | issue → system-design+spec | `list issues` → `show issue <N>` |
-| "create an issue from context" | todo → issue → system-design+spec | `extract <name>` → `create issue <body>` → `save-todo` |
+| "start a session" | git → system-design+spec | `start-session` |
+| "finish the session" | session-evaluation → git → system-design+spec | `generate` → `finish-session` → `export` |
+| "load the last issue" | issue → system-design+spec | `list-issues` → `show-issue <N>` |
+| "create an issue from context" | todo → issue → system-design+spec | `extract <name>` → `create-issue <body>` → `save-todo` |
 | "show pending todos" | todo → system-design+spec | `list-todos` |
 | "load a todo and work on it" | todo → system-design+spec | `load-todo <id>` → agent acts on content |
 | "port an npm package" | npm-optimizer → system-design+spec | `execute` |

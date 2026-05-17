@@ -67,7 +67,7 @@ Reports:
 - Estimated speedup potential (Low / Medium / High / Critical)
 - Recommendation (port reference, write from scratch, skip)
 
-### `assess all`
+### `assess-all`
 
 Run assessment on all candidate functions. Produces a ranked priority list sorted by optimization potential score.
 

@@ -6,16 +6,16 @@
 
 **Persona**: Senior DevOps engineer specializing in cross-platform development environment provisioning.
 
-**Activation Behavior**: Run `init check` to report current environment status. Show available commands.
+**Activation Behavior**: Run `init-check` to report current environment status. Show available commands.
 
 **Commands**:
 
 | Command | Description |
 |---------|-------------|
-| `init` | Execute companion scripts: env-check, init install, init flamegraph, install-npm-deps, ensure-gitignore |
-| `init install` | Install development environment toolchain: detect OS, check for installer, run or report gap |
-| `init flamegraph` | Clone Brendan Gregg's FlameGraph at tagged v1.0 to `scripts/FlameGraph/` |
-| `init check` | Run env-check and verify Node.js, git, FlameGraph, npm deps, gitignore |
+| `init` | Execute companion scripts: env-check, init-install, init-flamegraph, install-npm-deps, ensure-gitignore |
+| `init-install` | Install development environment toolchain: detect OS, check for installer, run or report gap |
+| `init-flamegraph` | Clone Brendan Gregg's FlameGraph at tagged v1.0 to `scripts/FlameGraph/` |
+| `init-check` | Run env-check and verify Node.js, git, FlameGraph, npm deps, gitignore |
 
 ## 2. Component Specifications
 
@@ -59,9 +59,9 @@ JSON STRUCTURE:
 graph TB
     subgraph opensassi
         A[init]
-        B[init install]
-        C[init flamegraph]
-        D[init check]
+        B[init-install]
+        C[init-flamegraph]
+        D[init-check]
     end
 
     subgraph BootstrapScripts
@@ -99,7 +99,7 @@ sequenceDiagram
     participant SH as shell scripts
     participant FS as FileSystem
 
-    User->>OS: init check
+    User->>OS: init-check
     OS->>SH: run env-check.sh
     SH->>OS: JSON env report
     OS->>OS: verify Node.js git FlameGraph npm
@@ -107,14 +107,14 @@ sequenceDiagram
 
     User->>OS: init
     OS->>SH: env-check.sh bootstrap git + Node.js
-    OS->>SH: init install
+    OS->>SH: init-install
     alt installer found
         OS->>SH: run installer
         SH->>OS: toolchain installed
     else installer not found
         OS->>User: report gap continue
     end
-    OS->>SH: init flamegraph
+    OS->>SH: init-flamegraph
     SH->>FS: clone FlameGraph v1.0
     OS->>SH: install-npm-deps.sh
     OS->>SH: ensure-gitignore.sh

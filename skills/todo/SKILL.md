@@ -11,7 +11,7 @@ Technical writer and project manager — extracts structured summaries from sess
 
 ## Dependencies
 
-Requires the **issue** skill — `create issue` handles the GitHub side.
+Requires the **issue** skill — `create-issue` handles the GitHub side.
 Load both on activation:
 ```
 skill issue
@@ -23,7 +23,7 @@ skill todo
 Show the workflow:
 1. `extract <name>` — analyze session context for unfinished work
 2. `propose-todo <name>` — draft a structured todo entry
-3. Load `issue` skill → `create issue <body>` — creates the GitHub issue, note the issue #
+3. Load `issue` skill → `create-issue <body>` — creates the GitHub issue, note the issue #
 4. `save-todo` — write to `todos/` with sequential numbering
 5. `load-todo <id>` or `list-todos` — retrieve saved work
 
@@ -33,7 +33,7 @@ Show the workflow:
 
 Scan the current session context for unfinished work, bugs, deferred items. Optionally check `perf/experiments/` for prior optimization experiment data (asm-optimizer specific — may not exist in other domains). Output a structured summary with two sections:
 
-#### Issue Body (formatted for the `issue` skill's `create issue` command)
+#### Issue Body (formatted for the `issue` skill's `create-issue` command)
 
 ```
 ### Title
@@ -77,7 +77,7 @@ Scan the current session context for unfinished work, bugs, deferred items. Opti
 
 ### `propose-todo <name>`
 
-From the extract output + an existing issue number (obtained by running `create issue` from the `issue` skill), draft a todo entry following this format:
+From the extract output + an existing issue number (obtained by running `create-issue` from the `issue` skill), draft a todo entry following this format:
 
 ```markdown
 # <NNN>-<name>
@@ -135,7 +135,7 @@ List all saved todo entries:
 
 ## Design Principles
 
-- The **issue** skill handles ALL issue creation — this skill never calls `gh issue create`. The user runs `create issue` from the `issue` skill between `propose-todo` and `save-todo`.
+- The **issue** skill handles ALL issue creation — this skill never calls `gh issue create`. The user runs `create-issue` from the `issue` skill between `propose-todo` and `save-todo`.
 - Session tracking line at the bottom of every issue body:
   ```
   ---

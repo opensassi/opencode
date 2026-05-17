@@ -50,7 +50,6 @@ npx @opensassi/opencode help                     # Show help
 | `skill-manager` | Create/revise skills interactively |
 | `system-design` | Interactive C++ spec authoring with diagrams |
 | `system-design-review` | Seven-expert panel audit of technical specs |
-| `npx` | Run npx commands in a target directory with automatic directory resolution |
 | `todo` | Create issues + debugging skills from session context |
 
 ## Package Contents

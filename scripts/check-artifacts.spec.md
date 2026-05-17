@@ -12,7 +12,7 @@
 3. Compares: if spec is newer than review → `"STALE"`; if no review → `"MISSING"`; otherwise → `"OK"`
 4. Outputs JSON array to stdout
 
-**Cross-references**: Used in CI pipelines after `generate from source` to detect drift. Depends on `extract-artifacts.js` directory conventions (`.artifacts/<specName>/review.md` path structure).
+**Cross-references**: Used in CI pipelines after `generate-from-source` to detect drift. Depends on `extract-artifacts.js` directory conventions (`.artifacts/<specName>/review.md` path structure).
 
 ## 2. Component Specifications
 

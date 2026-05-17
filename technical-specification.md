@@ -125,16 +125,16 @@ sequenceDiagram
     participant SM as skill-manager
     participant GIT as git skill
 
-    User ->> AG: start session
+    User ->> AG: start-session
     AG ->> SD: load skill system-design
-    SD ->> AP: generate from source
+    SD ->> AP: generate-from-source
     AP ->> AP: extract artifacts
     AP ->> AP: validate mermaid + D3
-    SD ->> AP: generate technical specification
+    SD ->> AP: generate-technical-specification
     AP ->> AP: verify D3 keyframes
     User ->> SM: create/revise skill
-    SM ->> SM: save skill to .opencode/skills/
-    User ->> GIT: finish session
+    SM ->> SM: save-skill to .opencode/skills/
+    User ->> GIT: finish-session
     GIT ->> GIT: commit + rebase + push
 ```
 
@@ -188,9 +188,9 @@ rb.addEventListener('click',function(){jk(0);pl=true;pb.textContent='Pause';cons
 
 | Test ID | Scenario | Steps | Expected |
 |---------|----------|-------|----------|
-| E2E01 | Full spec generation cycle | generate from source → extract → validate | All mermaid + D3 pass |
-| E2E02 | Skill save round-trip | skill-manager create skill → save → show skills | Skill appears in table |
-| E2E03 | Git session workflow | start session → develop → finish session | Single atomic commit, eval written |
+| E2E01 | Full spec generation cycle | generate-from-source → extract → validate | All mermaid + D3 pass |
+| E2E02 | Skill save round-trip | skill-manager create-skill → save-skill → show-skills | Skill appears in table |
+| E2E03 | Git session workflow | start-session → develop → finish-session | Single atomic commit, eval written |
 | E2E04 | Cross-platform install | Run install.sh on all 3 platforms | Toolchain installed |
 
 ### Regression Baseline

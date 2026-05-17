@@ -17,13 +17,13 @@ When activated:
 
 1. **Check prerequisites** — Verify `gh` is installed and authenticated via `gh auth status`. If not, print the setup commands and abort.
 2. **Show repo context** — Run `gh repo view --json name,owner,url` and `gh issue list --limit 5` to display the current repository and recent open issues.
-3. **Surface available commands** — List `create issue`, `list issues`, `show issue`, `close issue` with one-line descriptions.
+3. **Surface available commands** — List `create-issue`, `list-issues`, `show-issue`, `close-issue` with one-line descriptions.
 
 ---
 
 ## Available Commands
 
-### `create issue <description>`
+### `create-issue <description>`
 
 Take the user's description (interpreted in the context of the current conversation session), analyze it, and produce a structured issue proposal.
 
@@ -79,15 +79,15 @@ Generated from session `<session-id>` on `<date>`.
 
 Return the issue URL to the user.
 
-### `list issues [--limit N]`
+### `list-issues [--limit N]`
 
 Run `gh issue list --repo <owner/repo> --limit <N>` (default 10). Display results as a table.
 
-### `show issue <number>`
+### `show-issue <number>`
 
 Run `gh issue view <number> --repo <owner/repo>` and display the full body.
 
-### `close issue <number>`
+### `close-issue <number>`
 
 Close an issue. Confirm with the user before running `gh issue close <number>`.
 
@@ -99,6 +99,6 @@ Close an issue. Confirm with the user before running `gh issue close <number>`.
 - **Context extraction is implicit** — The agent already has the conversation. Extract from what was discussed without asking the user to repeat themselves.
 - **Issues are for future LLM agents** — Use the same conventions as technical specs and skills: clear sections, actionable criteria, explicit file references.
 - **Plain paths for Scope** — Use module paths like `source/Lib/MLTools/CUFeatureExtractor.cpp` rather than GitHub links, so references are branch-agnostic.
-- **One issue per create** — Each `create issue` invocation produces exactly one GitHub issue.
+- **One issue per create** — Each `create-issue` invocation produces exactly one GitHub issue.
 - **Session tracking** — Every issue body ends with a session reference line linking it back to the originating conversation.
 - **`gh` required** — The skill is inoperable without `gh` installed and authenticated. Check on activation.

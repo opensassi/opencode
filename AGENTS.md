@@ -30,7 +30,7 @@ All skills, scripts, and tooling are delivered via the npm package.
 
 ## Design Constraints
 
-- No commits during development — all changes staged at finish session time
+- No commits during development — all changes staged at finish-session time
 - Single atomic commit per session
 - Full test suite after every rebase
 - Session evaluation is read-only (generate) / write-once (export)

@@ -7,7 +7,7 @@
         "setup-baseline",
         "profile",
         "assess",
-        "assess all",
+        "assess-all",
         "setup-microbench",
         "spec",
         "analyze-gap",
@@ -32,8 +32,8 @@
       "name": "git",
       "description": "Rebase-based single-commit-per-session workflow",
       "commands": [
-        "start session",
-        "finish session",
+        "start-session",
+        "finish-session",
         "sync"
       ]
     },
@@ -41,22 +41,13 @@
       "name": "issue",
       "description": "GitHub issue management",
       "commands": [
-        "create issue",
-        "list issues",
-        "show issue",
-        "close issue"
+        "create-issue",
+        "list-issues",
+        "show-issue",
+        "close-issue"
       ]
     },
-    {
-      "name": "npx",
-      "description": "Run npx commands in a target directory with automatic directory resolution",
-      "commands": [
-        "npx <target> <npx-command>",
-        "npx . <npx-command>",
-        "npx list"
-      ]
-    },
-    {
+{
       "name": "npm-optimizer",
       "description": "Port an npm package to a C++ native addon — preserve 100% test compatibility while significantly improving performance through profiling-driven architectural iteration",
       "commands": [
@@ -104,34 +95,34 @@
       "name": "skill-manager",
       "description": "Create/revise skills interactively",
       "commands": [
-        "show skills",
-        "create skill",
-        "revise skill",
-        "save skill",
-        "delete skill",
+        "show-skills",
+        "create-skill",
+        "revise-skill",
+        "save-skill",
+        "delete-skill",
         "commit",
-        "audit skills"
+        "audit-skills"
       ]
     },
     {
       "name": "system-design",
       "description": "Interactive C++ spec authoring with diagrams and D3 animations",
       "commands": [
-        "generate sequence diagram",
-        "generate architecture diagram",
-        "generate class specification",
-        "generate manim animation",
-        "generate d3 animation",
-        "generate testing plan",
-        "generate from source",
-        "load spec",
-        "generate technical specification",
-        "revise technical specification",
-        "split sub-modules",
-        "combine sub-modules",
-        "list sub-modules",
-        "load sub-module spec",
-        "generate sub-module spec"
+        "generate-sequence-diagram",
+        "generate-architecture-diagram",
+        "generate-class-specification",
+        "generate-manim-animation",
+        "generate-d3-animation",
+        "generate-testing-plan",
+        "generate-from-source",
+        "load-spec",
+        "generate-technical-specification",
+        "revise-technical-specification",
+        "split-sub-modules",
+        "combine-sub-modules",
+        "list-sub-modules",
+        "load-sub-module-spec",
+        "generate-sub-module-spec"
       ]
     },
     {
