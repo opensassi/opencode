@@ -1,14 +1,12 @@
 #!/usr/bin/env node
-import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
+const CWD = process.cwd();
 const SPEC_FILE = 'technical-specification.md';
 
 function parseModuleReference() {
-  const content = fs.readFileSync(path.join(ROOT, SPEC_FILE), 'utf-8');
+  const content = fs.readFileSync(path.join(CWD, SPEC_FILE), 'utf-8');
   const lines = content.split('\n');
 
   let inTable = false;
@@ -123,11 +121,11 @@ function processSpecFile(specPath, outputDir, extraFiles) {
 }
 
 function processSubModule(mod) {
-  const outputDir = path.join(ROOT, mod.dir, '.artifacts');
+  const outputDir = path.join(CWD, mod.dir, '.artifacts');
   fs.mkdirSync(outputDir, { recursive: true });
   console.log(`\nProcessing ${mod.name} module → ${path.join(mod.dir, '.artifacts/')}`);
   for (const specFile of mod.specFiles) {
-    const specPath = path.join(ROOT, mod.dir, specFile);
+    const specPath = path.join(CWD, mod.dir, specFile);
     if (fs.existsSync(specPath)) {
       processSpecFile(specPath, outputDir);
     } else {
@@ -148,7 +146,7 @@ function main() {
       console.error('Usage: node scripts/extract-artifacts.js --file <relative-path>');
       process.exit(1);
     }
-    const absPath = path.resolve(ROOT, filePath);
+    const absPath = path.resolve(CWD, filePath);
     if (!fs.existsSync(absPath)) {
       console.error(`ERROR: File not found: ${absPath}`);
       process.exit(1);
@@ -181,9 +179,9 @@ function main() {
 
   if (allFlag) {
     console.log(`Processing ${SPEC_FILE} → .artifacts/`);
-    const rootD3 = path.join(ROOT, 'd3-animation.html');
+    const rootD3 = path.join(CWD, 'd3-animation.html');
     const rootExtra = fs.existsSync(rootD3) ? [{ src: rootD3, dest: 'd3-animation.html' }] : [];
-    processSpecFile(path.join(ROOT, SPEC_FILE), path.join(ROOT, '.artifacts'), rootExtra);
+    processSpecFile(path.join(CWD, SPEC_FILE), path.join(CWD, '.artifacts'), rootExtra);
     console.log('Extracting artifacts from all modules...');
     for (const mod of Object.values(modules)) {
       processSubModule(mod);
@@ -192,12 +190,12 @@ function main() {
     return;
   }
 
-  const outputDir = path.join(ROOT, '.artifacts');
+  const outputDir = path.join(CWD, '.artifacts');
   fs.mkdirSync(outputDir, { recursive: true });
   console.log(`Processing ${SPEC_FILE} → .artifacts/`);
-  const rootD3 = path.join(ROOT, 'd3-animation.html');
+  const rootD3 = path.join(CWD, 'd3-animation.html');
   const extraFiles = fs.existsSync(rootD3) ? [{ src: rootD3, dest: 'd3-animation.html' }] : [];
-  processSpecFile(path.join(ROOT, SPEC_FILE), outputDir, extraFiles);
+  processSpecFile(path.join(CWD, SPEC_FILE), outputDir, extraFiles);
   console.log('\nDone. Run `npm run test-artifacts` to validate.');
 }
 

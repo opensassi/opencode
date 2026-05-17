@@ -8,11 +8,12 @@ import sharp from 'sharp';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
+const CWD = process.cwd();
 
 function findArtifactDirs(specPath) {
   // When --file is given, return only that spec's artifact directory
   if (specPath) {
-    const absSpec = path.resolve(ROOT, specPath);
+    const absSpec = path.resolve(CWD, specPath);
     const specDir = path.dirname(absSpec);
     const specName = path.basename(absSpec);
     const artifactDir = path.join(specDir, '.artifacts', specName);
@@ -26,11 +27,11 @@ function findArtifactDirs(specPath) {
 
   const dirs = {};
 
-  const rootArtifacts = path.join(ROOT, '.artifacts');
+  const rootArtifacts = path.join(CWD, '.artifacts');
   if (fs.existsSync(rootArtifacts)) dirs['.artifacts'] = rootArtifacts;
 
   for (const base of ['src', 'source']) {
-    const baseDir = path.join(ROOT, base);
+    const baseDir = path.join(CWD, base);
     if (!fs.existsSync(baseDir)) continue;
 
     const xFind = (dir, label) => {
@@ -79,11 +80,11 @@ async function validateMermaid(specPath) {
     totalFound += mmdFiles.length;
     for (const mmdFile of mmdFiles) {
       const pngFile = mmdFile.replace(/\.mmd$/, '.png');
-      const rel = path.relative(ROOT, mmdFile);
+      const rel = path.relative(CWD, mmdFile);
       try {
         const puppeteerConfig = path.join(ROOT, 'scripts', 'puppeteer-config.json');
         execSync(`mmdc -i "${mmdFile}" -o "${pngFile}" -b transparent -p "${puppeteerConfig}"`, { stdio: 'pipe', timeout: 30000 });
-        results.pass.push({ file: rel, png: path.relative(ROOT, pngFile) });
+        results.pass.push({ file: rel, png: path.relative(CWD, pngFile) });
         console.log(`  ✓ ${rel}`);
       } catch (e) {
         const stderr = (e.stderr || '').toString() || e.message;
@@ -166,7 +167,7 @@ async function captureFilmstrip(htmlFile) {
         await image.greyscale().toFile(frameFile);
         fs.unlinkSync(tmpFile);
         execSync(`convert "${frameFile}" -colorspace Gray "${frameFile}"`, { stdio: 'ignore' });
-        frames.push({ file: path.relative(ROOT, frameFile), label: kf.label, time: kf.time });
+        frames.push({ file: path.relative(CWD, frameFile), label: kf.label, time: kf.time });
         console.log(`    frame ${i}/${keyframes.length} → frame-${i}-${kf.label}.png  [${domState}]`);
       }
       return { pass: true, animationDurationMs: duration || keyframes[keyframes.length - 1].time, frames, keyframes, skipped: false };
@@ -195,7 +196,7 @@ async function captureFilmstrip(htmlFile) {
       await image.greyscale().toFile(frameFile);
       fs.unlinkSync(tmpFile);
       execSync(`convert "${frameFile}" -colorspace Gray "${frameFile}"`, { stdio: 'ignore' });
-      frames.push({ file: path.relative(ROOT, frameFile), label: `frame-${i}`, time: waitMs });
+      frames.push({ file: path.relative(CWD, frameFile), label: `frame-${i}`, time: waitMs });
       console.log(`    frame ${i}/5 @ ${waitMs}ms → frame-${i}.png`);
     }
 
@@ -214,7 +215,7 @@ async function validateD3(specPath) {
     const htmlFiles = findFilesRecursive(dir, '.html');
     totalFound += htmlFiles.length;
     for (const htmlFile of htmlFiles) {
-      const rel = path.relative(ROOT, htmlFile);
+      const rel = path.relative(CWD, htmlFile);
       console.log(`  Loading ${rel}...`);
       try {
         const filmResult = await captureFilmstrip(htmlFile);
@@ -253,7 +254,7 @@ function writeReports(mermaidResults, d3Results, specPath) {
       ...mermaidResults.fail.map(r => ({ ...r, pass: false })),
     ];
     for (const r of allResults) {
-      const absFile = path.join(ROOT, r.file);
+      const absFile = path.join(CWD, r.file);
       if (absFile.startsWith(dir)) {
         report.mermaid.push(r);
       }
@@ -265,7 +266,7 @@ function writeReports(mermaidResults, d3Results, specPath) {
       ...d3Results.skipped.map(r => ({ ...r, pass: true, skipped: true })),
     ];
     for (const r of allD3) {
-      const absFile = path.join(ROOT, r.file);
+      const absFile = path.join(CWD, r.file);
       if (absFile.startsWith(dir)) {
         report.d3_filmstrip.push(r);
       }
@@ -286,7 +287,7 @@ async function main() {
     process.exit(1);
   }
   if (specPath) {
-    const absPath = path.resolve(ROOT, specPath);
+    const absPath = path.resolve(CWD, specPath);
     if (!fs.existsSync(absPath)) {
       console.error(`ERROR: Spec file not found: ${absPath}`);
       process.exit(1);

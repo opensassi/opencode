@@ -1,12 +1,10 @@
 #!/usr/bin/env node
-import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
 import http from 'http';
 import { chromium } from 'playwright';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
+const CWD = process.cwd();
 
 function serveStatic(dir) {
   const server = http.createServer((req, res) => {
@@ -38,7 +36,7 @@ function parseArgs() {
 
 async function verify() {
   const { filePath } = parseArgs();
-  const absPath = path.resolve(ROOT, filePath);
+  const absPath = path.resolve(CWD, filePath);
   if (!fs.existsSync(absPath)) {
     console.error(`ERROR: File not found: ${absPath}`);
     process.exit(1);
@@ -46,7 +44,7 @@ async function verify() {
 
   const dir = path.dirname(absPath);
   const fileName = path.basename(absPath);
-  const rel = path.relative(ROOT, absPath);
+  const rel = path.relative(CWD, absPath);
 
   console.log(`Verifying ${rel}...\n`);
 

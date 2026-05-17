@@ -1,21 +1,19 @@
 #!/usr/bin/env node
-import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
+const CWD = process.cwd();
 
 function getReviewPath(specPath) {
-  const rel = path.relative(ROOT, specPath);
+  const rel = path.relative(CWD, specPath);
   const dir = path.dirname(rel);
   const basename = path.basename(rel);
 
   if (rel === 'technical-specification.md') {
-    return path.join(ROOT, '.artifacts', 'review.md');
+    return path.join(CWD, '.artifacts', 'review.md');
   }
 
-  return path.join(ROOT, dir, '.artifacts', basename, 'review.md');
+  return path.join(CWD, dir, '.artifacts', basename, 'review.md');
 }
 
 function getReviewStatus(specPath) {
@@ -28,7 +26,7 @@ function getReviewStatus(specPath) {
   const status = reviewMtime < specMtime ? "STALE" : "OK";
 
   return {
-    reviewFile: path.relative(ROOT, reviewPath),
+    reviewFile: path.relative(CWD, reviewPath),
     reviewMtime: Math.floor(reviewMtime),
     reviewStatus: status,
   };
@@ -37,10 +35,10 @@ function getReviewStatus(specPath) {
 function getAllSpecFiles() {
   const files = [];
 
-  const rootSpec = path.join(ROOT, 'technical-specification.md');
+  const rootSpec = path.join(CWD, 'technical-specification.md');
   if (fs.existsSync(rootSpec)) files.push(rootSpec);
 
-  const srcDir = path.join(ROOT, 'src');
+  const srcDir = path.join(CWD, 'src');
   if (!fs.existsSync(srcDir)) return files;
 
   for (const entry of fs.readdirSync(srcDir)) {
@@ -58,7 +56,7 @@ function getAllSpecFiles() {
 }
 
 function getModuleSpecFiles(name) {
-  const moduleDir = path.join(ROOT, 'src', name);
+  const moduleDir = path.join(CWD, 'src', name);
   if (!fs.existsSync(moduleDir) || !fs.statSync(moduleDir).isDirectory()) {
     console.error(`ERROR: No such module: "${name}" (not found at src/${name}/)`);
     process.exit(1);
@@ -110,7 +108,7 @@ function main() {
   }
 
   const results = specFiles.map(specPath => {
-    const relSpecPath = path.relative(ROOT, specPath);
+    const relSpecPath = path.relative(CWD, specPath);
     const specMtime = fs.statSync(specPath).mtimeMs;
     const review = getReviewStatus(specPath);
 
