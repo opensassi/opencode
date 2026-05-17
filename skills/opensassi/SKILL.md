@@ -11,9 +11,22 @@ description: Root skill ecosystem — loads system-design + spec tree, routes su
 
 | Input | Action |
 |-------|--------|
-| `/opensassi` | Load `skill system-design`, read `technical-specification.md` + spec tree depth 2 (root + facade specs). Report ready. |
+| `/opensassi` | Bootstrap — load all sub-skills into context:
+  1. Load skills in dependency order: `system-design`, `system-design-review`, `git`, `issue`, `todo`, `session-evaluation`, `skill-manager`, `profiler`, `npm-optimizer`, `asm-optimizer`, `demo-video`.
+  2. For each, run `npx @opensassi/opencode <skill-name>` and read the output into context.
+  3. Check if `technical-specification.md` exists in the project root.
+     - If yes: Read it, parse the Module Reference table, read every referenced `.spec.md` file in full. Report ready with a summary.
+     - If no: Report ready with all skills loaded. |
 | `/opensassi init` | Run `env-check.sh`. Parse JSON result: if node+git+FlameGraph+deps all present → "Already bootstrapped". Otherwise run full bootstrap sequence (env-check → install → flamegraph → npm-deps → gitignore). |
-| `/opensassi <skill> <command> [args]` | Load `<skill>` via `npx @opensassi/opencode <skill>`, then run `<command>` with `[args]`. Return result. |
+| `/opensassi <skill> [command] [args]` | Load `<skill>` via `npx @opensassi/opencode <skill>`, then run `[command] [args]` if provided. |
+
+### `load-skill <name>`
+
+Reload a skill's instructions into context. Useful deep in a session when instruction-following may degrade.
+
+1. Run `npx @opensassi/opencode <name>` to print the skill's SKILL.md.
+2. Read the output into context to refresh the instructions.
+3. Confirm: "Reloaded `<name>` skill."
 
 ### Spec tree depth
 
@@ -63,6 +76,9 @@ If not → run full bootstrap:
 | | `list-sub-modules` | — | List all sub-modules with facade classes |
 | | `load-sub-module-spec` | `<path>` | Load one sub-module `.spec.md` |
 | | `generate-sub-module-spec` | `<name>` | Generate `.spec.md` for a named sub-module |
+| | `list-external` | — | List external integration pairs in `external/` |
+| | `load-external` | `<name>` | Load an external project's spec tree into context |
+| | `staleness-check` | — | Check for specs with missing or outdated reviews |
 | **git** | `start-session` | — | `git checkout main` → `git pull --rebase`, verify clean tree |
 | | `finish-session` | — | add → commit → rebase → test → eval → push (single atomic commit) |
 | | `sync` | — | `git fetch origin` → `git rebase origin/main` → test |
@@ -165,9 +181,9 @@ Parse user text into skill compositions:
 
 ## Context Architecture
 
-- **Tail (permanent base):** `system-design` skill + spec tree. Loaded at `/opensassi`. Self-repropagating tokens designed for long-context survival.
-- **Head (JIT-loaded):** Specific skill instructions loaded per phase. Strongest attention, loaded last.
-- **Sub-agent loading contracts:** When spawning phase sub-agents, load skills in deterministic order for KV cache reuse (detailed in `npm-optimizer` SKILL.md).
+- **All skills loaded at bootstrap**: Every skill in the Lexicon is loaded into context on `/opensassi`. No JIT-loading needed for normal operation.
+- **Repropagation**: If context degrades deep in a session, use `load-skill <name>` to reload a specific skill's instructions.
+- **Sub-agent loading contracts**: When spawning phase sub-agents, load skills in deterministic order for KV cache reuse (detailed in `npm-optimizer` SKILL.md).
 
 ## Design Principles
 

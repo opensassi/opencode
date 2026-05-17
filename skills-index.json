@@ -122,7 +122,10 @@
         "combine-sub-modules",
         "list-sub-modules",
         "load-sub-module-spec",
-        "generate-sub-module-spec"
+        "generate-sub-module-spec",
+        "list-external",
+        "load-external",
+        "staleness-check"
       ]
     },
     {

@@ -236,85 +236,51 @@ All diagrams must render and all D3 animations must pass filmstrip + verificatio
 
 ### `load-spec`
 
-Load the complete specification tree into the agent's working context — every `.spec.md` file at every level, in full, including diagrams and D3 animations. This is the strict inverse of `generate-from-source` (which builds the tree bottom-up) and acts as the identity function for the spec tree (reading back exactly what was generated).
+Execute immediately. Do not ask for confirmation.
 
-**Process**:
-
-1. **Read top-level spec** — Read `technical-specification.md` in full. Parse the Module Reference table and Free-Standing Components table to discover all sub-module facade specs, internal components, and free-standing file-level specs.
-
-2. **Load all spec files** — For every `.spec.md` file referenced in any table:
-   - Read the file in full, including Mermaid architecture/sequence diagrams and D3 HTML animations
-   - Every section must be loaded verbatim: Overview, Component Specifications, System Architecture, Detailed Data Flow, Visualization, Testing Requirements, Cross-References, and CLI Entry Point
-   - Do not skip, truncate, or summarize any section
-   - Do not defer diagram or animation content
-
-2.5 **Load external integration specs** — After loading the local spec tree, scan the
-    `external/` directory for two-file integration pairs.
-
-    For every entry where both `external/<name>.md` and `external/<name>/` directory
-    exist (e.g., `external/opencode.md` + `external/opencode/`):
-
-    a. **Read integration spec** — Read `external/<name>.md` in full. This document
-       (formatted like a `technical-specification.md`) describes the inter-linkages
-       between the current project and the external project.
-
-    b. **Check for external spec tree**: Detect whether `external/<name>/` contains
-       its own specification tree by checking for:
-       - `external/<name>/technical-specification.md` (top-level spec)
-       - `external/<name>/source/` and `external/<name>/src/` directories containing
-         `.spec.md` files
-
-    c. **Load external spec tree** — If `external/<name>/technical-specification.md`
-       exists, recursively apply steps 1-2 of this command:
-       - Read the external top-level spec
-       - Parse its Module Reference table and Free-Standing Components table
-       - Load every `.spec.md` file referenced in those tables in full
-
-    d. **Record integration edges** — In the spec tree index, record every
-       cross-reference from the integration spec (`external/<name>.md` §5
-       Cross-Reference Table) that connects a project-root file to an
-       external consumer or spec. These edges are validated in step 4.
-
-    e. **Mark as externally-linked** — Flag the spec tree index as having
-       external linkages. This affects the output summary format (step 6)
-       and staleness scope (step 5).
-
-3. **Build spec tree index** — From the loaded content, construct a structured navigable index in working memory:
-   - Sub-module count, names, and facade roles
-   - Internal component count and roles per sub-module
-   - Free-standing component count and roles
-   - External project count and linkage count
-   - Integration edges (project file → external consumer pairs)
-   - Cross-reference connectivity graph (which specs reference which)
-
-4. **Cross-reference validation** — Verify across all loaded specs:
-   - Every entry in every §7 Cross-References table matches a spec file that was loaded
-   - Every entry in every Internal Components table has a file-level spec loaded
-   - Every entry in the Free-Standing Components table has a spec loaded
-   - No spec is orphaned (referenced by zero specs and referencing zero specs)
-   - All architecture diagram node names correspond to actual component specifications
-   - All sequence diagram participant names correspond to actual components or subsystems
-   - Report unresolved references and orphaned specs as warnings
-
-5. **Staleness check** — Run `npx @opensassi/opencode run check-artifacts.js --errors` from the project root and report any specs with missing reviews (MISSING) or out-of-date reviews (STALE). If external spec trees were loaded in step 2.5, also run the staleness check inside each `external/<name>/` directory (if `scripts/check-artifacts.js` exists there) and report those results as a separate "External" section in the output.
-
-6. **Output summary** — Print a structured tree summary:
+1. **Glob** — Run `glob "**/*.spec.md"` from project root. Exclude `node_modules/`, `.git/`.
+2. **Read top-level spec** — Read `technical-specification.md` in full. Parse Module Reference table and Free-Standing Components table.
+3. **Load each spec file** — For every `.spec.md`, `read` it in full into context (all sections, diagrams, D3 HTML). Do not skip, truncate, or summarize.
+4. **Build spec tree index** — Construct a navigable index from loaded content (module count, facade roles, internal components, free-standing components, total files).
+5. **Output summary** — Print:
    ```
    Loaded specification tree:
-     Top-level: technical-specification.md
-     Sub-modules: N facade specs → M internal components
-     Free-standing: P component specs
-     External: R linked projects (see external/<name>.md for integration edges)
-     Integration edges: S cross-references verified
      Total: Q spec files loaded in full
-     Languages: Shell, JavaScript, PowerShell, Markdown
-     Cross-references: all resolved (or: N unresolved warnings)
-     Staleness: all up to date (or: N stale, M missing)
    ```
 
-**Context assumptions**: This command assumes a model with 1M+ token context and 250K+ token budget for the spec tree. The full tree is approximately 84K-96K tokens across ~36 spec files. Loading all files in full is intentional — the dense, internally-consistent cross-reference structure across all layers enables optimal sparse attention retrieval across the entire specification.
+`load-spec` does not write any files.
 
-**Relationship to `generate-from-source`**: `load-spec` is the read-only inverse of `generate-from-source`. It does not create, modify, or validate artifacts (beyond the staleness check). Use it to reify the full specification tree into the agent's context for review, analysis, or revision.
+---
+
+### `list-external`
+
+Scan `external/` for integration pairs and list them.
+
+1. Run `glob "external/*/"` to find all external directories.
+2. For each directory, check if `external/<name>.md` exists.
+3. Report each pair found and its spec file path.
+
+This command is read-only.
+
+### `load-external <name>`
+
+Load an external project's spec tree into context.
+
+1. Verify `external/<name>.md` and `external/<name>/` exist.
+2. Read `external/<name>.md` in full.
+3. If `external/<name>/technical-specification.md` exists, read it and all `.spec.md` files it references.
+4. Record integration edges (cross-references between project-root files and this external spec).
+5. Report: "Loaded external spec tree for `<name>` — N files, M integration edges."
+
+If no name is given, run `list-external` first and ask the user to pick one.
+
+### `staleness-check`
+
+Check for specs whose reviews are missing or out of date.
+
+1. Run `npx @opensassi/opencode run check-artifacts.js --errors`.
+2. Report any MISSING or STALE entries.
+3. If all up to date, report: "All reviews current."
 
 ---
 

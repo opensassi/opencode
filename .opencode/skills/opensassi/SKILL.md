@@ -11,7 +11,10 @@ Senior DevOps engineer specializing in cross-platform development environment pr
 
 ## On Activation
 
-1. Show the skills-index (from `skills-index.json` or by running `npx @opensassi/opencode opensassi --print-index`)
+1. Bootstrap — load all sub-skills into context:
+   a. For each skill in the skills-index, run `npx @opensassi/opencode <skill-name>` and read the output into context.
+   b. If `technical-specification.md` exists, read it, parse the Module Reference table, read every `.spec.md` file.
+   c. Report ready with a summary.
 2. Run `init-check` to report current environment status (OS, Node.js, git, FlameGraph, npm deps)
 3. Show available commands
 
