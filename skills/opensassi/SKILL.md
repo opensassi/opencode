@@ -11,6 +11,17 @@ description: Root skill ecosystem — loads system-design + spec tree, routes su
 
 When the agent is in plan mode, `npx @opensassi/opencode <skill-name>` is explicitly permitted by `.opencode/opencode.json`. Use it freely to load skills and spec files into context during read-only analysis. No other bash commands are allowed in plan mode.
 
+## On Activation
+
+When loaded, execute immediately:
+
+1. Run the bootstrap sequence (same as `/opensassi`):
+   a. Load `system-design` via `npx @opensassi/opencode system-design`.
+   b. Run the system-design skill's `load-spec --depth 2` — glob for all `.spec.md` files,
+      read `technical-specification.md` and every `.spec.md` in full.
+   c. Report ready with a spec tree summary.
+2. Do not wait for the user to type a command — the bootstrap runs automatically.
+
 ## Entry Point
 
 | Input | Action |
