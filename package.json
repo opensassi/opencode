@@ -1,6 +1,6 @@
 {
   "name": "@opensassi/opencode",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Agent skill harness for opencode — bootstrap, system-design, git workflow, profiling, and more",
   "type": "module",
   "bin": {
@@ -38,7 +38,8 @@
     "node": ">=22"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "opencode-ai": "1.14.51"
   },
   "devDependencies": {
     "@playwright/test": "^1.52.0",
