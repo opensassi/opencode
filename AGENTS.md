@@ -1,32 +1,23 @@
 # opencode Agent Instructions — @opensassi/opencode
 
-This project uses the **@opensassi/opencode** skill pack.
-All skills, scripts, and tooling are delivered via the npm package.
+This project is the **@opensassi/opencode** package itself.
 
-## Available Skills
+## Local Development Override
 
-| `skill` | Use case |
-|---------|----------|
-| `asm-optimizer` | SIMD/assembly optimization framework |
-| `daily-evaluation` | Aggregate session evaluations into dashboards |
-| `demo-video` | Produce narrated demo videos with multi-language subtitles |
-| `git` | Rebase-based single-commit-per-session workflow |
-| `issue` | GitHub issue management |
-| `npm-optimizer` | Port an npm package to a C++ native addon |
-| `opensassi` | Bootstrap a new project environment |
-| `profiler` | Linux perf profiling + flamegraphs |
-| `session-evaluation` | Generate structured session reports |
-| `skill-manager` | Create/revise skills interactively |
-| `system-design` | Interactive C++ spec authoring with diagrams |
-| `system-design-review` | Seven-expert panel audit of technical specs |
-| `todo` | Create issues + debugging skills from session context |
+All skill files reference `npx @opensassi/opencode` as the published CLI command.
+When developing locally in this repo, substitute `npm run opencode --` instead:
+
+| Published CLI | Local equivalent |
+|---------------|------------------|
+| `npx @opensassi/opencode <skill-name>` | `npm run opencode -- <skill-name>` |
+| `npx @opensassi/opencode run <path>` | `npm run opencode -- run <path>` |
+| `npx @opensassi/opencode run --skill <name> <path>` | `npm run opencode -- run --skill <name> <path>` |
 
 ## Workflow
 
 1. `skill opensassi` — Load the bootstrap skill. It exposes the full skills-index as a reference table.
 2. Run `npm run opencode -- <skill-name>` to load any sub-skill. The agent reads the output as the skill's full instructions.
 3. Use the skill's commands. Scripts are run via `npm run opencode -- run <path>` or `npm run opencode -- run --skill <name> <path>`.
-   - *Consumers of the published package use `npx @opensassi/opencode` instead of `npm run opencode --`.*
 
 ## Design Constraints
 

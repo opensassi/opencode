@@ -11,22 +11,22 @@ Senior DevOps engineer specializing in cross-platform development environment pr
 
 ## On Activation
 
-1. Show the skills-index (from `skills-index.json` or by running `npm run opencode -- opensassi --print-index`)
+1. Show the skills-index (from `skills-index.json` or by running `npx @opensassi/opencode opensassi --print-index`)
 2. Run `init-check` to report current environment status (OS, Node.js, git, FlameGraph, npm deps)
 3. Show available commands
 
 To load a sub-skill (e.g., system-design, git, profiler), the agent should run:
 ```
-npm run opencode -- <skill-name>
+npx @opensassi/opencode <skill-name>
 ```
 and read the output as the skill's full instructions.
-*Consumers of the published package use `npx @opensassi/opencode <skill-name>` instead.*
+*Local development: use `npm run opencode -- <skill-name>` when working in the opensassi repo itself.*
 
 ## Dependencies
 
 - `bash` or `powershell` (for bootstrap scripts — zero other deps)
 - `git` (installed by bootstrap if missing)
-- The `@opensassi/opencode` npm package (scripts resolve via `npm run opencode -- run --skill opensassi <name>`)
+- The `@opensassi/opencode` npm package (scripts resolve via `npx @opensassi/opencode run --skill opensassi <name>`)
 
 ## Commands
 
@@ -34,11 +34,11 @@ and read the output as the skill's full instructions.
 
 Execute companion scripts from the `@opensassi/opencode` package. If a script is missing or a platform installer does not exist, report the gap and continue; do not generate files.
 
-1. `npm run opencode -- run --skill opensassi env-check.sh` (or `env-check.ps1` on Windows) — bootstrap git + Node.js LTS (creates `.nvmrc` if missing)
+1. `npx @opensassi/opencode run --skill opensassi env-check.sh` (or `env-check.ps1` on Windows) — bootstrap git + Node.js LTS (creates `.nvmrc` if missing)
 2. `init-install` — run existing platform installer, or report if none found
 3. `init-flamegraph` — clone FlameGraph v1.0
-4. `npm run opencode -- run --skill opensassi install-npm-deps.sh` — `npm install`
-5. `npm run opencode -- run --skill opensassi ensure-gitignore.sh` — append common patterns
+4. `npx @opensassi/opencode run --skill opensassi install-npm-deps.sh` — `npm install`
+5. `npx @opensassi/opencode run --skill opensassi ensure-gitignore.sh` — append common patterns
 
 ### `init-install`
 
@@ -46,8 +46,8 @@ Install the development environment toolchain.
 
 **Flow:**
 
-1. **Detect environment** — run `npm run opencode -- run --skill opensassi env-check.sh` (Linux/macOS/WSL/Git Bash) or fall back to `env-check.ps1` (Windows native). Both output structured JSON.
-2. **Check for existing installer** — look for `npm run opencode -- run install.sh` for platform-specific installers from the package's `scripts/install/` directory
+1. **Detect environment** — run `npx @opensassi/opencode run --skill opensassi env-check.sh` (Linux/macOS/WSL/Git Bash) or fall back to `env-check.ps1` (Windows native). Both output structured JSON.
+2. **Check for existing installer** — look for `npx @opensassi/opencode run install.sh` for platform-specific installers from the package's `scripts/install/` directory
 3. **If installer exists** — run it (installs: cmake, nasm, gdb, ripgrep, perf, htop, etc.)
 4. **If installer NOT found**:
    a. Report: "No installer found for this platform"
@@ -61,7 +61,7 @@ Clone Brendan Gregg's FlameGraph at pinned tag `v1.0` to `scripts/FlameGraph/`:
 
 ### `init-check`
 
-Run `npm run opencode -- run --skill opensassi env-check.sh` (or `env-check.ps1`) and verify:
+Run `npx @opensassi/opencode run --skill opensassi env-check.sh` (or `env-check.ps1`) and verify:
 - Node.js version (LTS or later)
 - git availability
 - FlameGraph presence at `scripts/FlameGraph/`
