@@ -13,28 +13,24 @@ When the agent is in plan mode, `npx @opensassi/opencode <skill-name>` is explic
 
 ## On Activation
 
-When loaded, execute immediately:
-
-1. Run the bootstrap sequence (same as `/opensassi`):
-   a. Load `system-design` via `npx @opensassi/opencode system-design`.
-   b. Run the system-design skill's `load-spec --depth 2` — glob for all `.spec.md` files,
-      read `technical-specification.md` and every `.spec.md` in full.
-   c. Report ready with a spec tree summary.
-2. Do not wait for the user to type a command — the bootstrap runs automatically.
+1. Load `system-design` via `npx @opensassi/opencode system-design`.
+2. Follow the system-design skill's `load-spec --depth 2` instructions.
+3. Present the command reference from the Lexicon table below. Wait for the user to request a command or skill.
 
 ## Entry Point
 
 | Input | Action |
 |-------|--------|
-| `/opensassi` | Bootstrap:
-  1. Load `system-design` via `npx @opensassi/opencode system-design`.
-  2. Run the system-design skill's `load-spec --depth 2` — glob for all `.spec.md` files,
-     read `technical-specification.md` and every `.spec.md` in full. Keep the
-     context-conservation override from the `load-spec` section.
-  3. Report ready with a spec tree summary. |
-| `/opensassi init` | Run `env-check.sh`. Parse JSON result: if node+git+FlameGraph+deps all present → "Already bootstrapped". Otherwise run full bootstrap sequence (env-check → install → flamegraph → npm-deps → gitignore). |
-| `/opensassi <skill> [command] [args]` | Load `<skill>` via `npx @opensassi/opencode <skill>`, then run `[command] [args]` if provided. |
-| `/opensassi init` | Run `env-check.sh`. Parse JSON result: if node+git+FlameGraph+deps all present → "Already bootstrapped". Otherwise run full bootstrap sequence (env-check → install → flamegraph → npm-deps → gitignore). |
+| `/opensassi` | Same as On Activation — bootstrap system-design + spec tree + show Lexicon. |
+| `/opensassi init` | Bootstrap + full environment setup:
+  1. Run the On Activation sequence (system-design, load-spec, show Lexicon).
+  2. Run the init sequence:
+     a. `npx @opensassi/opencode run --skill opensassi env-check.sh`
+     b. `init-install` — platform installer
+     c. `init-flamegraph` — clone FlameGraph v1.0
+     d. `npx @opensassi/opencode run --skill opensassi install-npm-deps.sh`
+     e. `npx @opensassi/opencode run --skill opensassi ensure-gitignore.sh` |
+| `/opensassi show-commands` | Generate the command overview from the Lexicon table and present it. |
 | `/opensassi <skill> [command] [args]` | Load `<skill>` via `npx @opensassi/opencode <skill>`, then run `[command] [args]` if provided. |
 
 ### `load-skill <name>`
@@ -74,6 +70,14 @@ If not → run full bootstrap:
 3. `init-flamegraph` — clone FlameGraph v1.0 to `scripts/FlameGraph/`
 4. `npx @opensassi/opencode run --skill opensassi install-npm-deps.sh` — `npm install`
 5. `npx @opensassi/opencode run --skill opensassi ensure-gitignore.sh` — append common patterns
+
+## Commands
+
+### `show-commands`
+
+Generate the command overview from the `## Lexicon` table in this file. List every skill, its commands, arguments, and descriptions. Present the full table — do not summarize.
+
+This does not run any external commands. All data is in the Lexicon table already loaded in context.
 
 ## Lexicon
 
@@ -151,6 +155,7 @@ If not → run full bootstrap:
 | | `record` | — | Capture terminal + browser scenes as video clips |
 | | `produce` | — | TTS audio, subtitles, ffmpeg assembly → final MP4 |
 | **daily-evaluation** | *(no commands defined)* | — | Aggregate session evaluations into dashboards |
+| **opensassi** | `show-commands` | — | Generate the command overview from the Lexicon table and present it |
 
 ## Composition Patterns
 

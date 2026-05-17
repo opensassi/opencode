@@ -10,7 +10,7 @@
     "task": "allow",
     "webfetch": "allow",
     "skills": {
-      "demo-video": "allow"
+      "opensassi": "allow"
     }
   },
   "agent": {

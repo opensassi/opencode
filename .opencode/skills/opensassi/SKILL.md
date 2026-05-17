@@ -15,13 +15,10 @@ Senior DevOps engineer specializing in cross-platform development environment pr
 
 ## On Activation
 
-1. Bootstrap — load `system-design` skill and spec tree depth 2:
-   a. Run `npx @opensassi/opencode system-design` to load the system-design skill.
-   b. Follow the system-design skill's `load-spec --depth 2` instructions to glob for
-      `.spec.md` files, read `technical-specification.md` and every `.spec.md` in full.
-   c. Report ready with a summary.
-2. Run `init-check` to report current environment status (OS, Node.js, git, FlameGraph, npm deps)
-3. Show available commands
+1. Load `system-design` via `npx @opensassi/opencode system-design`.
+2. Follow the system-design skill's `load-spec --depth 2` instructions.
+3. Read the `## Lexicon` section below and present every skill, command, and description.
+   Do not summarize — read it directly from the table.
 
 To load a sub-skill (e.g., system-design, git, profiler), the agent should run:
 ```
@@ -75,6 +72,90 @@ Run `npx @opensassi/opencode run --skill opensassi env-check.sh` (or `env-check.
 - FlameGraph presence at `scripts/FlameGraph/`
 - npm deps installed (`node_modules/` exists)
 - `.gitignore` has common patterns
+
+### `show-commands`
+
+Generate the command overview from the `## Lexicon` table in this file. List every skill, its commands, arguments, and descriptions. Present the full table — do not summarize.
+
+This does not run any external commands. All data is in the Lexicon table already loaded in context.
+
+## Lexicon
+
+| Skill | Command | Arguments | Description |
+|-------|---------|-----------|-------------|
+| **system-design** | `load-spec` | `[--depth 1-4]` | Load spec tree into context (tail — permanent base) |
+| | `generate-from-source` | — | Build spec tree from source files |
+| | `generate-technical-specification` | — | Produce complete class spec + diagrams + test plan |
+| | `revise-technical-specification` | — | Propose structured revisions list |
+| | `generate-sequence-diagram` | — | Mermaid sequence diagram for data flow |
+| | `generate-architecture-diagram` | — | Mermaid C4 container/component diagram |
+| | `generate-class-specification` | — | Complete C++ class declarations |
+| | `generate-d3-animation` | — | Self-contained HTML D3.js animation |
+| | `generate-testing-plan` | — | Structured unit/integration/regression tests |
+| | `split-sub-modules` | — | Break monolithic spec into sub-module directory |
+| | `combine-sub-modules` | — | Flatten sub-module spec back to monolithic |
+| | `list-sub-modules` | — | List all sub-modules with facade classes |
+| | `load-sub-module-spec` | `<path>` | Load one sub-module `.spec.md` |
+| | `generate-sub-module-spec` | `<name>` | Generate `.spec.md` for a named sub-module |
+| | `list-external` | — | List external integration pairs in `external/` |
+| | `load-external` | `<name>` | Load an external project's spec tree into context |
+| | `staleness-check` | — | Check for specs with missing or outdated reviews |
+| **git** | `start-session` | — | `git checkout main` → `git pull --rebase`, verify clean tree |
+| | `finish-session` | — | add → commit → rebase → test → eval → push (single atomic commit) |
+| | `sync` | — | `git fetch origin` → `git rebase origin/main` → test |
+| **issue** | `create-issue` | `<body>` | Create GitHub issue from structured body |
+| | `list-issues` | `[--limit N]` | List recent GitHub issues |
+| | `show-issue` | `<number>` | Show issue details and status |
+| | `close-issue` | `<number>` | Close issue with comment |
+| **npm-optimizer** | `execute` | — | Full port pipeline: discover → ceiling → naive → profile → classify → pivot/micro → shim → report |
+| | `assess-ceiling` | — | Build N-API pass-through, measure upper bound |
+| | `implement-naive` | — | Scaffold simplest C++ addon passing 100% tests |
+| | `classify` | — | Sort perf samples Tier 1/2/3, decide pivot vs micro |
+| | `pivot` | — | Architectural pivot when N-API/V8 is bottleneck |
+| | `micro-optimize` | — | Iterative C++ micro-opt with 3-strikes rule |
+| | `shim` | — | JS compatibility wrapper + cross-reference docs |
+| | `bench` | — | Benchmark against original JS baseline |
+| | `assess-handoff` | — | Gate: evaluate dropping to asm-optimizer |
+| | `report` | — | Final comparison table + archive |
+| | `show-state` | — | Pipeline progress |
+| **profiler** | `check` | — | Verify perf toolchain available |
+| | `setup` | `[--frames N]` | Download test data, prepare profiling environment |
+| | `profile` | `[--events ...]` | `perf record` → flamegraph |
+| | `benchmark` | `[--iter N]` | Run N iterations with metric collection |
+| | `compare` | `<baseline> <candidate>` | Side-by-side benchmark comparison |
+| | `report` | `[--profile <label>]` | Bundle profiling session into report |
+| **asm-optimizer** | `setup-baseline` | — | Create baseline dirs, clone release, build, run profiling matrix |
+| | `profile` | `<name>` | Maximal perf counter dump against baseline |
+| | `assess` | `<entry>` | Evaluate one function's ASM optimization potential |
+| | `assess-all` | — | Rank all candidate functions by potential |
+| | `setup-microbench` | `<entry>` | Create isolated microbenchmark harness |
+| | `spec` | `<entry>` | Generate technical spec of C++ implementation |
+| | `analyze-gap` | `<entry>` | Compare ASM implementation against C++ spec |
+| | `bench` | `<entry>` | Run microbenchmark, compare against C++ baseline |
+| | `implement` | `<entry>` | Generate ASM implementation following spec-first process |
+| | `iterative-optimize` | `<entry>` | Full optimization pipeline with experiment archiving |
+| | `archive-experiment` | `<entry>` | Save experiment record when hypothesis fails |
+| | `report` | `[--format markdown\|json]` | Optimization report for all assessed entries |
+| **todo** | `extract` | `<name>` | Scan session context for unfinished work → structured summary |
+| | `propose-todo` | `<name>` | Draft todo entry from extract output |
+| | `save-todo` | — | Write to `todos/<NNN>-<name>.md` |
+| | `load-todo` | `<id>` | Read todo file into context for agent to act on |
+| | `list-todos` | — | List all saved todo entries |
+| **session-evaluation** | `generate` | — | Analyze conversation, produce structured session evaluation |
+| | `export` | — | Save evaluation + compressed session archive to `sessions/` |
+| **skill-manager** | `show-skills` | — | List all registered skills |
+| | `create-skill` | — | Interactive skill creation flow |
+| | `revise-skill` | `<name>` | Interactive skill revision |
+| | `save-skill` | — | Write skill to disk + register |
+| | `delete-skill` | `<name>` | Remove skill from disk |
+| | `commit` | — | Stage + commit all skill changes |
+| | `audit-skills` | — | Validate all skill files for consistency |
+| **system-design-review** | *(no commands defined)* | — | Seven-expert panel audit of technical specs |
+| **demo-video** | `plan` | — | Generate scene file from project outline |
+| | `record` | — | Capture terminal + browser scenes as video clips |
+| | `produce` | — | TTS audio, subtitles, ffmpeg assembly → final MP4 |
+| **daily-evaluation** | *(no commands defined)* | — | Aggregate session evaluations into dashboards |
+| **opensassi** | `show-commands` | — | Generate the command overview from the Lexicon table and present it |
 
 ## Design Principles
 

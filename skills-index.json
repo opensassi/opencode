@@ -4,18 +4,18 @@
       "name": "asm-optimizer",
       "description": "SIMD/assembly optimization framework",
       "commands": [
-        "setup-baseline",
-        "profile",
-        "assess",
-        "assess-all",
-        "setup-microbench",
-        "spec",
-        "analyze-gap",
-        "bench",
-        "implement",
-        "iterative-optimize",
-        "archive-experiment",
-        "report"
+        { "name": "setup-baseline", "description": "Create baseline directory structure and build release binary" },
+        { "name": "profile", "description": "Run perf counter dump against baseline binary" },
+        { "name": "assess", "description": "Evaluate one function for ASM optimization potential" },
+        { "name": "assess-all", "description": "Rank all candidate functions by optimization potential" },
+        { "name": "setup-microbench", "description": "Create isolated microbenchmark for one function" },
+        { "name": "spec", "description": "Generate technical spec of C++ implementation" },
+        { "name": "analyze-gap", "description": "Compare ASM implementation against C++ spec" },
+        { "name": "bench", "description": "Run microbenchmark, compare against C++ baseline" },
+        { "name": "implement", "description": "Generate ASM implementation following spec-first process" },
+        { "name": "iterative-optimize", "description": "Full optimization pipeline with experiment archiving" },
+        { "name": "archive-experiment", "description": "Save experiment record when hypothesis fails" },
+        { "name": "report", "description": "Optimization report for all assessed entries" }
       ]
     },
     {
@@ -25,107 +25,113 @@
     },
     {
       "name": "demo-video",
-      "description": "Produce narrated demo videos with multi-language subtitles — captures terminal TUI and browser, assembles via ffmpeg",
-      "commands": ["plan", "record", "produce"]
+      "description": "Produce narrated demo videos with multi-language subtitles",
+      "commands": [
+        { "name": "plan", "description": "Generate scene file from project outline" },
+        { "name": "record", "description": "Capture terminal + browser scenes as video clips" },
+        { "name": "produce", "description": "TTS audio, subtitles, ffmpeg assembly into final MP4" }
+      ]
     },
     {
       "name": "git",
       "description": "Rebase-based single-commit-per-session workflow",
       "commands": [
-        "start-session",
-        "finish-session",
-        "sync"
+        { "name": "start-session", "description": "git checkout main, pull rebase, verify clean tree" },
+        { "name": "finish-session", "description": "Add, commit, rebase, test, eval, push" },
+        { "name": "sync", "description": "git fetch origin, rebase onto main, test" }
       ]
     },
     {
       "name": "issue",
       "description": "GitHub issue management",
       "commands": [
-        "create-issue",
-        "list-issues",
-        "show-issue",
-        "close-issue"
+        { "name": "create-issue", "description": "Create GitHub issue from structured body" },
+        { "name": "list-issues", "description": "List recent GitHub issues" },
+        { "name": "show-issue", "description": "Show issue details and status" },
+        { "name": "close-issue", "description": "Close issue with comment" }
       ]
     },
-{
+    {
       "name": "npm-optimizer",
-      "description": "Port an npm package to a C++ native addon — preserve 100% test compatibility while significantly improving performance through profiling-driven architectural iteration",
+      "description": "Port an npm package to a C++ native addon with profiling-driven optimization",
       "commands": [
-        "execute",
-        "assess-ceiling",
-        "implement-naive",
-        "classify",
-        "pivot",
-        "micro-optimize",
-        "shim",
-        "bench",
-        "assess-handoff",
-        "report",
-        "show-state"
+        { "name": "execute", "description": "Run full port pipeline end to end" },
+        { "name": "assess-ceiling", "description": "Build N-API pass-through, measure upper bound" },
+        { "name": "implement-naive", "description": "Scaffold simplest C++ addon passing 100% tests" },
+        { "name": "classify", "description": "Sort perf samples and decide pivot vs micro-opt" },
+        { "name": "pivot", "description": "Architectural pivot when N-API or V8 is bottleneck" },
+        { "name": "micro-optimize", "description": "Iterative C++ micro-opt with 3-strikes rule" },
+        { "name": "shim", "description": "JS compatibility wrapper with cross-reference docs" },
+        { "name": "bench", "description": "Benchmark against original JS baseline" },
+        { "name": "assess-handoff", "description": "Evaluate whether to drop to asm-optimizer" },
+        { "name": "report", "description": "Final comparison table and archive" },
+        { "name": "show-state", "description": "Show pipeline progress" }
       ]
     },
     {
       "name": "opensassi",
       "description": "Root skill ecosystem — loads system-design + spec tree, routes sub-skill composition, bootstraps environments",
       "commands": [
-        "init"
+        { "name": "init", "description": "Bootstrap this directory with opensassi skills" },
+        { "name": "show-commands", "description": "Display all skills, commands, and descriptions" },
+        { "name": "load-skill", "description": "Reload a skill's instructions into context" }
       ]
     },
     {
       "name": "profiler",
       "description": "Linux perf profiling + flamegraphs",
       "commands": [
-        "check",
-        "setup",
-        "profile",
-        "benchmark",
-        "compare",
-        "report"
+        { "name": "check", "description": "Verify perf toolchain is available" },
+        { "name": "setup", "description": "Download test data and prepare profiling environment" },
+        { "name": "profile", "description": "Run perf record and generate flamegraph" },
+        { "name": "benchmark", "description": "Run N iterations with metric collection" },
+        { "name": "compare", "description": "Side-by-side benchmark comparison" },
+        { "name": "report", "description": "Bundle profiling session into report" }
       ]
     },
     {
       "name": "session-evaluation",
       "description": "Generate structured session reports",
       "commands": [
-        "generate",
-        "export"
+        { "name": "generate", "description": "Analyze conversation and produce structured evaluation" },
+        { "name": "export", "description": "Save evaluation and compressed session archive" }
       ]
     },
     {
       "name": "skill-manager",
       "description": "Create/revise skills interactively",
       "commands": [
-        "show-skills",
-        "create-skill",
-        "revise-skill",
-        "save-skill",
-        "delete-skill",
-        "commit",
-        "audit-skills"
+        { "name": "show-skills", "description": "List all registered skills with status" },
+        { "name": "create-skill", "description": "Interactive skill creation flow" },
+        { "name": "revise-skill", "description": "Interactive skill revision" },
+        { "name": "save-skill", "description": "Write skill to disk and register" },
+        { "name": "delete-skill", "description": "Remove skill from disk" },
+        { "name": "commit", "description": "Stage and commit all skill changes" },
+        { "name": "audit-skills", "description": "Validate all skill files for consistency" }
       ]
     },
     {
       "name": "system-design",
       "description": "Interactive C++ spec authoring with diagrams and D3 animations",
       "commands": [
-        "generate-sequence-diagram",
-        "generate-architecture-diagram",
-        "generate-class-specification",
-        "generate-manim-animation",
-        "generate-d3-animation",
-        "generate-testing-plan",
-        "generate-from-source",
-        "load-spec",
-        "generate-technical-specification",
-        "revise-technical-specification",
-        "split-sub-modules",
-        "combine-sub-modules",
-        "list-sub-modules",
-        "load-sub-module-spec",
-        "generate-sub-module-spec",
-        "list-external",
-        "load-external",
-        "staleness-check"
+        { "name": "generate-sequence-diagram", "description": "Mermaid sequence diagram for data flow" },
+        { "name": "generate-architecture-diagram", "description": "Mermaid C4 container/component diagram" },
+        { "name": "generate-class-specification", "description": "Complete C++ class declarations" },
+        { "name": "generate-manim-animation", "description": "Python Manim state machine visualization" },
+        { "name": "generate-d3-animation", "description": "Self-contained HTML D3.js animation" },
+        { "name": "generate-testing-plan", "description": "Structured unit/integration/regression tests" },
+        { "name": "generate-from-source", "description": "Build spec tree from source files" },
+        { "name": "load-spec", "description": "Load spec tree into context" },
+        { "name": "generate-technical-specification", "description": "Produce complete spec with diagrams and test plan" },
+        { "name": "revise-technical-specification", "description": "Propose structured revisions list" },
+        { "name": "split-sub-modules", "description": "Break monolithic spec into sub-module directory" },
+        { "name": "combine-sub-modules", "description": "Flatten sub-module spec back to monolithic" },
+        { "name": "list-sub-modules", "description": "List all sub-modules with facade classes" },
+        { "name": "load-sub-module-spec", "description": "Load one sub-module spec file" },
+        { "name": "generate-sub-module-spec", "description": "Generate spec file for a named sub-module" },
+        { "name": "list-external", "description": "List external integration pairs" },
+        { "name": "load-external", "description": "Load an external project's spec tree" },
+        { "name": "staleness-check", "description": "Check for specs with missing or outdated reviews" }
       ]
     },
     {
@@ -135,13 +141,13 @@
     },
     {
       "name": "todo",
-      "description": "Extract unfinished work from session context, create GitHub issues, and save structured todo entries to todos/ for future agents",
+      "description": "Create issues and debugging skills from session context",
       "commands": [
-        "extract",
-        "propose-todo",
-        "save-todo",
-        "load-todo",
-        "list-todos"
+        { "name": "extract", "description": "Scan session context for unfinished work" },
+        { "name": "propose-todo", "description": "Draft structured todo entry" },
+        { "name": "save-todo", "description": "Write todo to disk with sequential numbering" },
+        { "name": "load-todo", "description": "Read todo file into context" },
+        { "name": "list-todos", "description": "List all saved todo entries" }
       ]
     }
   ]
