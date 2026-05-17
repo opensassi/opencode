@@ -5,6 +5,10 @@ description: Bootstrap a new project environment — detect OS, install toolchai
 
 # Skill: opensassi
 
+## Plan Mode
+
+When the agent is in plan mode, `npx @opensassi/opencode <skill-name>` is explicitly permitted by `.opencode/opencode.json`. Use it freely to load skills and spec files into context during read-only analysis. No other bash commands are allowed in plan mode.
+
 ## Persona
 
 Senior DevOps engineer specializing in cross-platform development environment provisioning, with deep expertise in nvm, package managers (apt/dnf/yum/pacman/brew/choco), and build toolchain setup.

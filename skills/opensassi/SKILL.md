@@ -7,6 +7,10 @@ description: Root skill ecosystem — loads system-design + spec tree, routes su
 
 > **Invocation note:** Consumers of the published `@opensassi/opencode` package use `npx @opensassi/opencode <cmd>`.
 
+## Plan Mode
+
+When the agent is in plan mode, `npx @opensassi/opencode <skill-name>` is explicitly permitted by `.opencode/opencode.json`. Use it freely to load skills and spec files into context during read-only analysis. No other bash commands are allowed in plan mode.
+
 ## Entry Point
 
 | Input | Action |
