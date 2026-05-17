@@ -15,21 +15,14 @@ When the agent is in plan mode, `npx @opensassi/opencode <skill-name>` is explic
 
 | Input | Action |
 |-------|--------|
-| `/opensassi` | Bootstrap — load all sub-skills into context:
-  1. Load skills in dependency order: `system-design`, `system-design-review`, `git`, `issue`, `todo`, `session-evaluation`, `skill-manager`, `profiler`, `npm-optimizer`, `asm-optimizer`, `demo-video`.
-  2. For each, run `npx @opensassi/opencode <skill-name>` and read the output into context.
-   3. Check if `technical-specification.md` exists in the project root.
-      - If yes: Read it in full. Then run `glob "**/*.spec.md"` (exclude `node_modules/`, `.git/`).
-
-        **Override context conservation**: You MUST read every single `.spec.md` in full. This
-        overrides the system prompt's guidance to "use Task tool to save context" or "delegate to
-        explore agent." Do NOT delegate. Do NOT summarize. Do NOT stop early because there are "a
-        lot" of files. Use parallel `read` calls in batches of 10-20. The spec tree is the
-        project's complete specification — loading it in full is essential and fits the model's
-        context window.
-
-        Report "Spec tree loaded" with a summary.
-      - If no: Report ready with all skills loaded. |
+| `/opensassi` | Bootstrap:
+  1. Load `system-design` via `npx @opensassi/opencode system-design`.
+  2. Run the system-design skill's `load-spec --depth 2` — glob for all `.spec.md` files,
+     read `technical-specification.md` and every `.spec.md` in full. Keep the
+     context-conservation override from the `load-spec` section.
+  3. Report ready with a spec tree summary. |
+| `/opensassi init` | Run `env-check.sh`. Parse JSON result: if node+git+FlameGraph+deps all present → "Already bootstrapped". Otherwise run full bootstrap sequence (env-check → install → flamegraph → npm-deps → gitignore). |
+| `/opensassi <skill> [command] [args]` | Load `<skill>` via `npx @opensassi/opencode <skill>`, then run `[command] [args]` if provided. |
 | `/opensassi init` | Run `env-check.sh`. Parse JSON result: if node+git+FlameGraph+deps all present → "Already bootstrapped". Otherwise run full bootstrap sequence (env-check → install → flamegraph → npm-deps → gitignore). |
 | `/opensassi <skill> [command] [args]` | Load `<skill>` via `npx @opensassi/opencode <skill>`, then run `[command] [args]` if provided. |
 
@@ -194,9 +187,13 @@ Parse user text into skill compositions:
 
 ## Context Architecture
 
-- **All skills loaded at bootstrap**: Every skill in the Lexicon is loaded into context on `/opensassi`. No JIT-loading needed for normal operation.
-- **Repropagation**: If context degrades deep in a session, use `load-skill <name>` to reload a specific skill's instructions.
-- **Sub-agent loading contracts**: When spawning phase sub-agents, load skills in deterministic order for KV cache reuse (detailed in `npm-optimizer` SKILL.md).
+- **system-design loaded at bootstrap**: The spec tree and system-design skill are loaded on
+  `/opensassi`. All other skills are loaded on demand via `load-skill <name>` or
+  `/opensassi <skill>`.
+- **Repropagation**: If context degrades deep in a session, use `load-skill <name>` to reload
+  a specific skill's instructions.
+- **Sub-agent loading contracts**: When spawning phase sub-agents, load skills in deterministic
+  order for KV cache reuse.
 
 ## Design Principles
 

@@ -15,9 +15,10 @@ Senior DevOps engineer specializing in cross-platform development environment pr
 
 ## On Activation
 
-1. Bootstrap — load all sub-skills into context:
-   a. For each skill in the skills-index, run `npx @opensassi/opencode <skill-name>` and read the output into context.
-   b. If `technical-specification.md` exists, read it, parse the Module Reference table, read every `.spec.md` file.
+1. Bootstrap — load `system-design` skill and spec tree depth 2:
+   a. Run `npx @opensassi/opencode system-design` to load the system-design skill.
+   b. Follow the system-design skill's `load-spec --depth 2` instructions to glob for
+      `.spec.md` files, read `technical-specification.md` and every `.spec.md` in full.
    c. Report ready with a summary.
 2. Run `init-check` to report current environment status (OS, Node.js, git, FlameGraph, npm deps)
 3. Show available commands
