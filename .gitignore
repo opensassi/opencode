@@ -3,6 +3,9 @@
 /bin/
 /install/
 
+# npm pack output
+*.tgz
+
 # IDE
 .vscode/
 .idea/
