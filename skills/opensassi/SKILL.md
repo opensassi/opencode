@@ -13,17 +13,21 @@ When the agent is in plan mode, `npx @opensassi/opencode <skill-name>` is explic
 
 ## On Activation
 
-1. Load `system-design` via `npx @opensassi/opencode system-design`.
+1. Load all sub-skills in dependency order:
+   `system-design`, `system-design-review`, `git`, `issue`, `todo`,
+   `session-evaluation`, `skill-manager`, `profiler`, `npm-optimizer`,
+   `asm-optimizer`, `demo-video`.
+   For each, run `npx @opensassi/opencode <skill-name>` and read the output into context.
 2. Follow the system-design skill's `load-spec --depth 2` instructions.
-3. Present the command reference from the Lexicon table below. Wait for the user to request a command or skill.
+3. Present the command reference from the Lexicon table below.
 
 ## Entry Point
 
 | Input | Action |
 |-------|--------|
-| `/opensassi` | Same as On Activation — bootstrap system-design + spec tree + show Lexicon. |
-| `/opensassi init` | Bootstrap + full environment setup:
-  1. Run the On Activation sequence (system-design, load-spec, show Lexicon).
+| `/opensassi` | Same as On Activation — load all sub-skills, load-spec depth 2, show Lexicon. |
+| `/opensassi init` | Same as On Activation + full environment setup:
+  1. Run the On Activation sequence (load all skills, load-spec, show Lexicon).
   2. Run the init sequence:
      a. `npx @opensassi/opencode run --skill opensassi env-check.sh`
      b. `init-install` — platform installer
@@ -199,13 +203,12 @@ Parse user text into skill compositions:
 
 4. **Unknown requests** — Reference the Lexicon table and ask: "I see you want to [paraphrase]. Do you mean one of these: [list 2-3 matching skills]?"
 
-5. **Permanent base** — Always keep `system-design` + spec tree loaded (tail of context). Only JIT-load the head skills needed for the current task.
+5. **Permanent base** — All skills are loaded at bootstrap time (step 1 of On Activation). Only re-load via `load-skill <name>` if context degrades.
 
 ## Context Architecture
 
-- **system-design loaded at bootstrap**: The spec tree and system-design skill are loaded on
-  `/opensassi`. All other skills are loaded on demand via `load-skill <name>` or
-  `/opensassi <skill>`.
+- **All skills loaded at bootstrap**: Every skill in the Lexicon is loaded into context on
+  activation. No JIT-loading needed for normal operation.
 - **Repropagation**: If context degrades deep in a session, use `load-skill <name>` to reload
   a specific skill's instructions.
 - **Sub-agent loading contracts**: When spawning phase sub-agents, load skills in deterministic

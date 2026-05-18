@@ -15,7 +15,11 @@ Senior DevOps engineer specializing in cross-platform development environment pr
 
 ## On Activation
 
-1. Load `system-design` via `npx @opensassi/opencode system-design`.
+1. Load all sub-skills in dependency order:
+   `system-design`, `system-design-review`, `git`, `issue`, `todo`,
+   `session-evaluation`, `skill-manager`, `profiler`, `npm-optimizer`,
+   `asm-optimizer`, `demo-video`.
+   For each, run `npx @opensassi/opencode <skill-name>` and read the output into context.
 2. Follow the system-design skill's `load-spec --depth 2` instructions.
 3. Read the `## Lexicon` section below and present every skill, command, and description.
    Do not summarize — read it directly from the table.
